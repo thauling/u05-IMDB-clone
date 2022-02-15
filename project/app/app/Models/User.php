@@ -41,4 +41,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     //define relationship of User with Review and Movie - a user can have many reviews and movies 
+     public function review()
+     {
+         return $this->hasMany(Review::class);
+     }
+
+     public function movie()
+     {
+         return $this->hasMany(Movie::class);
+     }
 }

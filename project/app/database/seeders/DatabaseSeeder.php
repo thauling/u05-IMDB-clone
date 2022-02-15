@@ -14,6 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(10)->create(); //10 = 10 rows I guess
+        /* or more specifically:
+        $user = User::factory()->create([
+            'name' => 'John Smith',
+            'email' => 'john@example.com',
+            'password' => bcrypt('password')
+        ]);
+
+        */
     }
 }
