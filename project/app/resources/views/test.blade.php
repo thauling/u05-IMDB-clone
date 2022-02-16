@@ -1,3 +1,13 @@
+<?php
+use App\Models\User;  
+use App\Models\Movie;  
+use App\Models\Review;  
+
+$usercount = User::count();
+$moviecount = Movie::count();
+$reviewcount = Review::count();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,5 +18,8 @@
 </head>
 <body>
     <h1>Shiny new IMDB</h1>
+    <p>Row count in users: {{ $usercount }}</p>
+    <p>Row count in movies: {{ $moviecount }}</p>
+    <p>Row count in reviews: {{ $reviewcount }}</p>
 </body>
 </html>
