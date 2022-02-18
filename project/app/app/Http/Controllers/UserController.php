@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;  
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -29,6 +30,13 @@ class UserController extends Controller
     public function create()
     {
         //
+        // need to implement authorization logic here
+        if (auth()->user()->is_admin === false) {   //pseudocode! require middleware 'auth'
+            abort(Response::HTTP_FORBIDDEN);
+        }
+
+
+
         return view('users.create'); //route needs to be defined
     }
 
