@@ -1,11 +1,12 @@
 <?php
+//for testing, this should all go into respective controllers and then passed on to .blade via web.php
 use App\Models\User;  
 use App\Models\Movie;  
 use App\Models\Review;  
 
-$usercount = User::count();
-$moviecount = Movie::count();
-$reviewcount = Review::count();
+//$usercount = User::count();
+// $moviecount = Movie::count();
+// $reviewcount = Review::count();
 ?>
 
 <!DOCTYPE html>
@@ -18,8 +19,14 @@ $reviewcount = Review::count();
 </head>
 <body>
     <h1>Shiny new IMDB</h1>
-    <p>Row count in users: {{ $usercount }}</p>
-    <p>Row count in movies: {{ $moviecount }}</p>
-    <p>Row count in reviews: {{ $reviewcount }}</p>
+    @if (User::count())
+    <p>Row count in users: {{ User::count() }}</p>
+    @endif
+    @if (Movie::count())
+    <p>Row count in movies: {{ Movie::count() }}</p>
+    @endif
+    @if (Review::count())
+    <p>Row count in reviews: {{ Movie::count() }}</p>
+    @endif
 </body>
 </html>

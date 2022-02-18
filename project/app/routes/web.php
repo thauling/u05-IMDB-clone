@@ -16,14 +16,15 @@ use App\Http\Controllers\ReviewController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/test', function () {
     return view('test');  
 });
 
-//this doesn't do anything yet
-Route::get('someRoute', [UserController::class, 'whatgoeshere?']);
-
+//admin functionality
+Route::get('dashboard', [UserController::class, 'index']);
+Route::post('store-user', [UserController::class, 'store']);
+Route::post('store-movie', [MovieController::class, 'store']);
