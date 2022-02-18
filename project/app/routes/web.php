@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContentsArrController;
+use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing', [
+        'movies' => Movie::all()
+    ]);
 });
+
+Route::get('/contents-arr', [ContentsArrController::class, 'createContents']);
