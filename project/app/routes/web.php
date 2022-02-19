@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,8 @@ Route::get('/', function () {
     return view('test');  
 });
 
+Route::get('movies/{movie}', function ($id) {
+    return view('movie', [
+        'movie' => Movie::find($id)
+    ]);
+});
