@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\MovieController;
-use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,21 +13,10 @@ use App\Http\Controllers\ReviewController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/test', function () {
-    return view('test');  
+Route::get('/', function () {
+    return view('welcome');
 });
 
-<<<<<<< HEAD
 Route::get('/userpage', function () {
     return view('userpage');
 });
-=======
-//admin functionality
-Route::get('dashboard', [UserController::class, 'index']);
-Route::post('store-user', [UserController::class, 'store']);
-Route::post('store-movie', [MovieController::class, 'store']);
->>>>>>> thomas
