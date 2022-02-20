@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
         // Movie::factory(100)->create();
 
         
+
+        /**** SHOULD THESE API REQUESTS BE SOMEWHERE ELSE? IN THE MOVIE FACTORY FILE? ****/
         // Get popular movies from TMDB
         $movies = Http::get('https://api.themoviedb.org/3/movie/popular?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US&page=1');
         $moviesToArray = json_decode($movies); // Convert to array
