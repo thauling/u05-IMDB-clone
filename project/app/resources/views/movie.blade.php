@@ -1,9 +1,7 @@
 <?php 
-  use Illuminate\Support\Facades\Http;
-
   $imgsToArray = json_decode($movie->urls_images); 
   
-  $imgPath = 'https://image.tmdb.org/t/p/w1280' . $imgsToArray[0];
+  $imgPath = "https://image.tmdb.org/t/p/w1280$imgsToArray[0]";
 ?>
 
 <x-layout>
