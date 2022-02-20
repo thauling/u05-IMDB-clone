@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MoviesController;
 use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
@@ -22,15 +23,14 @@ Route::get('/', function () {
     return view('test');  
 });
 
-Route::get('movies/{movie}', function ($id) {
-    return view('movie', [
-        'movie' => Movie::find($id)
-    ]);
-});
+// Movie routes
+Route::get('/movies/{movie}', [MoviesController::class, 'getMovie']);
+
+// User routes
 Route::get('/userpage', function () {
     return view('userpage');
 });
-//admin functionality
+// Admin functionality
 Route::get('dashboard', [UserController::class, 'index']);
 Route::post('store-user', [UserController::class, 'store']);
 Route::post('store-movie', [MovieController::class, 'store']);
