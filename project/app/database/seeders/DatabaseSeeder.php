@@ -26,42 +26,46 @@ class DatabaseSeeder extends Seeder
         // Movie::factory(100)->create();
 
         
-
+        // Get popular movies from TMDB
         $movies = Http::get('https://api.themoviedb.org/3/movie/popular?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US&page=1');
-        $moviesToArray = json_decode($movies);
+        $moviesToArray = json_decode($movies); // Convert to array
 
-        function getGenre ($id) {
+        // Genres are defined as a seperate table and are refered to by their ID in the movie object
+        function getGenre ($id) { // Get the genre by the genre ID in the movie object
             $genres = Http::get('https://api.themoviedb.org/3/genre/movie/list?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US');
             $genresToArray = json_decode($genres);
 
-            foreach ($genresToArray->genres as $genre) {
+            foreach ($genresToArray->genres as $genre) { // Loop through all genres to find the match, return the genre name
                 if ($genre->id == $id) {
                     return $genre->name;
                 }
             }
         }
 
-        function getTrailer ($id) {
+        // Trailers are defined as a seperate table
+        function getTrailer ($id) { // Get the trailer youtube key with the movie ID
             $trailer = Http::get("https://api.themoviedb.org/3/movie/$id/videos?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US");
             $trailerToArray = json_decode($trailer);
 
-            if (!$trailerToArray->results == []) {
+            if (!$trailerToArray->results == []) { // If results is NOT empty array
                 
                 $trailerId = $trailerToArray->results[0]->key;
 
-                return "https://www.youtube.com/embed/$trailerId";
+                return "https://www.youtube.com/embed/$trailerId"; // Return embed url
             } else {
                 return "";
             }
             
         }
 
+        // Loop through API response
         foreach ($moviesToArray->results as $movie) {
 
+            // Actors of a specific movie are defined as a seperate table
             $actors = Http::get("https://api.themoviedb.org/3/movie/$movie->id/credits?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US");
             $actorsToArray = json_decode($actors);
 
-            Movie::create([
+            Movie::create([ // Seed movies table with the API responses
                 'title' => $movie->original_title,
                 'genre' => getGenre($movie->genre_ids[0]),
                 'cast' => json_encode(array($actorsToArray->cast[0]->name, $actorsToArray->cast[1]->name, $actorsToArray->cast[2]->name)),
