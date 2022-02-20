@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         $movies = Http::get('https://api.themoviedb.org/3/movie/popular?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US&page=1');
         $moviesToArray = json_decode($movies); // Convert to array
 
-        // Genres are defined as a seperate table and are refered to by their ID in the movie object
+        // Genres are defined as a seperate endpoint and are refered to by their ID in the movie object
         function getGenre ($id) { // Get the genre by the genre ID in the movie object
             $genres = Http::get('https://api.themoviedb.org/3/genre/movie/list?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US');
             $genresToArray = json_decode($genres);
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // Trailers are defined as a seperate table
+        // Trailers are defined as a seperate endpoint
         function getTrailer ($id) { // Get the trailer youtube key with the movie ID
             $trailer = Http::get("https://api.themoviedb.org/3/movie/$id/videos?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US");
             $trailerToArray = json_decode($trailer);
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
         // Loop through API response
         foreach ($moviesToArray->results as $movie) {
 
-            // Actors of a specific movie are defined as a seperate table
+            // Actors of a specific movie are defined as a seperate endpoint
             $actors = Http::get("https://api.themoviedb.org/3/movie/$movie->id/credits?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US");
             $actorsToArray = json_decode($actors);
 
