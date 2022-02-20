@@ -27,3 +27,10 @@ Route::get('movies/{movie}', function ($id) {
         'movie' => Movie::find($id)
     ]);
 });
+Route::get('/userpage', function () {
+    return view('userpage');
+});
+//admin functionality
+Route::get('dashboard', [UserController::class, 'index']);
+Route::post('store-user', [UserController::class, 'store']);
+Route::post('store-movie', [MovieController::class, 'store']);

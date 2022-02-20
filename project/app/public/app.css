@@ -3,3 +3,86 @@
 * {
   font-family: 'Montserrat', sans-serif;
 }
+
+body {
+  margin: 0;
+}
+
+header {
+  background-color: rgb(77, 77, 77);
+  padding: 10px 50px;
+}
+
+.logo {
+  height: 60px;
+}
+
+main {
+  padding: 10px 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.movie-wrapper {
+  width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row: auto;
+  grid-template-areas: 
+  "title title"
+  "released rating"
+  "media media"
+  "genre ."
+  "cast cast"
+  "abstract abstract"
+  ;
+}
+
+.movie-title {
+  font-size: 42px;
+  grid-area: title;
+}
+
+.movie-year {
+  grid-area: released;
+  font-size: 22px;
+}
+
+.movie-rating {
+  grid-area: rating;
+  justify-self: end;
+  font-size: 22px;
+}
+
+.movie-media {
+  grid-area: media;
+} 
+
+.movie-genre {
+  grid-area: genre;
+  font-size: 22px;
+  border: 1px solid #000000;
+  border-radius: 45%;
+  justify-self: start;
+  padding: 8px;
+}
+
+.movie-cast {
+  display: flex;
+  grid-area: cast;
+  justify-self: stretch;
+  font-size: 20px;
+}
+
+.movie-cast p {
+  margin-right: 20px;
+}
+
+.movie-abstract {
+  grid-area: abstract;
+  font-size: 24px;
+}
+
+.bold-paragraph {
+  font-weight: 500;
+}
