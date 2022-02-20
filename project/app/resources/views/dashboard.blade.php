@@ -13,6 +13,10 @@
 </head>
 
 <body>
+    @unless (Auth::check())
+    <h1>You are not signed in.</h1>
+    @endunless
+    @if (Auth::check())
     <h1>Dashboard</h1>
     <!-- dashboard 
 - able to add new movies and information about movies in an ordered way.
@@ -198,12 +202,12 @@
             </div>
         </form>
     </section>
+
     <h2>CRUD User Tracking</h2>
     <!-- table and/ or chart on user stats -->
     @if ($users->count())
     <p>
         <!-- "$users->links" to be used with paginate-->
-
     <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -254,6 +258,10 @@
     </p>
     @endif
 
+    <h2>CRUD Single User Tracking (test)</h2>
+    <p> {{ $user }}</p>
+
+    @endif
 </body>
 
 </html>

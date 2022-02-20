@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;  
+
+use App\Models\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -13,13 +16,85 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function register(Request $request)
+    {
+       // dd('at least I have made it this far');
+        $attributes = request()->validate([
+            'name' => 'required', //['required', 'string', 'min:5', 'max:255'],
+            'email' => 'required', //['required', 'max:255', 'email', 'unique:users,email'],
+            'password' => 'required'// ['required', 'string', 'confirmed', 'min:7', 'max:255'] // 'confirmed' for user regis
+            //'is_admin' => ['required']
+        ]);
+
+        //dd('validation success'); //for debugging, to see if store method is called
+        $user = User::create([
+            'name' => $attributes['name'],
+            'email' => $attributes['email'],
+            'password' => bcrypt($attributes['password'])
+            // is_admin is set to false by default 
+        ]);
+
+        $token = $user->createToken('apptoken')->plainTextToken;
+
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        session()->flash('success', 'User registered', response($response, 201));
+        return response($response, 201);
+        //return redirect('home');
+    }
+
+    public function logout(Request $request)
+    {
+        // Revoke the token that was used to authenticate the current request...
+        $request->user()->currentAccessToken()->delete();
+        session()->flash('success', 'User logged out');
+        //return ['message' => 'User logged out'];
+        return redirect('home');
+    }
+
+    //login with email and password
+    public function login(Request $request) {
+
+        $attributes = request()->validate([
+            //'name' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => ['required','string'] // 'confirmed' for user regis
+        ]);
+
+        // get (first) user with matching email, will be null if user does not exist
+        $user = User::where('email', $attributes['email'])->first();
+        // return error if user does NOT exist or psw does NOT match
+        if (!$user || !Hash::check($attributes['password'], $user->password)) {
+            return response(['message' => 'user does not exist or password is incorrect'], 401);
+        }
+        // else assign token
+        $token = $user->createToken('apptoken')->plainTextToken;
+
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        session()->flash('success', 'User logged in',  response($response, 201));
+       // return response($response, 201); //if api, if called from wep.php use:
+       return redirect('home'); //or whatever landig page is called, nneds to be defined
+    }
+
+
     public function index()
     {
         //show all unsers
         //$users = User::latest()->firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(2)->withQueryString(); //lookup eager loading
-        $users = User::firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(3)->withQueryString(); //
-        //$users = User::get(); 
-        return view('dashboard', ['users' => $users]);//->paginate(2);      
+        //$users = User::firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(3)->withQueryString(); //
+        // $users = User::paginate(5); 
+        // $users = User::get();
+        $users = User::all();  // same as 'get()' ?
+        return view('dashboard', ['users' => $users]); //->paginate(2);      
     }
 
     /**
@@ -27,18 +102,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-        // need to implement authorization logic here
-        if (auth()->user()->is_admin === false) {   //pseudocode! require middleware 'auth'
-            abort(Response::HTTP_FORBIDDEN);
-        }
+    // public function create()
+    // {
+    //     //
+    //     // need to implement authorization logic here
+    //     if (auth()->user()->is_admin === false) {   //pseudocode! require middleware 'auth'
+    //         abort(Response::HTTP_FORBIDDEN);
+    //     }
 
 
 
-        return view('users.create'); //route needs to be defined
-    }
+    //     return view('users.create'); //route needs to be defined
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -52,17 +127,24 @@ class UserController extends Controller
         //dd(request());
         $request["is_admin"] = $request["is_admin"] ? 1 : 0; //convert checkbox value to tinyint, 1 or 0
         $attributes = request()->validate([
-            'name' => ['required', 'min:5', 'max:255'],
-            'email' => ['required', 'max:255', 'email'],
-            'password' => ['required', 'min:7', 'max:255'],
+            'name' => ['required', 'string', 'min:5', 'max:255'],
+            'email' => ['required', 'max:255', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:7', 'max:255'], // 'confirmed' for user regis
             'is_admin' => ['required']
         ]);
 
         //dd('validation success'); //for debugging, to see if store method is called
-        User::create($attributes);
+        //User::create($attributes);
+        $user = User::create([
+            'name' => $attributes['name'],
+            'email' => $attributes['email'],
+            'password' => bcrypt($attributes['password']),
+            'is_admin' => $attributes['is_admin'] 
+        ]);
+
         session()->flash('success', 'User created successfully');
         //return redirect()->back(); //back() redirects to previous page
-        return redirect('/dashboard');
+        return redirect('dashboard'); //return redirect()->to('dashboard');
     }
 
     /**
@@ -74,6 +156,8 @@ class UserController extends Controller
     public function show($id)
     {
         //
+        $user = User::find($id);  // same as 'get()' ?
+        return view('dashboard', ['user' => $user]); //->paginate(2);      
     }
 
     /**
@@ -97,6 +181,10 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = User::find($id);
+        $user->update($request->all());
+        return $user;
+        // should nt this be $user->save(); ?
     }
 
     /**
@@ -108,5 +196,18 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        User::destroy($id);
+        session()->flash('success', 'User deleted');
+        //return redirect()->back(); //back() redirects to previous page
+        return redirect('dashboard'); 
+    }
+
+    public function search($email) // and/ or $name
+    {
+        //
+        return User::where('email', 'like', '%' . $email . '%')->get(); // '%' are regex placeholders, 
+        // for exact search, do
+        //return User::where('email', $email)->get();
+
     }
 }
