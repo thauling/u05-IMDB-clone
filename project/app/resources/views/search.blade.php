@@ -1,12 +1,15 @@
 @include('_head')
 
+
 <body class="bg-gray-800">
 
     <div class="container mx-auto px-2 py-4">
 
         <nav class="flex justify-between flex-col md:flex-row">
             
-            <h1 class="text-4xl font-bold text-blue-600">iMDB</h1>
+            <a href="/">
+                <h1 class="text-4xl font-bold text-blue-600">iMDB</h1>
+            </a>
 
             <div class="my-2">
                 <form action="/search/" method="get">
@@ -22,19 +25,18 @@
             </div>
         </nav>
 
-        <h1 class="text-3xl font-semibold text-white text-center mt-4">Top movies</h1>
+        <h1 class="text-3xl font-semibold text-white text-center mt-4">Result</h1>
  
         <?php 
         $random_first = rand(0, (count($movies) - 3));
         $movie_set = array_slice($movies->toArray(), $random_first, 3);
 
-        $collection = collect($movies);
         ?>
 
         <?php $i = 0; ?>
 
             @foreach ($movies as $movie)
-                @if ($movie->avg_rating >= 5)       
+                @if (Str::contains(strtolower($movie->title), $_GET['s']))       
                     <article class="max-w-fw mx-auto flex border max-h-64 my-5 bg-white rounded ">
                         
                         <div class="w-1/4 border mr-10">
@@ -71,22 +73,12 @@
                             </ul>
                         </div>
                     </article>
-
                 @endif
-                <?php if(++$i > 3) : ?> 
-                    @break
-                <?php endif; ?>
             @endforeach
 
 
     </div>
-
-
      
-
-    
-
-
 
 </body>
 </html>

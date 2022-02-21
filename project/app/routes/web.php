@@ -21,4 +21,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/contents-arr', [ContentsArrController::class, 'createContents']);
+Route::get('/search', function() {
+    return view('search', [
+        'movies' => Movie::all()
+    ]);
+});
