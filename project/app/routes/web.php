@@ -35,6 +35,7 @@ Route::post('login-user', [UserController::class, 'login']);
 
 
 
+<<<<<<< HEAD
 //Route::post('store-register', [UserController::class, 'register']);
 
 // Movie routes
@@ -88,3 +89,18 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 >>>>>>> 417ac88bdc3d144649a5671abc64f61e9b84a3a6
+=======
+Route::get('/userpage', function () {
+    return view('userpage');
+});
+
+Route::get('reviews', [ReviewController::class, 'index']);
+Route::post('store-review', [ReviewController::class, 'store']);
+Route::get('review/{id}', [ReviewController::class, 'show']);
+Route::get('reviews/create', [ReviewController::class, 'create']);
+
+//admin functionality
+Route::get('dashboard', [UserController::class, 'index']);
+Route::post('store-user', [UserController::class, 'store']);
+Route::post('store-movie', [MovieController::class, 'store']);
+>>>>>>> d454556f3f5ab73f3d43869dc1c73b6f5417c7ad
