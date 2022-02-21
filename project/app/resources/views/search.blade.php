@@ -33,10 +33,21 @@
 
         ?>
 
-        <?php $i = 0; ?>
+        <?php 
+        $i = 0; 
+        $actors = [];
+        ?>
+
 
             @foreach ($movies as $movie)
-                @if (Str::contains(strtolower($movie->title), $_GET['s']))       
+                @foreach ($movie->cast as $actor)
+                   <?php array_push($actors, strtolower($actor)) ?>
+                @endforeach
+
+                @if (Str::contains(strtolower($movie->title), $_GET['s']) || 
+                Str::contains(strtolower($movie->genre), $_GET['s']) ||
+                in_array($_GET['s'], $actors)
+                )  
                     <article class="max-w-fw mx-auto flex border max-h-64 my-5 bg-white rounded ">
                         
                         <div class="w-1/4 border mr-10">

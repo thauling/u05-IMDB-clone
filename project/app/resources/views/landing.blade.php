@@ -1,28 +1,39 @@
 @include('_head')
 
+<?php
+    session_start();
+    $_SESSION['id'] = 5;
+    $userID = $_SESSION['id'];
+?>
+
 <body class="bg-gray-800">
 
     <div class="container mx-auto px-2 py-4">
 
-        <nav class="flex justify-between flex-col md:flex-row">
+        <nav class="flex justify-between flex-col md:flex-row items-center">
             
             <h1 class="text-4xl font-bold text-blue-600">iMDB</h1>
 
             <div class="my-2">
                 <form action="/search/" method="get">
+                    @csrf
                     <input class="rounded py-2 px-2" type="text" placeholder="search" name="s">
                     
                     <button type="submit" class="bg-blue-500 text-white hover:bg-blue-400 font-bold py-2 px-4 rounded">search</button>
                 </form>
             </div>
-
+            
             <div class="my-2">
-                <button class="bg-blue-500 text-white hover:bg-blue-400 font-bold py-2 px-4 rounded">Profile</button>
-                
+            <?php if ($_SESSION['id'] !== null) : ?>
+                <a class="bg-blue-500 text-white hover:bg-blue-400 font-bold py-2 px-4 rounded" href="/user/{{ $userID }}">Profile</a>
             </div>
+            <?php else : ?>
+                <a href="/login" class="bg-blue-500 text-white hover:bg-blue-400 font-bold py-2 px-4 rounded">Login</a>
+            </div>
+            <?php endif; ?>
         </nav>
 
-        <h1 class="text-3xl font-semibold text-white text-center mt-4">Top movies</h1>
+        <h1 class="text-3xl font-semibold text-white text-center mt-4">Top 3 movies</h1>
  
         <?php 
         $random_first = rand(0, (count($movies) - 3));
