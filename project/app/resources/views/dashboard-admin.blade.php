@@ -17,7 +17,7 @@
     @unless (Auth::check())
     <h1>You are not signed in.</h1>
     @endunless
-    @if (Auth::check())
+
     <h1>Dashboard</h1>
     <!-- dashboard 
 - able to add new movies and information about movies in an ordered way.
@@ -262,7 +262,7 @@
     <h2>CRUD Single User Tracking (test)</h2>
     <p> {{ $user }}</p>
 
-    @endif
+   
 </body>
 
 </html>
