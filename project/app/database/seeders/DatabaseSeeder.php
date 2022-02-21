@@ -21,26 +21,6 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
 
-        Movie::create([
-            'title' => 'Lord of the Rings',
-            'genre' => 'fantasy',
-            'cast' => [
-                "Elijah Wood", 
-                "Orlando Bloom",
-                "Viggo Mortensen", 
-                "Cate Blanchett", 
-                "Liv Tyler" 
-            ],
-            'abstract' => 'Lorem ipsum dolor sit amet.',
-            'avg_rating' => 5.0,
-        ]);
-
-        Movie::create([
-            'title' => 'Cloud Atlas',
-            'genre' => 'drama',
-            'cast' => ["Tom Hanks"],
-            'abstract' => 'Lorem ipsum dolor sit amet.',
-            'avg_rating' => 3.2
-        ]);
+        Movie::factory(10)->create();
     }
 }
