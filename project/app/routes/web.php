@@ -4,8 +4,6 @@ use App\Http\Controllers\MoviesController;
 use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\MovieController;
-use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +16,7 @@ use App\Http\Controllers\ReviewController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// all requests that do not require authentication:
-
-
-
+/// Thomas
 //public: landing page, register, login
 Route::view('/home', 'home');
 Route::view('/register', 'register');
@@ -45,6 +36,7 @@ Route::post('login-user', [UserController::class, 'login']);
 // Movie routes
 Route::get('/movies/{movie}', [MoviesController::class, 'getMovie']);
 
+<<<<<<< HEAD
 // User routes
 Route::get('/userpage', function () {
     return view('userpage');
@@ -53,3 +45,34 @@ Route::get('/userpage', function () {
 Route::get('dashboard', [UserController::class, 'index']);
 Route::post('store-user', [UserController::class, 'store']);
 Route::post('store-movie', [MovieController::class, 'store']);
+=======
+// show stats
+Route::view('/datavis', 'datavis');
+
+// admin dashboard routes
+// show user details
+Route::get('dashboard-admin', [UserController::class, 'index']);
+Route::get('dashboard-admin/{id}', [UserController::class, 'show']); 
+
+// add a new user to the db
+Route::post('store-user', [UserController::class, 'store']);
+//update user details, e.g. role
+Route::put('dashboard-admin/{id}', [UserController::class, 'update']);
+//remove user
+Route::delete('dashboard-admin/{id}', [UserController::class, 'delete']);
+// search for a user by email
+Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
+// Thomas end
+
+
+// Breeze
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+>>>>>>> 417ac88bdc3d144649a5671abc64f61e9b84a3a6
