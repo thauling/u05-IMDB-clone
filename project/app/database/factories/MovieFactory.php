@@ -17,7 +17,10 @@ class MovieFactory extends Factory
     public function definition()
     {
         return [
+<<<<<<< HEAD
             //
+=======
+>>>>>>> 866b18aac92d5a7168d44ae6c76ebc906084976d
             'title' => $this->faker->sentence(),
             'genre' => $this->faker->sentence(),
             'cast' => json_encode(array($this->faker->name(), $this->faker->name(), $this->faker->name())),

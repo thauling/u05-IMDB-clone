@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 use App\Http\Controllers\MoviesController;
+=======
+use App\Http\Controllers\ContentsArrController;
+>>>>>>> 866b18aac92d5a7168d44ae6c76ebc906084976d
 use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -67,7 +71,15 @@ Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
 
 // Breeze
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing', [
+        'movies' => Movie::all()
+    ]);
+});
+
+Route::get('/search', function() {
+    return view('search', [
+        'movies' => Movie::all()
+    ]);
 });
 
 Route::get('/dashboard', function () {

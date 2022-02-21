@@ -10,14 +10,27 @@
         "production": "mix --production"
     },
     "devDependencies": {
+<<<<<<< HEAD
         "@tailwindcss/forms": "^0.4.0",
         "alpinejs": "^3.4.2",
+=======
+>>>>>>> 866b18aac92d5a7168d44ae6c76ebc906084976d
         "autoprefixer": "^10.4.2",
         "axios": "^0.25",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.4.6",
         "postcss-import": "^14.0.2",
+<<<<<<< HEAD
         "tailwindcss": "^3.0.18"
+=======
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.49.8",
+        "sass-loader": "^12.6.0",
+        "tailwindcss": "^3.0.23"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.0.0"
+>>>>>>> 866b18aac92d5a7168d44ae6c76ebc906084976d
     }
 }
