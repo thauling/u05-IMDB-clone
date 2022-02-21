@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\MovieController;
-use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,14 +13,7 @@ use App\Http\Controllers\ReviewController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// all requests that do not require authentication:
-
-
-
+/// Thomas
 //public: landing page, register, login
 Route::view('/home', 'home');
 Route::view('/register', 'register');
@@ -44,29 +34,29 @@ Route::post('login-user', [UserController::class, 'login']);
 // show stats
 Route::view('/datavis', 'datavis');
 
-//Route::post('store-movie', [MovieController::class, 'store']);
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    //protected: logout existing user
-    Route::post('/logout', [UserController::class, 'logout']);
+// admin dashboard routes
+// show user details
+Route::get('dashboard-admin', [UserController::class, 'index']);
+Route::get('dashboard-admin/{id}', [UserController::class, 'show']); 
+
+// add a new user to the db
+Route::post('store-user', [UserController::class, 'store']);
+//update user details, e.g. role
+Route::put('dashboard-admin/{id}', [UserController::class, 'update']);
+//remove user
+Route::delete('dashboard-admin/{id}', [UserController::class, 'delete']);
+// search for a user by email
+Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
+// Thomas end
 
 
-
-    //admin functionality (which of these should move to api.php ?)
-    Route::get('dashboard', [UserController::class, 'index']);
-    Route::get('dashboard/{id}', [UserController::class, 'show']); // how to set this up? 
-    Route::post('store-user', [UserController::class, 'store']);
-    //update user details, e.g. role
-    Route::put('dashboard/{id}', [UserController::class, 'update']);
-    //remove user
-    Route::delete('dashboard/{id}', [UserController::class, 'delete']);
-
-    Route::get('dashboard/{email}', [UserController::class, 'search']);
-
-
-    //for movies (not implemented)
-    Route::post('/movies', [MovieController::class, 'store']);
-    Route::put('/movies/{id}', [MovieController::class, 'update']);
-    Route::delete('/movies/{id}', [MovieController::class, 'destroy']);
-    //for users
-
+// Breeze
+Route::get('/', function () {
+    return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';

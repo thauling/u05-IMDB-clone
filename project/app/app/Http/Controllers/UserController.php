@@ -94,7 +94,7 @@ class UserController extends Controller
         // $users = User::paginate(5); 
         // $users = User::get();
         $users = User::all();  // same as 'get()' ?
-        return view('dashboard', ['users' => $users]); //->paginate(2);      
+        return view('dashboard-admin', ['users' => $users]); //->paginate(2);      
     }
 
     /**
@@ -144,7 +144,7 @@ class UserController extends Controller
 
         session()->flash('success', 'User created successfully');
         //return redirect()->back(); //back() redirects to previous page
-        return redirect('dashboard'); //return redirect()->to('dashboard');
+        return redirect('dashboard-admin'); //return redirect()->to('dashboard');
     }
 
     /**
@@ -157,7 +157,7 @@ class UserController extends Controller
     {
         //
         $user = User::find($id);  // same as 'get()' ?
-        return view('dashboard', ['user' => $user]); //->paginate(2);      
+        return view('dashboard-admin', ['user' => $user]); //->paginate(2);      
     }
 
     /**
@@ -199,7 +199,7 @@ class UserController extends Controller
         User::destroy($id);
         session()->flash('success', 'User deleted');
         //return redirect()->back(); //back() redirects to previous page
-        return redirect('dashboard'); 
+        return redirect('dashboard-admin'); 
     }
 
     public function search($email) // and/ or $name
