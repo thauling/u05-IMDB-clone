@@ -24,13 +24,16 @@ Route::get('/test', function () {
     return view('test');  
 });
 
-<<<<<<< HEAD
 Route::get('/userpage', function () {
     return view('userpage');
 });
-=======
+
+Route::get('reviews', [ReviewController::class, 'index']);
+Route::post('store-review', [ReviewController::class, 'store']);
+Route::get('review/{id}', [ReviewController::class, 'show']);
+Route::get('reviews/create', [ReviewController::class, 'create']);
+
 //admin functionality
 Route::get('dashboard', [UserController::class, 'index']);
 Route::post('store-user', [UserController::class, 'store']);
 Route::post('store-movie', [MovieController::class, 'store']);
->>>>>>> thomas
