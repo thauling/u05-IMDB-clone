@@ -21,6 +21,10 @@
 <input type="number" id="movie_id" name="movie_id">
 <button type="submit">Submit</button>
 </form>
-
+@if(session('status'))
+    <div >
+        {{ session('status') }}
+    </div>
+@endif
 </body>
 </html>

@@ -26,7 +26,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        return view('reviews.create');
+        return view('reviews/create');
     }
 
     /**
@@ -82,7 +82,12 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Get the review from database
+        $review = Review::find($id);
+
+        //show the form and get data from form
+        return view('reviews/edit')
+        ->with('review', $review);
     }
 
     /**
@@ -95,6 +100,12 @@ class ReviewController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $review = Review::find($id);
+        $review->review_content = $request->input('content');
+        $review->review_rating = $request->input('rating');
+        $review->movie_id = $request->input('movie_id');
+        $review->update();
+        return redirect()->back()->with('status','Review Updated Successfully');
     }
 
     /**
@@ -105,6 +116,10 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $review = Review::find($id);
+        $review->delete();
+        return redirect()->back()->with('status','Review Deleted Successfully');
+
+        
     }
 }

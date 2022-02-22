@@ -21,7 +21,13 @@
 <input type="number" id="movie_id" name="movie_id">
 <button type="submit">Submit</button>
 </form>
+@if(session('status'))
+    <div >
+        {{ session('status') }}
+    </div>
+@endif
 
+<br><br><br>
 
 
 
@@ -63,6 +69,9 @@
                                 </td>
                                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                     {{$review->movie_id}}
+                                </td>
+                                <td>
+                                    <a href="{{ url('edit-review/'.$review->id) }}">Edit</a>
                                 </td>
                             </tr>
                             @endforeach

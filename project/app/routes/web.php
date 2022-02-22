@@ -3,6 +3,7 @@
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ContentsArrController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReviewController;
 use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
@@ -76,12 +77,13 @@ Route::get('/search', function() {
         'movies' => Movie::all()
     ]);
 });
-// Movie CRUD
-// Route::get('reviews', [ReviewController::class, 'index']);
-// Route::post('store-review', [ReviewController::class, 'store']);
-// Route::get('review/{id}', [ReviewController::class, 'show']);
-// Route::get('reviews/create', [ReviewController::class, 'create']);
-// Movies end
+// Review CRUD
+Route::get('reviews', [ReviewController::class, 'index']);
+Route::post('store-review', [ReviewController::class, 'store']);
+Route::get('review/{id}', [ReviewController::class, 'show']);
+Route::get('edit-review/{id}', [ReviewController::class, 'edit']);
+Route::put('update-review/{id}', [ReviewController::class, 'update']);
+// Review end
 
 // Breeze start
 Route::get('/', function () {
