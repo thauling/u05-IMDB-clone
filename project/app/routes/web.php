@@ -36,20 +36,19 @@ Route::view('/datavis', 'datavis');
 
 // admin dashboard routes
 // show user details
-Route::get('dashboard-admin', [UserController::class, 'index']);
-Route::get('dashboard-admin/{id}', [UserController::class, 'show']); 
+//Route::get('dashboard-admin', [UserController::class, 'index']);
+// Route::get('dashboard-admin/{id}', [UserController::class, 'show']); 
 
-// User CRUD
-// add a new user to the db
-Route::post('store-user', [UserController::class, 'store']);
-//update user details, e.g. role
-Route::put('dashboard-admin/{id}', [UserController::class, 'update']);
-//remove user
-Route::delete('dashboard-admin/{id}', [UserController::class, 'delete']);
-// search for a user by email
-Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
+// // User CRUD
+// // add a new user to the db
+// Route::post('store-user', [UserController::class, 'store']);
+// //update user details, e.g. role
+// Route::put('dashboard-admin/{id}', [UserController::class, 'update']);
+// //remove user
+// Route::delete('dashboard-admin/{id}', [UserController::class, 'delete']);
+// // search for a user by email
+// Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
 // Thomas end
-
 
 // Landing page start
 Route::get('/', function () {
@@ -58,7 +57,6 @@ Route::get('/', function () {
     ]);
 });
 // Landing page end
-
 
 // start User page routes
 Route::get('/userpage', function () {

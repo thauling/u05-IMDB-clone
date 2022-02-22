@@ -17,8 +17,9 @@
     @unless (Auth::check())
     <h1>You are not signed in.</h1>
     @endunless
-
+    @if (Auth::check() && Auth::user()->is_admin)  <!-- '&& Auth::user()->is_admin' -->
     <h1>Dashboard</h1>
+    <span class="block text-gray-500 font-bold"> Hi admin {{Auth::user()->name}} ! </span>
     <!-- dashboard 
 - able to add new movies and information about movies in an ordered way.
 - ability to separate movies into different categories and provide additional metadata about each movie, 
@@ -37,30 +38,7 @@
     </section>
     <section class="flex">
         <h2>CRUD Movie Details</h2>
-        <!-- 
-    <form method="post" action="{{url('store-movie')}}">
-        @csrf
-        <label class="" for="title">Title</label>
-        <input type="text" name="title" required>
-
-        <label class="" for="abstract">Abstract</label>
-        <input type="text" name="abstract" required>
-
-        <label class="" for="cast">Cast</label>
-        <input type="text" name="cast" required>
-
-        <label class="" for="genre">Genre</label>
-        <input type="text" name="genre" required>
-
-        <label class="" for="urls_images">Image URLs</label>
-        <input type="text" name="urls_images" required>
-
-        <label class="" for="url_trailer">Trailer URL</label>
-        <input type="text" name="url_trailer" required>
-        <button type="submit" class="btn btn-primary">Save</button> 
-    </form>
-     -->
-
+     
         <form class="w-full max-w-sm" method="post" action="{{url('store-movie')}}">
             @csrf
             <div class="md:flex md:items-center mb-6">
@@ -134,25 +112,6 @@
         </form>
 
         <h2>CRUD User Details and Permissions</h2>
-        <!--
-    <form method="post" action="{{url('store-user')}}">
-       
-        @csrf
-        <label class="" for="name">Name</label>
-        <input type="text" name="name" required>
-
-        <label class="" for="email">Email</label>
-        <input type="text" name="email" required>
-
-        <label class="" for="password">Password</label>
-        <input type="text" name="password" required>
-
-        <label class="" for="is_admin">Is admin</label>
-        <input type="checkbox" name="is_admin" value="yes">
-
-        <button type="submit" class="btn btn-primary">Save</button> 
-    </form>
--->
 
         <form class="w-full max-w-sm" method="post" action="{{url('store-user')}}">
             @csrf
@@ -261,8 +220,9 @@
 
     <h2>CRUD Single User Tracking (test)</h2>
     <p> {{ $user }}</p>
-
-   
+    @else
+    <h1>Sorry mate, you must me an ADMIN to view this.</h1>
+   @endif
 </body>
 
 </html>
