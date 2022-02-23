@@ -17,6 +17,19 @@
                     </x-nav-link>
                 </div>
             </div>
+            
+            <!-- fudged extra LOGOUT link becuse dropdown doesnt work -->
+            <div class="mt-3 space-y-1">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </x-responsive-nav-link>
+                </form>
+            </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">

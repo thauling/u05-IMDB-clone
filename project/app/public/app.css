@@ -86,3 +86,88 @@ main {
 .bold-paragraph {
   font-weight: 500;
 }
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: sans-serif;
+}
+body {
+    background-color: #fcf6f5ff;
+}
+h1 {
+    width: 100%;
+    background-color: #990011ff;
+    color: #fcf6f5ff;
+    padding: 1vh 0 1vh 0;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 5px 5px 5px gray;
+}
+
+.bio {
+    background-color: rgb(238, 207, 207);
+    width: 50%;
+    justify-content: center;
+    margin: 5vw 0 5rem 0;
+    font-size: 1.5rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px gray;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    align-content: space-around;
+    justify-content: center;
+    gap: 5rem;
+}
+
+.container_2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.options {
+    width: 80%;
+    background-color: #990011ff;
+    margin: 1vw;
+    border-radius: 8px;
+    border: black 1px solid;
+    color: #fcf6f5ff;
+    height: 10vh;
+    box-shadow: 1px 1px 5px gray;
+}
+
+.options:hover {
+    background-color: rgb(109, 2, 14);
+}
+
+.footer {
+    background-color: black;
+    color: #fcf6f5ff;
+    margin-top: 5rem;
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        flex-flow: column nowrap;
+        gap: 1rem;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .bio {
+        width: 80%;
+    }
+}
