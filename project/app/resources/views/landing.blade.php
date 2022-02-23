@@ -23,14 +23,19 @@
                 </form>
             </div>
             
-            <div class="my-2">
-            <?php if ($_SESSION['id'] !== null) : ?>
-                <a class="bg-blue-500 text-white hover:bg-blue-400 font-bold py-2 px-4 rounded" href="/user/{{ $userID }}">Profile</a>
-            </div>
-            <?php else : ?>
-                <a href="/login" class="bg-blue-500 text-white hover:bg-blue-400 font-bold py-2 px-4 rounded">Login</a>
-            </div>
-            <?php endif; ?>
+            @if (Route::has('login'))
+                <div class="hidden top-0 right-0 px-6 py-4 sm:block">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Log in</a>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Register</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
         </nav>
 
         <h1 class="text-3xl font-semibold text-white text-center mt-4">Top 3 movies</h1>
@@ -50,8 +55,8 @@
                         
                         <div class="w-1/4 border mr-10">
                             <a href="/movie/{{ $movie->id }}">
-                        @if ($movie->urls_images)
-                            <img src=" {{ $movie->urls_images[0] }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
+                        @if (json_decode($movie->urls_images))
+                            <img src=" {{ json_decode($movie->urls_images)[0] }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
                         @else
                             NO IMG
                         @endif
@@ -76,7 +81,7 @@
                         <div class="ml-10 pt-10">
                             <h3 class="font-bold">Cast</h3>
                             <ul class="text-sm sm:text-base">
-                            @foreach($movie->cast as $actor)
+                            @foreach(json_decode($movie->cast) as $actor)
                                 <li>{{ $actor }}</li>
                             @endforeach
                             </ul>
