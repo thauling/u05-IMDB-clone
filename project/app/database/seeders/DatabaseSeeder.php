@@ -2,13 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Movie;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Movie;
 use App\Models\Review;
@@ -58,8 +54,7 @@ class DatabaseSeeder extends Seeder
                 return "https://www.youtube.com/embed/$trailerId"; // Return embed url
             } else {
                 return "";
-            }
-            
+            } 
         }
 
         // Loop through API response
@@ -80,6 +75,5 @@ class DatabaseSeeder extends Seeder
                 'released' => (int)substr($movie->release_date, 0, 4)
             ]);
         }
-
     }
 }

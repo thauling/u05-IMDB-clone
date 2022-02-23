@@ -86,24 +86,24 @@ main {
 .bold-paragraph {
   font-weight: 500;
 }
-* {
+/* * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     text-align: center;
     font-family: sans-serif;
-}
+} */
 body {
     background-color: #fcf6f5ff;
 }
-h1 {
+.user-h1 {
     width: 100%;
     background-color: #990011ff;
     color: #fcf6f5ff;
     padding: 1vh 0 1vh 0;
 }
 
-img {
+.user-avatar {
     width: 200px;
     height: 200px;
     border-radius: 50%;

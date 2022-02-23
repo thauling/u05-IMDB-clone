@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\MoviesController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ContentsArrController;
 use App\Http\Controllers\UserController;
 use App\Models\Movie;
@@ -77,10 +77,10 @@ Route::get('/search', function() {
     ]);
 });
 // UPDATE ALL OF THESE TO CORRECT CONTROLLER AND MOVE MOVIESCONRTROLLER CONTENT INTO CORRECT CONTROLLER
-Route::get('/movies/{movie}', [MoviesController::class, 'getMovie']);
-Route::post('/movies/new/create', [MoviesController::class, 'postMovie']);
-Route::delete('/movies/{movie}/delete', [MoviesController::class, 'deleteMovie']);
-Route::patch('/movies/{movie}/edit', [MoviesController::class, 'editMovie']);
+Route::get('/movies/{movie}', [MovieController::class, 'getMovie']);
+Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
+Route::delete('/movies/{movie}/delete', [MovieController::class, 'deleteMovie']);
+Route::patch('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
 
 // Movie CRUD
 // Route::get('reviews', [ReviewController::class, 'index']);
