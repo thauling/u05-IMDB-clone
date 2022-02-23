@@ -70,12 +70,18 @@ Route::get('/userpage', function () {
 
 
 // Movie routes
-Route::get('/movies/{movie}', [MoviesController::class, 'getMovie']);
+Route::view('/movies/new', 'new-movie');
 Route::get('/search', function() {
     return view('search', [
         'movies' => Movie::all()
     ]);
 });
+// UPDATE ALL OF THESE TO CORRECT CONTROLLER AND MOVE MOVIESCONRTROLLER CONTENT INTO CORRECT CONTROLLER
+Route::get('/movies/{movie}', [MoviesController::class, 'getMovie']);
+Route::post('/movies/new/create', [MoviesController::class, 'postMovie']);
+Route::delete('/movies/{movie}/delete', [MoviesController::class, 'deleteMovie']);
+Route::patch('/movies/{movie}/edit', [MoviesController::class, 'editMovie']);
+
 // Movie CRUD
 // Route::get('reviews', [ReviewController::class, 'index']);
 // Route::post('store-review', [ReviewController::class, 'store']);
