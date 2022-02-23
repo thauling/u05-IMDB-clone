@@ -53,7 +53,7 @@ Route::view('/datavis', 'datavis');
 // Landing page start
 Route::get('/', function () {
     return view('landing', [
-        'movies' => Movie::all()
+        'movies' => Movie::orderBy('avg_rating', 'desc')->get()
     ]);
 });
 // Landing page end
