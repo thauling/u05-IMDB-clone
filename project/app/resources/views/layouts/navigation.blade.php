@@ -18,7 +18,7 @@
                 </div>
             </div>
             
-            <!-- fudged extra LOGOUT link becuse dropdown doesnt work -->
+            <!-- fudged extra LOGOUT link because dropdown doesnt work -->
             <div class="mt-3 space-y-1">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

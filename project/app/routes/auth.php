@@ -37,17 +37,22 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     //Thomas
+    Route::view('edit-user', 'admin.edit-user'); 
+    // show auth user stats
+    Route::view('/datavis', 'datavis');
     // need extra 'is_admin check'  
-    Route::get('dashboard-admin', [UserController::class, 'index']);
+    Route::get('dashboard-admin', [UserController::class, 'index']); // redirected to from UserController methods, no direct access implemented
     // User CRUD
     // add a new user to the db
-    Route::post('store-user', [UserController::class, 'store']);
-    //update user details, e.g. role
-    Route::put('dashboard-admin/{id}', [UserController::class, 'update']);
+    Route::post('store-user', [UserController::class, 'store']); //called by admin-main create user/ admin form
+    //edit, search and update user details, e.g. role
+    Route::post('edit-user/{id}', [UserController::class, 'edit']); //called by admin-main search form
+    Route::get('search-user', [UserController::class, 'search']); //called by admin-main search form
+    Route::put('update-user/{id}', [UserController::class, 'update']); //called by admin-edit form
     //remove user
-    Route::delete('dashboard-admin/{id}', [UserController::class, 'delete']);
-    // search for a user by email
-    Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
+    Route::delete('destroy-user/{id}', [UserController::class, 'destroy']);
+    // // search for a user by email
+    // Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
     //Thomas end
 
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])

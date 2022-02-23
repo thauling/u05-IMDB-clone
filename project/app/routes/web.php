@@ -31,24 +31,8 @@ Route::post('/register-user', [UserController::class, 'register']);
 //login existing user
 Route::post('login-user', [UserController::class, 'login']);
 
-// show stats
-Route::view('/datavis', 'datavis');
-
-// admin dashboard routes
-// show user details
-//Route::get('dashboard-admin', [UserController::class, 'index']);
-// Route::get('dashboard-admin/{id}', [UserController::class, 'show']); 
-
-// // User CRUD
-// // add a new user to the db
-// Route::post('store-user', [UserController::class, 'store']);
-// //update user details, e.g. role
-// Route::put('dashboard-admin/{id}', [UserController::class, 'update']);
-// //remove user
-// Route::delete('dashboard-admin/{id}', [UserController::class, 'delete']);
-// // search for a user by email
-// Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
-// Thomas end
+// // show admin stats
+// Route::view('/datavis', 'datavis');
 
 // Landing page start
 Route::get('/', function () {
@@ -70,6 +54,7 @@ Route::get('/userpage', function () {
 
 
 // Movie routes
+Route::get('/movie', [MoviesController::class, 'getMovie']);
 Route::get('/movies/{movie}', [MoviesController::class, 'getMovie']);
 Route::get('/search', function() {
     return view('search', [

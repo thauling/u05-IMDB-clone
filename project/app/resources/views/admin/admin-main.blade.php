@@ -1,3 +1,6 @@
+<?php
+$rownumber = 0;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +20,8 @@
     @unless (Auth::check())
     <h1>You are not signed in.</h1>
     @endunless
-    @if (Auth::check() && Auth::user()->is_admin)  <!-- '&& Auth::user()->is_admin' -->
+    @if (Auth::check() && Auth::user()->is_admin)
+    <!-- '&& Auth::user()->is_admin' -->
     <h1>Dashboard</h1>
     <span class="block text-gray-500 font-bold"> Hi admin {{Auth::user()->name}} ! </span>
     <!-- dashboard 
@@ -28,17 +32,9 @@
 - able to grant and remove roles to different users, granting them access to specific functionality as either 
     an admin or restricting them to a regular user.
 -->
-    <section class="message">
-        @if (session()->has('success'))
-        <section x-data="{ show: true}" x-init="setTimeout(() => show = false, 4000)" x-show="show">
-            <!-- need to import alpine for this to work -->
-            <p>{{ session()->get('success') }}</p>
-        </section>
-        @endif
-    </section>
     <section class="flex">
         <h2>CRUD Movie Details</h2>
-     
+
         <form class="w-full max-w-sm" method="post" action="{{url('store-movie')}}">
             @csrf
             <div class="md:flex md:items-center mb-6">
@@ -112,7 +108,7 @@
         </form>
 
         <h2>CRUD User Details and Permissions</h2>
-
+        <!-- Search for user and update details -->
         <form class="w-full max-w-sm" method="post" action="{{url('store-user')}}">
             @csrf
             <div class="md:flex md:items-center mb-6">
@@ -153,65 +149,105 @@
                 </label>
             </div>
             <div class="md:flex md:items-center">
-                <div class="md:w-1/3"></div>
                 <div class="md:w-2/3">
-                    <button class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
-                        Save
+                    <button class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" name="register" type="submit">
+                        Register
                     </button>
                 </div>
+
             </div>
         </form>
     </section>
 
-    <h2>CRUD User Tracking</h2>
-    <!-- table and/ or chart on user stats -->
-    @if ($users->count())
-    <p>
+    <!-- Display a CRUD action message -->
+    <section class="bg-red-500">
+        <!-- class ="message"-->
+        @if (session()->has('success'))
+        <section x-data="{ show: true}" x-init="setTimeout(() => show = false, 4000)" x-show="show">
+            <!-- need to import alpine for this to work -->
+            <p>{{ session()->get('success') }}</p>
+        </section>
+        @endif
+    </section>
+
+    <section>
+        <h2>CRUD User Tracking</h2>
+        <!-- table and/ or chart on user stats -->
+        @if ($users->count())
         <!-- "$users->links" to be used with paginate-->
-    <div class="flex flex-col">
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="overflow-hidden">
-                    <table class="min-w-full">
-                        <thead class="bg-gray-100 border-b">
-                            <tr>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    #
-                                </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Name
-                                </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Email
-                                </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full">
+                            <thead class="bg-gray-100 border-b">
+                                <tr>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        #
+                                    </th>
+                                    <!-- <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Id
+                                </th> -->
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        Name
+                                    </th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        Email
+                                    </th>
+                                    <!-- <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                     Password
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- fix pagination -->
-                            @foreach ($users as $user)
-                            <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    {{$user->name}}
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    {{$user->email}}
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                </th> -->
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- fix pagination -->
+                                @foreach ($users as $user)
+                                <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        {{++$rownumber}}
+                                    </td>
+                                    <!-- <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    {{$user->id}}
+                                </td> -->
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{$user->name}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{$user->email}}
+                                    </td>
+                                    <!-- <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                     {{$user->password}}
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                </td> -->
+
+                                    <td class="flex flex-col">
+                                        <form method="post" action="{{url('edit-user',$user->id)}}">
+                                            <!-- "flex justify-start content-start" -->
+                                            @csrf
+
+                                            <div class="md:w-1/6">
+                                                <button class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" type="submit">Edit</button>
+                                            </div>
+                                        </form>
+                                        <form method="post" action="{{url('destroy-user',$user->id)}}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="md:w-1/6">
+                                                <button class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" type="submit">Delete</button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    </p>
+    </section>
     @else
     <p>
         No users found.
@@ -222,7 +258,7 @@
     <p> {{ $user }}</p>
     @else
     <h1>Sorry mate, you must me an ADMIN to view this.</h1>
-   @endif
+    @endif
 </body>
 
 </html>
