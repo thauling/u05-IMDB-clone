@@ -20,6 +20,7 @@ class ReviewFactory extends Factory
     {
         return [
             //
+            'title'=>$this->faker->sentence(),
             'review_content' => $this->faker->paragraph(),
             'review_rating' => $this->faker->numberBetween(1,5),
             'user_id' => $this->faker->numberBetween(1, User::count()),//1,

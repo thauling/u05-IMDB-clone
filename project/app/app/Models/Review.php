@@ -9,7 +9,7 @@ class Review extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['content', 'rating', 'user_id', 'movie_id']; //could also use protected $fillable = ['prob1', 'prob2', 'etc'];
+    protected $guarded = []; //could also use protected $fillable = ['prob1', 'prob2', 'etc'];
 
     // define relationship of this model/ table with User and Movie
     public function user()
