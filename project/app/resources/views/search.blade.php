@@ -40,20 +40,31 @@
 
 
             @foreach ($movies as $movie)
-                @foreach ($movie->cast as $actor)
-                   <?php array_push($actors, strtolower($actor)) ?>
+
+            <?php 
+            $imgsToArray = json_decode($movie->urls_images); 
+                
+            $imgPath = "https://image.tmdb.org/t/p/w1280$imgsToArray[0]";
+            ?>
+
+                @foreach (json_decode($movie->cast) as $actor)
+                   
+                    @if (Str::contains(strtolower($actor), strtolower($_GET['s'])))
+                        <?php
+                        array_push($actors, $actor);
+                        ?>
+                    @endif
+                   
                 @endforeach
 
-                @if (Str::contains(strtolower($movie->title), $_GET['s']) || 
-                Str::contains(strtolower($movie->genre), $_GET['s']) ||
-                in_array($_GET['s'], $actors)
-                )  
+                @if (Str::contains(strtolower($movie->title), strtolower($_GET['s'])) || 
+                Str::contains(strtolower($movie->genre), strtolower($_GET['s'])) || !empty($actors))  
                     <article class="max-w-fw mx-auto flex border max-h-64 my-5 bg-white rounded ">
                         
                         <div class="w-1/4 border mr-10">
                             <a href="/movie/{{ $movie->id }}">
                         @if ($movie->urls_images)
-                            <img src=" {{ $movie->urls_images[0] }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
+                            <img src=" {{ $imgPath }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
                         @else
                             NO IMG
                         @endif
@@ -70,24 +81,22 @@
                             <p class="block">
                             {{ $movie->genre }}
                             </p>
-                            
-                            
-        
                         </div>
 
                         <div class="ml-10 pt-10">
                             <h3 class="font-bold">Cast</h3>
                             <ul class="text-sm sm:text-base">
-                            @foreach($movie->cast as $actor)
+                            @foreach(json_decode($movie->cast) as $actor)
                                 <li>{{ $actor }}</li>
                             @endforeach
                             </ul>
                         </div>
                     </article>
                 @endif
+                <?php
+                $actors = [];
+                ?>
             @endforeach
-
-
     </div>
      
 

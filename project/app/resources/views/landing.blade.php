@@ -10,7 +10,7 @@
 
     <div class="container mx-auto px-2 py-4">
 
-        <nav class="flex justify-between flex-col md:flex-row items-center">
+        <nav class="flex justify-between  md:flex-row items-center">
             
             <h1 class="text-4xl font-bold text-blue-600">iMDB</h1>
 
@@ -24,11 +24,19 @@
             </div>
             
             @if (Route::has('login'))
-                <div class="hidden top-0 right-0 px-6 py-4 sm:block">
+                <div class="flex gap-x-2">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Dashboard</a>
+                        <div>
+                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">{{ Auth::user()->name }}</a>
+                        </div>
+
+                        <form action="{{ route('logout') }}" method="POST">
+                            <a href="{{ route('logout') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline" onclick="this.closest('form').submit(); event.preventDefault();">Logout</a>
+                        </form>
+
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Log in</a>
+                        
+                        <a href="/login" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Log in</a>
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Register</a>
