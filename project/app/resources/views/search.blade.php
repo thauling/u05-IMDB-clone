@@ -1,41 +1,56 @@
 @include('_head')
 
+<?php
+    $logo = asset('assets/images/imdb_logo.png');
+?>
 
-<body class="bg-gray-800">
+
+<body class="bg-gray-300">
 
     <div class="container mx-auto px-2 py-4">
 
-        <nav class="flex justify-between flex-col md:flex-row">
+        <nav class="flex justify-between  md:flex-row items-center">
             
             <a href="/">
-                <h1 class="text-4xl font-bold text-blue-600">iMDB</h1>
+                <img src="{{ $logo }}" alt="IMDb" width="80px">
             </a>
 
             <div class="my-2">
                 <form action="/search/" method="get">
                     @csrf
-                    <input class="rounded py-2 px-2" type="text" placeholder="search" name="s">
+                    <input class="rounded border border-solid border-gray-400 py-2 px-2" type="text" placeholder="search" name="s">
                     
-                    <button type="submit" class="bg-blue-500 text-white hover:bg-blue-400 font-bold py-2 px-4 rounded">search</button>
+                    <button type="submit" class="bg-gray-500 text-white border border-gray-600 hover:bg-blue-300 font-bold py-2 px-4 rounded">search</button>
                 </form>
             </div>
 
-            <div class="my-2">
-                <button class="bg-blue-500 text-white hover:bg-blue-400 font-bold py-2 px-4 rounded">Profile</button>
-                
-            </div>
+            @if (Route::has('login'))
+                <div class="flex gap-x-2">
+                    @auth
+                        <div>
+                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">{{ Auth::user()->name }}</a>
+                        </div>
+
+                        <form action="/logout" method="POST">
+                            @csrf
+                            <a href="/logout" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline" onclick="this.closest('form').submit(); event.preventDefault();">Logout</a>
+                        </form>
+
+                    @else
+                        
+                        <a href="/login" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Log in</a>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Register</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
         </nav>
 
-        <h1 class="text-3xl font-semibold text-white text-center mt-4">Result</h1>
- 
-        <?php 
-        $random_first = rand(0, (count($movies) - 3));
-        $movie_set = array_slice($movies->toArray(), $random_first, 3);
-
-        ?>
+        <h1 class="text-3xl font-semibold text-gray-900 text-center mt-4">Result</h1>
 
         <?php 
-        $i = 0; 
         $actors = [];
         ?>
 

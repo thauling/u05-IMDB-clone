@@ -1,25 +1,23 @@
 @include('_head')
 
 <?php
-    session_start();
-    $_SESSION['id'] = 5;
-    $userID = $_SESSION['id'];
+    $logo = asset('assets/images/imdb_logo.png');
 ?>
 
-<body class="bg-gray-800">
+<body class="bg-gray-300">
 
     <div class="container mx-auto px-2 py-4">
 
         <nav class="flex justify-between  md:flex-row items-center">
             
-            <h1 class="text-4xl font-bold text-blue-600">iMDB</h1>
+            <img src="{{ $logo }}" alt="IMDb" width="80px">
 
             <div class="my-2">
                 <form action="/search/" method="get">
                     @csrf
-                    <input class="rounded py-2 px-2" type="text" placeholder="search" name="s">
+                    <input class="rounded border border-solid border-gray-400 py-2 px-2" type="text" placeholder="search" name="s">
                     
-                    <button type="submit" class="bg-blue-500 text-white hover:bg-blue-400 font-bold py-2 px-4 rounded">search</button>
+                    <button type="submit" class="bg-gray-500 text-white border border-gray-600 hover:bg-blue-300 font-bold py-2 px-4 rounded">search</button>
                 </form>
             </div>
             
@@ -47,14 +45,7 @@
             @endif
         </nav>
 
-        <h1 class="text-3xl font-semibold text-white text-center mt-4">Top 3 movies</h1>
- 
-        <?php 
-        $random_first = rand(0, (count($movies) - 3));
-        $movie_set = array_slice($movies->toArray(), $random_first, 3);
-
-        $collection = collect($movies);
-        ?>
+        <h1 class="text-3xl font-semibold text-gray-900 text-center mt-4">Top 3 movies</h1>
 
         <?php $i = 0; ?>
 
@@ -66,10 +57,10 @@
             $imgPath = "https://image.tmdb.org/t/p/w1280$imgsToArray[0]";
             ?>
                    
-                    <article class="max-w-fw mx-auto flex border max-h-64 my-5 bg-white rounded ">
+                    <article class="max-w-fw mx-auto flex border border-solid border-gray-400 max-h-64 my-5 bg-white rounded ">
                         
                         <div class="w-1/4 border mr-10">
-                            <a href="/movie/{{ $movie->id }}">
+                            <a href="/movies/{{ $movie->id }}">
                         @if ($imgsToArray)
                             <img src=" {{ $imgPath }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
                         @else
@@ -79,7 +70,7 @@
                         </div>
 
                         <div class="py-10">
-                            <a href="/movie/{{ $movie->id }}" class="hover:text-red-700">
+                            <a href="/movies/{{ $movie->id }}" class="hover:text-red-700">
                                 <h2 class="text-lg font-bold block">
                                     {{ $movie->title }}
                                 </h2>
