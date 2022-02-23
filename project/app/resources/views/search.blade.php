@@ -13,6 +13,7 @@
 
             <div class="my-2">
                 <form action="/search/" method="get">
+                    @csrf
                     <input class="rounded py-2 px-2" type="text" placeholder="search" name="s">
                     
                     <button type="submit" class="bg-blue-500 text-white hover:bg-blue-400 font-bold py-2 px-4 rounded">search</button>

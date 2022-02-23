@@ -30,8 +30,9 @@
                         <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">{{ Auth::user()->name }}</a>
                         </div>
 
-                        <form action="{{ route('logout') }}" method="POST">
-                            <a href="{{ route('logout') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline" onclick="this.closest('form').submit(); event.preventDefault();">Logout</a>
+                        <form action="/logout" method="POST">
+                            @csrf
+                            <a href="/logout" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline" onclick="this.closest('form').submit(); event.preventDefault();">Logout</a>
                         </form>
 
                     @else
