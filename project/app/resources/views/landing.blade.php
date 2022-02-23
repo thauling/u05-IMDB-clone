@@ -45,13 +45,19 @@
         <?php $i = 0; ?>
 
             @foreach ($movies as $movie)
+
+            <?php 
+                $imgsToArray = json_decode($movie->urls_images); 
+  
+                $imgPath = "https://image.tmdb.org/t/p/w1280$imgsToArray[0]";
+            ?>
                 @if ($movie->avg_rating >= 5)       
                     <article class="max-w-fw mx-auto flex border max-h-64 my-5 bg-white rounded ">
                         
                         <div class="w-1/4 border mr-10">
                             <a href="/movie/{{ $movie->id }}">
                         @if ($movie->urls_images)
-                            <img src=" {{ $movie->urls_images[0] }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
+                            <img src=" {{ $imgPath }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
                         @else
                             NO IMG
                         @endif
@@ -76,7 +82,7 @@
                         <div class="ml-10 pt-10">
                             <h3 class="font-bold">Cast</h3>
                             <ul class="text-sm sm:text-base">
-                            @foreach($movie->cast as $actor)
+                            @foreach (json_decode($movie->cast) as $actor)
                                 <li>{{ $actor }}</li>
                             @endforeach
                             </ul>
