@@ -88,9 +88,11 @@ Route::get('/search', function() {
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/', function () {
+    return view('landing', [
+        'movies' => Movie::orderBy('avg_rating', 'desc')->get()
+    ]);
+})->middleware(['auth'])->name('landing');
 
 require __DIR__.'/auth.php';
 
