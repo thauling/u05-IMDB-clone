@@ -14,11 +14,12 @@ class Review extends Model
     // define relationship of this model/ table with User and Movie
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function movie()
     {
         return $this->belongsTo(Movie::class);
-    }
+
+}
 }

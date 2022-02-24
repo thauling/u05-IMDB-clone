@@ -83,6 +83,9 @@ Route::post('store-review', [ReviewController::class, 'store']);
 Route::get('review/{id}', [ReviewController::class, 'show']);
 Route::get('edit-review/{id}', [ReviewController::class, 'edit']);
 Route::put('update-review/{id}', [ReviewController::class, 'update']);
+Route::get('reviews/create', function(){
+    return view('reviews/create');
+});
 // Review end
 
 // Breeze start

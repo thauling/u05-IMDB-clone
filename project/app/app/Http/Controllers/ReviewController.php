@@ -14,9 +14,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-    $users =DB::table('users')->get()->toArray();
-     $reviews = DB::table('reviews')->get()->toArray();
-     return view('reviews/reviews', ['reviews'=> $reviews, 'users'=> $users]);
+     $reviews = Review::get();
+     return view('reviews/reviews', ['reviews'=> $reviews]);
     
     }
 

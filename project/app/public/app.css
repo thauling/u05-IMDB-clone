@@ -103,13 +103,13 @@ h1 {
     padding: 1vh 0 1vh 0;
 }
 
-img {
+/* img {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 5px 5px 5px gray;
-}
+} */
 
 .bio {
     background-color: rgb(238, 207, 207);
@@ -171,3 +171,4 @@ img {
         width: 80%;
     }
 }
+
