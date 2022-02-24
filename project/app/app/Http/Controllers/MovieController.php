@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -11,8 +12,30 @@ class MovieController extends Controller
     public function getAllMovies()
     {
         $movies = Movie::all();
+
+        $alteredMovies = [];
+
+        foreach ($movies as $movie) {
+            $imgsToArray = json_decode($movie->urls_images); 
+
+            $alteredMovie = [
+                'id' => $movie->id,
+                'title' => $movie->title,
+                'genre' => $movie->genre,
+                'cast' => json_decode($movie->cast),
+                'abstract' => $movie->abstract,
+                'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
+                'url_trailer' => $movie->url_trailer,
+                'avg_rating' => $movie->avg_rating,
+                'released' => $movie->released
+            ];
+
+            array_push($alteredMovies, $alteredMovie);
+        }
         
-        return $movies;
+        return view('landing', [
+            'movies' => $alteredMovies
+        ]);
     }
 
     public function getMovie($id)
@@ -22,6 +45,7 @@ class MovieController extends Controller
         $imgsToArray = json_decode($movie->urls_images); 
 
         $alteredMovie = [
+            'id' => $movie->id,
             'title' => $movie->title,
             'genre' => $movie->genre,
             'cast' => json_decode($movie->cast),
@@ -33,9 +57,29 @@ class MovieController extends Controller
         ];
 
         $reviews = Review::where('movie_id', $id)->get()->toArray();
+        $alteredReviews = [];
+
+        foreach ($reviews as $review) {
+
+            $user = User::find($review['user_id']);
+
+            $alteredReview = [
+                "id" => $review['id'],
+                "review_content" => $review['review_content'],
+                "review_rating" => $review['review_rating'],
+                "user_id" => $review['user_id'],
+                "user_name" => $user['name'],
+                "movie_id" => $review['movie_id'],
+                "created_at" => $review['created_at'],
+                "updated_at" => $review['updated_at']
+            ];
+
+            array_push($alteredReviews, $alteredReview);
+        }
+
         return view('movie', [
             'movie' => $alteredMovie,
-            'reviews' => $reviews
+            'reviews' => $alteredReviews
         ]);
     }
 
