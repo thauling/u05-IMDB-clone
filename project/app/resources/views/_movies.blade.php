@@ -2,6 +2,10 @@
                         
                         <div class="w-1/4 border mr-10">
                             <a href="/movies/{{ $movie->id }}">
+                        @if (isset($result))
+                            $movie = $result
+                        @endif
+                        
                         @if ($movie->urls_images)
                             <img src=" {{ $imgPath }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
                         @else

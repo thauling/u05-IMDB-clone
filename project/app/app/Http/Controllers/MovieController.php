@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movie;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -80,5 +81,14 @@ class MovieController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request) // and/ or $name
+    {
+        
+        $query = $request->input('s');
+        $results = Movie::where('title', 'like', '%' . $query . '%')->orWhere('cast', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
+
+        return view('landing', ['results' => $results]);
     }
 }

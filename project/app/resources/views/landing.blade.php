@@ -1,13 +1,23 @@
 @include('_head')
 
 @include('_nav')
-
         <h1 class="text-3xl font-semibold text-gray-900 text-center mt-4">Top 3 movies</h1>
-
         <?php $i = 0; ?>
 
-            @foreach ($movies as $movie)
+            
+            @if(str_contains(url()->current(), '/search-movie'))
+                {{ $results->title }}
 
+               <?php
+                $movies = $results->attributes;
+
+                print_r($movies);
+               ?> 
+            @endif
+           
+                
+            @foreach ($movies as $movie)
+            
             <?php 
             $imgsToArray = json_decode($movie->urls_images); 
                 
@@ -20,6 +30,9 @@
                     @break
                 <?php endif; ?>
             @endforeach
+
     </div>
+
+
 </body>
 </html>
