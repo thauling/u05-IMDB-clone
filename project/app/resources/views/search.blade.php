@@ -1,56 +1,6 @@
 @include('_head')
 
-<?php
-    $logo = asset('assets/images/imdb_logo.png');
-?>
-
-
-<body class="bg-gray-300">
-
-    <div class="container mx-auto px-2 py-4">
-
-        <nav class="flex justify-between  md:flex-row items-center">
-            
-            <a href="/">
-                <img src="{{ $logo }}" alt="IMDb" width="80px">
-            </a>
-
-            <div class="my-2">
-                <form class="flex gap-x-1" action="/search/" method="get">
-                    @csrf
-                    <input class="rounded border border-solid border-gray-400 py-2 px-2" type="text" placeholder="search" name="s">
-                    
-                    <button type="submit" class="bg-gray-500 text-white border border-gray-600 hover:bg-blue-300 font-bold py-2 px-4 rounded">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-5 m-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </button>
-                </form>
-            </div>
-
-            @if (Route::has('login'))
-                <div class="flex gap-x-2">
-                    @auth
-                        <div>
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">{{ Auth::user()->name }}</a>
-                        </div>
-
-                        <form action="/logout" method="POST">
-                            @csrf
-                            <a href="/logout" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline" onclick="this.closest('form').submit(); event.preventDefault();">Logout</a>
-                        </form>
-
-                    @else
-                        
-                        <a href="/login" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-        </nav>
+@include('_nav')
 
         <h1 class="text-3xl font-semibold text-gray-900 text-center mt-4">Result</h1>
 
@@ -79,46 +29,14 @@
 
                 @if (Str::contains(strtolower($movie->title), strtolower($_GET['s'])) || 
                 Str::contains(strtolower($movie->genre), strtolower($_GET['s'])) || !empty($actors))  
-                    <article class="max-w-fw mx-auto flex border max-h-64 my-5 bg-white rounded ">
-                        
-                        <div class="w-1/4 border mr-10">
-                            <a href="/movie/{{ $movie->id }}">
-                        @if ($movie->urls_images)
-                            <img src=" {{ $imgPath }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
-                        @else
-                            NO IMG
-                        @endif
-                            </a>
-                        </div>
+                
+                    @include('_movies')
 
-                        <div class="py-10">
-                            <a href="/movie/{{ $movie->id }}" class="hover:text-red-700">
-                                <h2 class="text-lg font-bold block">
-                                    {{ $movie->title }}
-                                </h2>
-                            </a>
-
-                            <p class="block">
-                            {{ $movie->genre }}
-                            </p>
-                        </div>
-
-                        <div class="ml-10 pt-10">
-                            <h3 class="font-bold">Cast</h3>
-                            <ul class="text-sm sm:text-base">
-                            @foreach(json_decode($movie->cast) as $actor)
-                                <li>{{ $actor }}</li>
-                            @endforeach
-                            </ul>
-                        </div>
-                    </article>
                 @endif
                 <?php
                 $actors = [];
                 ?>
             @endforeach
     </div>
-     
-
 </body>
 </html>
