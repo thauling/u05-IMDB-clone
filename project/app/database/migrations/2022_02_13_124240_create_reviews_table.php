@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->text('title')->nullable();
             $table->text('review_content')->nullable();
             $table->tinyInteger('review_rating')->unsigned();
             //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 

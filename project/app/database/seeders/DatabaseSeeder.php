@@ -75,5 +75,6 @@ class DatabaseSeeder extends Seeder
                 'released' => (int)substr($movie->release_date, 0, 4)
             ]);
         }
+
     }
 }
