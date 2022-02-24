@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -30,7 +31,12 @@ class MovieController extends Controller
             'avg_rating' => $movie->avg_rating,
             'released' => $movie->released
         ];
-        return view('movie', ['movie' => $alteredMovie]);
+
+        $reviews = Review::where('movie_id', $id)->get()->toArray();
+        return view('movie', [
+            'movie' => $alteredMovie,
+            'reviews' => $reviews
+        ]);
     }
 
     public function postMovie(Request $req)

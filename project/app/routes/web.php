@@ -90,9 +90,9 @@ Route::patch('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
 // Movies end
 
 // Breeze start
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');

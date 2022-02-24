@@ -55,7 +55,7 @@
                     <article class="max-w-fw mx-auto flex border max-h-64 my-5 bg-white rounded ">
                         
                         <div class="w-1/4 border mr-10">
-                            <a href="/movie/{{ $movie->id }}">
+                            <a href="/movies/{{ $movie->id }}">
                         @if ($movie->urls_images)
                             <img src=" {{ $imgPath }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
                         @else
@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="py-10">
-                            <a href="/movie/{{ $movie->id }}" class="hover:text-red-700">
+                            <a href="/movies/{{ $movie->id }}" class="hover:text-red-700">
                                 <h2 class="text-lg font-bold block">
                                     {{ $movie->title }}
                                 </h2>

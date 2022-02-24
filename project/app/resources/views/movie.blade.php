@@ -1,3 +1,7 @@
+<?php 
+  
+?>
+
 <x-layout>
   <section class="movie-wrapper">
     <h1 class="movie-title">{{ $movie['title'] }}</h1>
@@ -14,5 +18,18 @@
       @endforeach
     </div>
     <p class="movie-abstract">{{ $movie['abstract'] }}</p>
+  </section>
+  <section class="reviews-wrapper">
+    <h2>Reviews</h2>
+    <a href="/reviews/create">Submit a review</a>
+    @foreach ($reviews as $review)
+      <?php $date = date_create($review['created_at']); ?>
+      <div>
+        <h3>Användarnamn</h3>
+        <p>{{ date_format($date, 'Y-m-d') }}</p>
+        <p>{{ $review['review_rating'] }}/10</p>
+        <p>{{ $review['review_content'] }}</p>
+      </div>
+    @endforeach
   </section>
 </x-layout>
