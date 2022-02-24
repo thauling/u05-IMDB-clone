@@ -1,4 +1,4 @@
-<article class="max-w-fw mx-auto flex border max-h-64 my-5 bg-white rounded ">
+<article class="max-w-fw mx-auto flex border-solid border-2 border-white max-h-64 my-5 bg-white rounded ">
                         
                         <div class="w-1/4 border mr-10">
                             <a href="/movies/{{ $movie->id }}">
