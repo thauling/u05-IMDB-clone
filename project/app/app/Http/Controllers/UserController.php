@@ -92,19 +92,15 @@ class UserController extends Controller
         //show all unsers
         //$users = User::latest()->firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(2)->withQueryString(); //lookup eager loading
         //$users = User::firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(3)->withQueryString(); //
-        //$users = User::latest()->paginate(5);
-        $users = User::latest()->get();
+        $users = User::latest()->paginate(5);
+        //$users = User::latest()->get();
         //$users = User::all();  // same as 'get()' ?
         return view('admin.admin-main', ['users' => $users]); //->paginate(2);      
         // return view('admin.admin-main',compact('users'))
         // ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     // public function create()
     // {
     //     //
@@ -118,12 +114,6 @@ class UserController extends Controller
     //     return view('users.create'); //route needs to be defined
     // }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         if (Auth::check() && Auth::user()->is_admin) :
@@ -151,25 +141,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function show($id)
-    // {
-    //     //
-    //     $user = User::find($id);  
-    //     return view('admin.edit-user', ['user' => $user]); //->paginate(2);      
-    // }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
+    
     public function edit($id)
     {
         $user = User::find($id);  
@@ -181,31 +153,29 @@ class UserController extends Controller
     
     public function search(Request $request) // and/ or $name
     {
-        //
-        // for exact search, do
-        //return User::where('email', $email)->get();
+        
         $query = $request->input('query');
         //dd($query);
         $user = User::where('email', 'like', '%' . $query . '%')->orWhere('name', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
-        //return view('admin.edit-user', ['user' => $user]);
-      //dd($user);
+
+        // grouped orWhere clause should be used instead according to docs but throws error
+        // $user = User::where (function ($query) 
+        // {$query->where('email', 'like', '%' . $query . '%')
+        //     ->orWhere('name', 'like', '%' . $query . '%');})
+        // ->first(); 
+
         return view('admin.edit-user', ['user' => $user]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
         //
         $user = User::find($id);
         $user->update($request->all());
-        //return $user;
-        return redirect('dashboard-admin');
+        
+       // return redirect('dashboard-admin');
+        return redirect('admin-main');
        
     }
 

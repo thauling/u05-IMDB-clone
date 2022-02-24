@@ -1,6 +1,6 @@
-<?php
+<!-- <?php
 $searchemail = "ralph";
-?>
+?> -->
 <!-- need to redirect from controller->find() that sends $user -->
 <x-admin>
 <h2>Find User by name or email</h2>

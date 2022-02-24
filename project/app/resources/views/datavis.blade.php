@@ -9,50 +9,24 @@ use App\Models\Review;
 // $reviewcount = Review::count();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<x-admin>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-</head>
-<title>Datavis</title>
-</head>
-
-<body>
-    <h1>User and Movie Stats</h1>
-    <h2>In raw numbers</h2>
-    @if (User::count())
-    <p>Number of users: {{ User::count() }}</p>
-    @endif
-    @if (Movie::count())
-    <p>Number of movies: {{ Movie::count() }}</p>
-    @endif
-    @if (Review::count())
-    <p>Number of reviews: {{ Review::count() }}</p>
-    @endif
-
-    @if (User::count() || Movie::count() || Review::count())
-    <h2>But I prefer a graphical representation</h2>
-    <div class="container">
-        <div id="columnGraph"> </div> <!--  style="height: 600px; width: 100%"> replace this with tailwind-->
-        <div id="calendar_basic" ></div> <!-- style="width: 1000px; height: 350px;" -->
-    </div>
-
-
-    <script>
-        google.charts.load('visualization', "1", {
-            packages: ['corechart']
+    <script type="text/javascript">
+        // google.charts.load('visualization', "1", {
+        //     packages: ['corechart']
+        // });
+        // Load Charts and the corechart and barchart packages.
+        google.charts.load('current', {
+            'packages': ['corechart']
         });
 
+        // Draw the bar chart that displays total numbers of users, movies, reviews.
+        google.charts.setOnLoadCallback(drawBarChart);
+          // Draw the calendar chart that displays property x over time.
+        google.charts.setOnLoadCallback(drawCalendarChart);
+
+        // Callback func() that draws bar chart
         function drawBarChart() {
-            // const data = google.visualization.arrayToDataTable([
-            //    // ['Users', 'Movies', 'Reviews'],
-            //    <?php //echo User::count(),  Movie::count(), Review::count()]  
-                    ?>
-            // ]);
 
             const data = new google.visualization.DataTable();
             data.addColumn('string', 'Table');
@@ -71,57 +45,69 @@ use App\Models\Review;
                 isStacked: true
             };
 
+            // instantiate and draw the chart
             const chart = new google.visualization.ColumnChart(document.querySelector('#columnGraph'));
             chart.draw(data, options);
         }
-       
+
         //add calendar chart to visualize stats over time?
+        // Callback func() that draws calendar chart
         function drawCalendarChart() {
-            const calendarStats = new google.visualization.DataTable();
-            calendarStats.addColumn({
+            const data = new google.visualization.DataTable();
+            data.addColumn({
                 type: 'date',
                 id: 'Date'
             });
-            calendarStats.addColumn({
+            data.addColumn({
                 type: 'number',
                 id: 'Won/Loss'
             });
             //pseudo data
-            calendarStats.addRows([
+            data.addRows([
                 [new Date(2012, 3, 13), 37032],
                 [new Date(2012, 3, 14), 38024],
-                [new Date(2012, 3, 15), 38024],
-                [new Date(2012, 3, 16), 38108],
-                [new Date(2012, 3, 17), 38229],
-                // Many rows omitted for brevity.
-                [new Date(2013, 9, 4), 38177],
-                [new Date(2013, 9, 5), 38705],
-                [new Date(2013, 9, 12), 38210],
-                [new Date(2013, 9, 13), 38029],
-                [new Date(2013, 9, 19), 38823],
-                [new Date(2013, 9, 23), 38345],
                 [new Date(2013, 9, 24), 38436],
                 [new Date(2013, 9, 30), 38447]
             ]);
 
-            const chart = new google.visualization.Calendar(document.querySelector('#calendar_basic'));
-
+           
             const options = {
-                height: 300,
-               // is3D: true,
+                width: 400,
+                height: 240,
                 title: 'User logins'
             };
 
-            chart.draw(calendarStats, options);
+             // instantiate and draw the chart
+            const chart = new google.visualization.Calendar(document.querySelector('#calendarBasic'));
+            chart.draw(data, options);
         }
-
-        google.charts.setOnLoadCallback(drawBarChart);
-
-        google.charts.setOnLoadCallback(drawCalendarChart);
     </script>
+
+
+    <h1>User and Movie Stats</h1>
+    <h2>In raw numbers</h2>
+    @if (User::count())
+    <p>Number of users: {{ User::count() }}</p>
     @endif
-  
+    @if (Movie::count())
+    <p>Number of movies: {{ Movie::count() }}</p>
+    @endif
+    @if (Review::count())
+    <p>Number of reviews: {{ Review::count() }}</p>
+    @endif
 
-</body>
+    <span>{{User::select('created_at')->get()}}</span>
 
-</html>
+    @if (User::count() || Movie::count() || Review::count())
+    <h2>But I prefer a graphical representation</h2>
+    <div class="container">
+        <div id="columnGraph"> </div> <!--  style="height: 600px; width: 100%"> replace this with tailwind-->
+        <div id="calendarBasic"></div> <!-- style="width: 1000px; height: 350px;" -->
+    </div>
+
+
+    
+    @endif
+
+
+</x-admin>
