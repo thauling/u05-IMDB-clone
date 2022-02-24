@@ -31,7 +31,7 @@
                 <div class="flex gap-x-2">
                     @auth
                         <div>
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">{{ Auth::user()->name }}</a>
+                        <a href="{{ url('/userpage') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">{{ Auth::user()->name }}</a>
                         </div>
 
                         <form action="/logout" method="POST">
