@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Movie;
+
 class ReviewController extends Controller
 {
     /**
@@ -26,7 +28,9 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        return view('reviews/create');
+        $review = Review::get();
+
+        return view('reviews/create' ,['review'=> $review ]);
     }
 
     /**
@@ -46,16 +50,25 @@ class ReviewController extends Controller
         //         ]);
         //  Review::create($validatedData);
 
-        $review = new Review;
-        $review->review_content = $request->content;
-        $review->review_rating = $request->rating;
-        $review->user_id = $request->user_id;
-        $review->movie_id = $request->movie_id;
+        $movie_id = $request->movie_id;
+
+        $movie_check = Movie::where('id', $movie_id)->first();
+        if($movie_check){
+                
+            $review = new Review;
+            $review->review_content = $request->content;
+            $review->review_rating = $request->rating;
+            $review->user_id = $request->user_id;
+            $review->movie_id = $request->movie_id;
 
         $review->save();
-        
         return redirect('reviews/create')->with('status', 'Creating review was successful!');
-       
+        }
+        
+        else
+        {
+            return redirect()->back()->with('status', 'Something went wrong.');
+        }
 
     }
    

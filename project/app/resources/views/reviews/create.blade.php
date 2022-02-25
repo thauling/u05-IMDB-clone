@@ -36,6 +36,7 @@
     <title>Reviews</title>
 </head>
 <body>
+  @if (Auth::check()){
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Rate this movie
 </button>
@@ -76,8 +77,8 @@
                         <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Content</label>
                             <div class="mt-1">
                             <input type="text" id="content"name="content" class="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="">
-                            <input type="number" id="user_id" name="user_id">
-                            <input type="number" id="movie_id" name="movie_id">
+                            <input type="hidden" id="user_id" name="user_id" value="{{Auth::id}}">
+                            <input type="hidden" id="movie_id" name="movie_id" value={{$review->movies->id}}>
                             <div class="flex items-center justify-between">
                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Submit</button>
                             </div>
@@ -87,6 +88,8 @@
     </div>
   </div>
 </div>
+  }
+  @endif
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </body>
