@@ -9,7 +9,7 @@ $rownumber = 0;
     <h1>You are not signed in.</h1>
     @endunless
     @if (Auth::check() && Auth::user()->is_admin)
-    <!-- '&& Auth::user()->is_admin' -->
+   
     <div class="block text-gray-500 font-bold">
         <h1 class="">Dashboard</h1>
         <span class=""> Hi admin {{Auth::user()->name}} ! </span>
@@ -99,7 +99,7 @@ $rownumber = 0;
             </form>
             <div class="mt-10">
                 <a href="{{url('movie-cast')}}" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold mr-2 py-2 px-4 rounded">Add cast</a>
-                <a href="{{url('movie-images')}}" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add images</a>
+                <!-- <a href="{{url('movie-images')}}" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add images</a> -->
             </div>
         </div>
 
