@@ -15,12 +15,12 @@
     </div>
     <p class="movie-abstract">{{ $movie['abstract'] }}</p>
   </section>
-  <section class="reviews-wrapper">
+  <section class="reviews-section">
     <h2>Reviews</h2>
     <a href="/reviews/create">Submit a review</a>
     @foreach ($reviews as $review)
       <?php $date = date_create($review['created_at']); ?>
-      <div>
+      <div class="review-wrapper">
         <h3>{{ $review['user_name'] }}</h3>
         <p>{{ date_format($date, 'Y-m-d') }}</p>
         <p>{{ $review['review_rating'] }}/10</p>

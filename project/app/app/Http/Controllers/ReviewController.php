@@ -14,8 +14,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-     $reviews = Review::get();
-     return view('reviews/reviews', ['reviews'=> $reviews]);
+        $reviews = Review::get();
+        return view('reviews/reviews', ['reviews'=> $reviews]);
     
     }
 

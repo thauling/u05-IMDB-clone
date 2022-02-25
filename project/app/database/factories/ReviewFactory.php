@@ -22,9 +22,9 @@ class ReviewFactory extends Factory
             //
             'title'=>$this->faker->sentence(),
             'review_content' => $this->faker->paragraph(),
-            'review_rating' => $this->faker->numberBetween(1,5),
-            'user_id' => $this->faker->numberBetween(1, User::count()),//1,
-            'movie_id' => $this->faker->numberBetween(1, Movie::count())//1,
+            'review_rating' => $this->faker->numberBetween(1,10),
+            'user_id' => $this->faker->numberBetween(1, 10),
+            'movie_id' => $this->faker->numberBetween(1, 20)
         ];
     }
 }

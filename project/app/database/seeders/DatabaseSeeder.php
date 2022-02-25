@@ -20,9 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory(10)->create();
-        Review::factory(20)->create();
-        // Movie::factory(100)->create();
-
+        Review::factory(50)->create();
         
 
         /**** SHOULD THESE API REQUESTS BE SOMEWHERE ELSE? IN THE MOVIE FACTORY FILE? ****/
