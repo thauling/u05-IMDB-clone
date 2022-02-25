@@ -2,13 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Movie;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
+use App\Models\User;
+use App\Models\Movie;
 use App\Models\Review;
 
 
@@ -22,9 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory(10)->create();
-        Review::factory(20)->create();
-        // Movie::factory(100)->create();
-
+        Review::factory(50)->create();
         
 
         /**** SHOULD THESE API REQUESTS BE SOMEWHERE ELSE? IN THE MOVIE FACTORY FILE? ****/
@@ -56,8 +52,7 @@ class DatabaseSeeder extends Seeder
                 return "https://www.youtube.com/embed/$trailerId"; // Return embed url
             } else {
                 return "";
-            }
-            
+            } 
         }
 
         // Loop through API response

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\MoviesController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ContentsArrController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
@@ -57,6 +57,8 @@ Route::get('/', function () {
         'movies' => Movie::all()
     ]);
 });
+
+Route::get('/movies', [MovieController::class, 'getAllMovies']);
 // Landing page end
 
 // start User page routes
@@ -71,27 +73,38 @@ Route::get('/userpage', function () {
 
 
 // Movie routes
-Route::get('/movies/{movie}', [MoviesController::class, 'getMovie']);
+Route::view('/movies/new', 'new-movie');
 Route::get('/search', function() {
     return view('search', [
         'movies' => Movie::all()
     ]);
 });
+
+// UPDATE ALL OF THESE TO CORRECT CONTROLLER AND MOVE MOVIESCONRTROLLER CONTENT INTO CORRECT CONTROLLER
+Route::get('/movies/{movie}', [MovieController::class, 'getMovie']);
+Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
+Route::delete('/movies/{movie}/delete', [MovieController::class, 'deleteMovie']);
+Route::patch('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
+
+// Movie CRUD
+// Route::get('reviews', [ReviewController::class, 'index']);
+// Route::post('store-review', [ReviewController::class, 'store']);
+// Route::get('review/{id}', [ReviewController::class, 'show']);
+// Route::get('reviews/create', [ReviewController::class, 'create']);
+// Movies end
 // Review CRUD
 Route::get('reviews', [ReviewController::class, 'index']);
 Route::post('store-review', [ReviewController::class, 'store']);
 Route::get('review/{id}', [ReviewController::class, 'show']);
 Route::get('edit-review/{id}', [ReviewController::class, 'edit']);
 Route::put('update-review/{id}', [ReviewController::class, 'update']);
-Route::get('reviews/create', function(){
-    return view('reviews/create');
-});
+Route::get('reviews/create', [ReviewController::class, 'create']);
 // Review end
 
 // Breeze start
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
