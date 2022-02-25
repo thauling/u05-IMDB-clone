@@ -107,17 +107,37 @@ class MovieController extends Controller
         return redirect('dashboard-admin'); // Correct redirect? Since only admins are supposed to be able to delete?
     }
 
-    public function editMovie(Request $req, $id)
+    public function editMovie($id)
     {   
         // Needs validator
+        $movie = Movie::find($id);
+
+        $imgsToArray = json_decode($movie->urls_images); 
+
+        $alteredMovie = [
+            'id' => $movie->id,
+            'title' => $movie->title,
+            'genre' => $movie->genre,
+            'cast' => json_decode($movie->cast),
+            'abstract' => $movie->abstract,
+            'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
+            'url_trailer' => $movie->url_trailer,
+            'avg_rating' => $movie->avg_rating,
+            'released' => $movie->released
+        ];
+
+        return view('edit-movie', ['movie' => $alteredMovie]);
+        
+    }
+
+    public function updateMovie(Request $req, $id) 
+    {
         $movie = Movie::where('id', $id)->update([
             'title' => $req->title,
             'genre' => $req->genre, 
             'cast' => json_encode(array($req->cast)),
             'abstract' => $req->abstract,
-            'urls_images' => json_encode(array($req->images)),
-            'url_trailer' => $req->trailer,
-            'avg_rating' => $req->rating, 
+            'url_trailer' => $req->url_trailer,
             'released' => (int)$req->released
         ]);
 

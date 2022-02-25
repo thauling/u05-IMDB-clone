@@ -52,11 +52,11 @@ Route::view('/datavis', 'datavis');
 // Thomas end
 
 // Landing page start
-Route::get('/', function () {
-    return view('landing', [
-        'movies' => Movie::all()
-    ]);
-});
+// Route::get('/', function () {
+//     return view('landing', [
+//         'movies' => Movie::all()
+//     ]);
+// });
 
 Route::get('/movies', [MovieController::class, 'getAllMovies']);
 // Landing page end
@@ -84,7 +84,8 @@ Route::get('/search', function() {
 Route::get('/movies/{movie}', [MovieController::class, 'getMovie']);
 Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
 Route::delete('/movies/{movie}/delete', [MovieController::class, 'deleteMovie']);
-Route::patch('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
+Route::get('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
+Route::post('/movies/{movie}/update', [MovieController::class, 'updateMovie']);
 
 // Movie CRUD
 // Route::get('reviews', [ReviewController::class, 'index']);

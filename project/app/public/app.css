@@ -31,7 +31,7 @@ main {
   grid-template-columns: 1fr 1fr;
   grid-row: auto;
   grid-template-areas: 
-  "title title"
+  "title edit"
   "released rating"
   "media media"
   "genre ."
@@ -50,6 +50,12 @@ main {
 .movie-title {
   font-size: 42px;
   grid-area: title;
+}
+
+.edit-link {
+  grid-area: edit;
+  justify-self: end;
+  align-self: center;
 }
 
 .movie-year {

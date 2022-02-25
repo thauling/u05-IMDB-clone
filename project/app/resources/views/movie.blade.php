@@ -1,6 +1,8 @@
 <x-layout>
   <section class="movie-wrapper">
     <h1 class="movie-title">{{ $movie['title'] }}</h1>
+    <!-- SHOULD ONLY BE SEEN IF ADMIN -->
+    <a class="edit-link" href="/movies/{{$movie['id']}}/edit">edit movie</a>
     <p class="movie-year">Released <span class="bold-paragraph">{{ $movie['released'] }}</span></p>
     <p class="movie-rating">Rating <span class="bold-paragraph">{{ $movie['avg_rating'] }}/10</span> </p>
     <div class="movie-media">
