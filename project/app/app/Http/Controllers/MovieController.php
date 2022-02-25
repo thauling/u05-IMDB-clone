@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class MovieController extends Controller
 {
@@ -85,12 +86,38 @@ class MovieController extends Controller
 
     public function search(Request $request) // and/ or $name
     {
-        
+        $movies = Movie::all();
         $query = $request->input('s');
-        $results = Movie::where('title', 'like', '%' . $query . '%')
-                            ->orWhere('genre', 'like', '%' . $query . '%')
-                            ->orWhere('cast', 'like', '%' . $query . '%')
-                            ->get(); 
+        $results = [];
+        $actors = [];
+
+        foreach($movies as $movie) {
+
+           foreach (json_decode($movie->cast) as $actor) {
+               
+                if (Str::contains(strtolower($actor), strtolower($query))) {
+                array_push($actors, $actor);
+                }
+            }
+                   
+            if (Str::contains(strtolower($movie->title), strtolower($query)) || 
+            Str::contains(strtolower($movie->genre), strtolower($query)) || !empty($actors)) {
+                
+                array_push($results, $movie);
+            }
+            
+            $actors = [];
+        }
+
+        if($query === null || $query === '') {
+            $results = $movies;
+        }
+
+
+        // $results = Movie::where('title', 'like', '%' . $query . '%')
+        //                     ->orWhere('genre', 'like', '%' . $query . '%')
+        //                     ->orWhere('cast', 'like', '%' . $query . '%')
+        //                     ->get(); 
 
         return view('landing', ['results' => $results]);
     }

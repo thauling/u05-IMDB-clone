@@ -1,7 +1,13 @@
 @include('_head')
 
 @include('_nav')
-        <h1 class="text-3xl font-semibold text-gray-900 text-center mt-4">Top 3 movies</h1>
+        <h1 class="text-3xl font-semibold text-gray-900 text-center mt-4">
+            @isset($results)
+                Results
+            @else
+                Top 3 movies
+            @endif
+        </h1>
         <?php $i = 0; ?>
 
             
