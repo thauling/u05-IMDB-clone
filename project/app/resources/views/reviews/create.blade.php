@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <style>/* rating */
-.rating-css div {
+/* .rating-css div {
   color: #ffe400;
   font-size: 30px;
   font-family: sans-serif;
@@ -29,14 +29,13 @@
 }
 .rating-css label:active {
   transform: scale(0.8);
-  transition: 0.3s ease;
-}
+  transition: 0.3s ease; */
+/* } */
 /* End of Star Rating */
 </style>
     <title>Reviews</title>
 </head>
 <body>
-  @if (Auth::check()){
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Rate this movie
 </button>
@@ -56,15 +55,25 @@
                     <div class="col-span-3 sm:col-span-2">
                           <div class="rating-css">
                           <div class="star-icon">
-                            <input type="radio" value="1" name="product_rating" checked id="rating1">
+                            <input type="radio" value="1" name="movie_rating" checked id="rating1">
                             <label for="rating1" class="fa fa-star"></label>
-                            <input type="radio" value="2" name="product_rating" id="rating2">
+                            <input type="radio" value="2" name="movie_rating" id="rating2">
                             <label for="rating2" class="fa fa-star"></label>
-                            <input type="radio" value="3" name="product_rating" id="rating3">
+                            <input type="radio" value="3" name="movie_rating" id="rating3">
                             <label for="rating3" class="fa fa-star"></label>
-                            <input type="radio" value="4" name="product_rating" id="rating4">
+                            <input type="radio" value="4" name="movie_rating" id="rating4">
                             <label for="rating4" class="fa fa-star"></label>
-                            <input type="radio" value="5" name="product_rating" id="rating5">
+                            <input type="radio" value="5" name="movie_rating" id="rating5">
+                            <label for="rating5" class="fa fa-star"></label>
+                            <input type="radio" value="6" name="movie_rating" id="rating6">
+                            <label for="rating5" class="fa fa-star"></label>
+                            <input type="radio" value="7" name="movie_rating" id="rating7">
+                            <label for="rating5" class="fa fa-star"></label>
+                            <input type="radio" value="8" name="movie_rating" id="rating8">
+                            <label for="rating5" class="fa fa-star"></label>
+                            <input type="radio" value="9" name="movie_rating" id="rating9">
+                            <label for="rating5" class="fa fa-star"></label>
+                            <input type="radio" value="10" name="movie_rating" id="rating10">
                             <label for="rating5" class="fa fa-star"></label>
                         </div>
                     </div>
@@ -77,8 +86,8 @@
                         <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Content</label>
                             <div class="mt-1">
                             <input type="text" id="content"name="content" class="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="">
-                            <input type="hidden" id="user_id" name="user_id" value="{{Auth::id}}">
-                            <input type="hidden" id="movie_id" name="movie_id" value={{$review->movies->id}}>
+                            <input type="hidden" id="user_id" name="user_id" value="5">
+                            <input type="hidden" id="movie_id" name="movie_id" value="5">
                             <div class="flex items-center justify-between">
                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Submit</button>
                             </div>
@@ -88,8 +97,6 @@
     </div>
   </div>
 </div>
-  }
-  @endif
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </body>

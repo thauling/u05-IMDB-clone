@@ -28,9 +28,9 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        $review = Review::get();
+        $movie = Movie::get();
 
-        return view('reviews/create' ,['review'=> $review ]);
+        return view('reviews/create')->with('movie', $movie);
     }
 
     /**
@@ -57,7 +57,7 @@ class ReviewController extends Controller
                 
             $review = new Review;
             $review->review_content = $request->content;
-            $review->review_rating = $request->rating;
+            $review->review_rating = $request->movie_rating;
             $review->user_id = $request->user_id;
             $review->movie_id = $request->movie_id;
 
@@ -114,6 +114,7 @@ class ReviewController extends Controller
     {
         //
         $review = Review::find($id);
+        $review->review_content = $request->input('title');
         $review->review_content = $request->input('content');
         $review->review_rating = $request->input('rating');
         $review->movie_id = $request->input('movie_id');
