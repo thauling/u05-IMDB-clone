@@ -87,7 +87,10 @@ class MovieController extends Controller
     {
         
         $query = $request->input('s');
-        $results = Movie::where('title', 'like', '%' . $query . '%')->orWhere('cast', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
+        $results = Movie::where('title', 'like', '%' . $query . '%')
+                            ->orWhere('genre', 'like', '%' . $query . '%')
+                            ->orWhere('cast', 'like', '%' . $query . '%')
+                            ->get(); 
 
         return view('landing', ['results' => $results]);
     }

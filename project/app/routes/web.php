@@ -50,13 +50,7 @@ Route::view('/datavis', 'datavis');
 // Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
 // Thomas end
 
-// Landing page start
-Route::get('/', function () {
-    return view('landing', [
-        'movies' => Movie::orderBy('avg_rating', 'desc')->get()
-    ]);
-});
-// Landing page end
+
 
 // start User page routes
 Route::get('/userpage', function () {
@@ -88,12 +82,20 @@ Route::get('/search', function() {
 //     return view('welcome');
 // });
 
-Route::get('/', function () {
-    return view('landing', [
-        'movies' => Movie::orderBy('avg_rating', 'desc')->get()
-    ]);
-})->middleware(['auth'])->name('landing');
+// Route::get('/', function () {
+//     return view('landing', [
+//         'movies' => Movie::orderBy('avg_rating', 'desc')->get()
+//     ]);
+// })->middleware(['auth'])->name('landing');
 
 require __DIR__.'/auth.php';
 
 // Breeze end
+
+// Landing page start
+Route::get('/', function () {
+    return view('landing', [
+        'movies' => Movie::orderBy('avg_rating', 'desc')->get()
+    ]);
+});
+// Landing page end

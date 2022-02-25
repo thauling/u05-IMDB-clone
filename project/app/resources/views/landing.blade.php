@@ -6,12 +6,11 @@
 
             
             @if(str_contains(url()->current(), '/search-movie'))
-                {{ $results->title }}
 
                <?php
-                $movies = $results->attributes;
-
-                print_r($movies);
+                $movies = $results;
+                // @dd($movies);
+                // print_r($movies);
                ?> 
             @endif
            
@@ -26,9 +25,11 @@
                    
                 @include('_movies')
 
+                @if(!str_contains(url()->current(), '/search-movie'))
                 <?php if(++$i === 3) : ?> 
                     @break
                 <?php endif; ?>
+                @endif
             @endforeach
 
     </div>
