@@ -186,6 +186,42 @@ class UserController extends Controller
         return $user;
         // should nt this be $user->save(); ?
     }
+    
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateSettings(Request $request)
+    {
+        //
+        $userID = Auth::user('id');
+        
+        $user = User::find($userID)->first();
+        // dd($user);
+        // request()->validate([
+        //     'name' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+        //     'passConfirm' => 'required'
+
+        // ]);
+
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->save();
+
+
+        // if($request->get('password')===$request->get('passConfirm')){
+        //     $user->update([
+        //         'password' => $request->get('password'),    
+        //     ]);
+        // }
+        
+        return redirect('user/user-settings')
+                            ->with('status', 'updated successfully!');
+    }
 
     /**
      * Remove the specified resource from storage.
