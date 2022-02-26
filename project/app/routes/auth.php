@@ -73,7 +73,7 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 
-    Route::put('user/user-settings', [UserController::class, 'update']);
+    Route::put('update-settings', [UserController::class, 'update']);
     
     Route::get('user/user-settings', [UserController::class, 'settings']);
 
