@@ -210,4 +210,11 @@ class UserController extends Controller
         //return User::where('email', $email)->get();
 
     }
+
+    public function settings()
+    {
+        $user = User::get();
+
+        return view('user-settings', ['user' => $user]);
+    }
 }
