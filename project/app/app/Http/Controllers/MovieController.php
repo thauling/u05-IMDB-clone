@@ -65,6 +65,7 @@ class MovieController extends Controller
 
             $alteredReview = [
                 "id" => $review['id'],
+                "title" =>$review['title'],
                 "review_content" => $review['review_content'],
                 "review_rating" => $review['review_rating'],
                 "user_id" => $review['user_id'],
@@ -76,10 +77,9 @@ class MovieController extends Controller
 
             array_push($alteredReviews, $alteredReview);
         }
-
         return view('movie', [
             'movie' => $alteredMovie,
-            'reviews' => $alteredReviews
+            'reviews' => $alteredReviews,
         ]);
     }
 

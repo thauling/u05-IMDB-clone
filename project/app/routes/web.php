@@ -86,12 +86,7 @@ Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
 Route::delete('/movies/{movie}/delete', [MovieController::class, 'deleteMovie']);
 Route::patch('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
 
-// Movie CRUD
-// Route::get('reviews', [ReviewController::class, 'index']);
-// Route::post('store-review', [ReviewController::class, 'store']);
-// Route::get('review/{id}', [ReviewController::class, 'show']);
-// Route::get('reviews/create', [ReviewController::class, 'create']);
-// Movies end
+
 // Review CRUD
 Route::get('reviews', [ReviewController::class, 'index']);
 Route::post('store-review', [ReviewController::class, 'store']);
