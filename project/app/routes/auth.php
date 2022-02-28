@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UploadImageController; //could move funcs to AdminController but this way perhaps better for reusability
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -40,11 +41,14 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     //Thomas
+    // image CRUD
+    Route::get('upload-image', [UploadImageController::class, 'index']);
+    //Route::post('save', [UploadImageController::class, 'save']);
     // need extra 'is_admin check'  
     Route::get('admin-main', [AdminController::class, 'showUsersAndMovies']); // redirected to from UserController methods, no direct access implemented
     //Route::get('admin-main', [UserController::class, 'index']);
     // show auth user stats
-     Route::view('/datavis', 'datavis');
+    Route::view('/datavis', 'datavis');
     // User CRUD
     // add a new user to the db
     // could also group these: 
@@ -58,21 +62,21 @@ Route::middleware('auth')->group(function () {
     //         // Matches The "/admin/users" URL
     //     });
     // });
-    
+
     Route::post('store-user', [UserController::class, 'store']); //called by admin-main create user/ admin form
     //edit, search and update user details, e.g. role
-    Route::view('edit-user', 'admin.edit-user'); 
+    Route::view('edit-user', 'admin.edit-user');
     Route::post('edit-user/{id}', [UserController::class, 'edit']); //called by admin-main search form
     Route::get('search-user', [UserController::class, 'search']); //called by admin-main search form
     Route::put('update-user/{id}', [UserController::class, 'update']); //called by admin-edit form
     //remove user
     Route::delete('destroy-user/{id}', [UserController::class, 'destroy']);
     // Movie CRUD
-     // add a new movie to the db
+    // add a new movie to the db
     Route::post('store-movie', [MovieController::class, 'store']); //c
     // show cast and images forms
     Route::view('movie-cast', 'admin.movie-cast');
-    Route::view('movie-images', 'admin.movie-images');  
+    Route::view('movie-images', 'admin.movie-images');
     Route::post('edit-movie/{id}', [MovieController::class, 'edit']);
     Route::get('search-movie', [MovieController::class, 'search']); //
     Route::put('update-movie/{id}', [MovieController::class, 'update']); //

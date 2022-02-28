@@ -3,6 +3,7 @@
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ContentsArrController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UploadImageController;
 use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
@@ -62,7 +63,9 @@ Route::get('/search', function() {
         'movies' => Movie::all()
     ]);
 });
-// Movie CRUD
+
+// Image CRUD
+Route::post('save', [UploadImageController::class, 'save']);
 // Route::get('reviews', [ReviewController::class, 'index']);
 // Route::post('store-review', [ReviewController::class, 'store']);
 // Route::get('review/{id}', [ReviewController::class, 'show']);
