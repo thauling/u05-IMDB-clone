@@ -3,8 +3,8 @@
     <h1 class="movie-title">{{ $movie['title'] }}</h1>
     <p class="movie-year">Released <span class="bold-paragraph">{{ $movie['released'] }}</span></p>
     <p class="movie-rating">Rating <span class="bold-paragraph">{{ $movie['avg_rating'] }}/10</span> </p>
-    <div class="movie-media">
-      <img height="505" src="{{ $movie['urls_images'] }}" alt="movie poster" />
+    <div class="movie-media container_2">
+      <img  class="movie_poster" height="505" src="{{ $movie['urls_images'] }}" alt="movie poster" />
       <iframe width="853" height="505" class="movie_trailer" src="{{ $movie['url_trailer'] }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <p class="movie-genre">{{ $movie['genre'] }}</p>
@@ -35,7 +35,7 @@
         <div class="w-full md:w-px h-2 md:h-8 mx-8 bg-transparent md:bg-gray-200"></div>
           <div class="inline-flex">
               @for ($i = 0; $i < $review['review_rating']; $i++)
-            <a class="inline-block mr-1" href="#">
+            <a class="inline-block mr-1">
               <svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20 7.91677H12.4167L10 0.416763L7.58333 7.91677H0L6.18335 12.3168L3.81668 19.5834L10 15.0834L16.1834 19.5834L13.8167 12.3168L20 7.91677Z" fill="#FFCB00"></path>
               </svg>
@@ -43,7 +43,7 @@
             @endfor
           </div>
         </div>
-        <h3 class="w-full md:w-auto text-l font-heading font-medium">{{$review['title']}} </h3>
+        <h3 class="w-full md:w-auto text-l font-heading font-medium"><a class="nostyle"href="{{url('review', ['id' => $review['id']] )}}">{{$review['title']}} </a></h3>
         <p class="mb-8 max-w-2xl text-darkBlueGray-400 leading-loose">{{ $review['review_content'] }}</p>
       </div>
       <br>

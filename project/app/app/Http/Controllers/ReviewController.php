@@ -16,9 +16,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::get();
-        return view('reviews/reviews', ['reviews'=> $reviews]);
-    
+      //function for showing reviews is in index funtion in MovieController
     }
 
     /**
@@ -28,9 +26,6 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        $movie = Movie::get();
-
-        return view('reviews/create')->with('movie', $movie);
     }
 
     /**
@@ -50,16 +45,20 @@ class ReviewController extends Controller
         //         ]);
         //  Review::create($validatedData);
 
-                
+        if($request->movie_rating === null){
+            return redirect()->back()->with('status', "You have to fill in a rating for this movie!");
+                }
+        else{
             $review = new Review;
             $review->review_content = $request->content;
             $review->review_rating = $request->movie_rating;
             $review->user_id = $request->user_id;
             $review->movie_id = $request->movie_id;
 
-        $review->save();
-        return redirect()->back()->with('status', 'Creating review was successful!');
-        }
+            $review->save();
+            return redirect()->back()->with('status', 'Creating review was successful!');
+            }
+    }
         
 
    

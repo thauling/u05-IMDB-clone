@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-
-    <title>Document</title>
-</head>
-<body>
+<x-layout>
 <div>
 <div class="mb-2 shadow-lg rounded-t-8xl rounded-b-5xl overflow-hidden">
       <div class="pt-3 pb-3 md:pb-1 px-4 md:px-16 bg-white bg-opacity-40">
@@ -38,9 +28,9 @@
             <p class="mb-8 text-sm text-gray-300">Created at {{$review->created_at}}</p>
           </div>
         </div>
+        <a class="goback" href="{{ url()->previous() }}"> Go back</a>
       </div>
     </div>
     <br>
 </div>
-</body>
-</html>
+</x-layout>

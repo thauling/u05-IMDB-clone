@@ -76,12 +76,10 @@ Route::patch('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
 
 
 // Review CRUD
-Route::get('reviews', [ReviewController::class, 'index']);
 Route::post('store-review', [ReviewController::class, 'store']);
 Route::get('review/{id}', [ReviewController::class, 'show']);
 Route::get('edit-review/{id}', [ReviewController::class, 'edit']);
 Route::put('update-review/{id}', [ReviewController::class, 'update']);
-Route::get('reviews/create', [ReviewController::class, 'create']);
 // Review end
 
 // Breeze start
