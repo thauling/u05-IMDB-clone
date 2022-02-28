@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+
+
 
 class UserController extends Controller
 {
@@ -178,6 +181,46 @@ class UserController extends Controller
         return redirect('admin-main');
        
     }
+    
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateSettings(Request $request)
+    {
+        //
+        $userID = Auth::user('id');
+        $user = User::find($userID)->first();
+
+        // ---------------DOESNT WORK
+        // $updates = $request->validate([
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        // ]);
+
+        // $user::update([
+        //     'name' => $updates['name'],
+        //     'email' => $updates['email'],
+        //     'password' => Hash::make($updates['password'])
+        // ]);
+
+
+        // ------------WORKS BUT IS PROBABLY BAD PRACTICE
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        
+        if(($request->get('password')) === ($request->get('passConfirm'))){
+            $user->password = password_hash($request->get('password'), PASSWORD_BCRYPT); 
+        }
+        $user->save();
+
+        session()->flash('status', 'updated successfully!');
+
+        return redirect('user/user-settings');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -194,4 +237,19 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    // public function search($email) // and/ or $name
+    // {
+    //     //
+    //     return User::where('email', 'like', '%' . $email . '%')->get(); // '%' are regex placeholders, 
+    //     // for exact search, do
+    //     //return User::where('email', $email)->get();
+
+    // }
+
+    public function settings()
+    {
+        $user = User::get();
+
+        return view('user-settings', ['user' => $user]);
+    }
 }
