@@ -50,10 +50,6 @@ class ReviewController extends Controller
         //         ]);
         //  Review::create($validatedData);
 
-        $movie_id = $request->movie_id;
-
-        $movie_check = Movie::where('id', $movie_id)->first();
-        if($movie_check){
                 
             $review = new Review;
             $review->review_content = $request->content;
@@ -62,15 +58,10 @@ class ReviewController extends Controller
             $review->movie_id = $request->movie_id;
 
         $review->save();
-        return redirect('reviews/create')->with('status', 'Creating review was successful!');
+        return redirect()->back()->with('status', 'Creating review was successful!');
         }
         
-        else
-        {
-            return redirect()->back()->with('status', 'Something went wrong.');
-        }
 
-    }
    
     
 

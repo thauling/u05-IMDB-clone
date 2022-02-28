@@ -36,7 +36,6 @@ Route::post('login-user', [UserController::class, 'login']);
 // // show admin stats
 // Route::view('/datavis', 'datavis');
 
-<<<<<<< HEAD
 // Landing page start
 Route::get('/', function () {
     return view('landing', [
@@ -46,9 +45,7 @@ Route::get('/', function () {
 
 Route::get('/movies', [MovieController::class, 'getAllMovies']);
 // Landing page end
-=======
 
->>>>>>> landing
 
 // start User page routes
 Route::get('/userpage', function () {

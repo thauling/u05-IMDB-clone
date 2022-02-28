@@ -210,16 +210,6 @@ class MovieController extends Controller
     }
 
      
-    // public function search(Request $request) // and/ or $name
-    // {
-        
-    //     $query = $request->input('query');
-    //     //dd($query);
-    //     $movie = Movie::where('title', 'like', '%' . $query . '%')->orWhere('abstract', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
-
-
-    //     return view('admin.movie-cast', ['movie' => $movie]);
-    // }
 
     
     public function update(Request $request, $id)

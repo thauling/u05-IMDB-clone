@@ -20,6 +20,9 @@
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Rate this movie
 </button>
+@if (session('status'))
+                <h6>{{ session('status') }}</h6>
+@endif
     
 @foreach ($reviews as $review)
       <?php $date = date_create($review['created_at']); ?>
@@ -49,7 +52,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">This movie</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{$movie['title']}}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -59,30 +62,20 @@
             <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                 <div class="grid grid-cols-3 gap-6">
                     <div class="col-span-3 sm:col-span-2">
-                          <div class="rating-css">
-                          <div class="star-icon">
-                            <input type="radio" value="1" name="movie_rating" checked id="rating1">
-                            <label for="rating1" class="fa fa-star"></label>
-                            <input type="radio" value="2" name="movie_rating" id="rating2">
-                            <label for="rating2" class="fa fa-star"></label>
-                            <input type="radio" value="3" name="movie_rating" id="rating3">
-                            <label for="rating3" class="fa fa-star"></label>
-                            <input type="radio" value="4" name="movie_rating" id="rating4">
-                            <label for="rating4" class="fa fa-star"></label>
-                            <input type="radio" value="5" name="movie_rating" id="rating5">
-                            <label for="rating5" class="fa fa-star"></label>
-                            <input type="radio" value="6" name="movie_rating" id="rating6">
-                            <label for="rating5" class="fa fa-star"></label>
-                            <input type="radio" value="7" name="movie_rating" id="rating7">
-                            <label for="rating5" class="fa fa-star"></label>
-                            <input type="radio" value="8" name="movie_rating" id="rating8">
-                            <label for="rating5" class="fa fa-star"></label>
-                            <input type="radio" value="9" name="movie_rating" id="rating9">
-                            <label for="rating5" class="fa fa-star"></label>
-                            <input type="radio" value="10" name="movie_rating" id="rating10">
-                            <label for="rating5" class="fa fa-star"></label>
-                        </div>
-                    </div>
+                        <fieldset>
+                        <span class="star-cb-group">
+                          <input type="radio" name="movie_rating" value="10" /><label for="rating-10">10</label>
+                          <input type="radio" name="movie_rating" value="9" /><label for="rating-9">9</label>
+                          <input type="radio" name="movie_rating" value="8" /><label for="rating-8">8</label>
+                          <input type="radio" name="movie_rating" value="7" /><label for="rating-7">7</label>
+                          <input type="radio" name="movie_rating" value="6"  /><label for="rating-6">6</label>
+                          <input type="radio" name="movie_rating" value="5" /><label for="rating-5">5</label>
+                          <input type="radio" name="movie_rating" value="4" /><label for="rating-4">4</label>
+                          <input type="radio" name="movie_rating" value="3" /><label for="rating-3">3</label>
+                          <input type="radio" name="movie_rating" value="2" /><label for="rating-2">2</label>
+                          <input type="radio" name="movie_rating" value="1" /><label for="rating-1">1</label>
+                        </span>
+                      </fieldset>
                         <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full px-3">
                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="title">Title</label>
@@ -93,7 +86,7 @@
                             <div class="mt-1">
                             <input type="text" id="content"name="content" class="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="">
                             <input type="hidden" id="user_id" name="user_id" value="5">
-                            <input type="hidden" id="movie_id" name="movie_id" value="5">
+                            <input type="hidden" id="movie_id" name="movie_id" value="{{$movie['id']}}">
                             <div class="flex items-center justify-between">
                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Submit</button>
                             </div>

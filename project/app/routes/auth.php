@@ -11,7 +11,6 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\MovieController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
 
