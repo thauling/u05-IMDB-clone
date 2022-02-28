@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\MoviesController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ContentsArrController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UploadImageController;
+use App\Http\Controllers\ReviewController;
 use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,15 @@ Route::post('login-user', [UserController::class, 'login']);
 // // show admin stats
 // Route::view('/datavis', 'datavis');
 
+// Landing page start
+Route::get('/', function () {
+    return view('landing', [
+        'movies' => Movie::all()
+    ]);
+});
+
+Route::get('/movies', [MovieController::class, 'getAllMovies']);
+// Landing page end
 
 
 // start User page routes
@@ -50,6 +60,7 @@ Route::get('/userpage', function () {
 
 
 // Movie routes
+Route::view('/movies/new', 'new-movie');
 Route::get('/movie', [MoviesController::class, 'getMovie']);
 Route::get('/movies/{movie}', [MoviesController::class, 'getMovie']);
 Route::get('/search', function() {
@@ -58,13 +69,19 @@ Route::get('/search', function() {
     ]);
 });
 
-// Image CRUD
-Route::post('save', [UploadImageController::class, 'save']);
-// Route::get('reviews', [ReviewController::class, 'index']);
-// Route::post('store-review', [ReviewController::class, 'store']);
-// Route::get('review/{id}', [ReviewController::class, 'show']);
-// Route::get('reviews/create', [ReviewController::class, 'create']);
-// Movies end
+// UPDATE ALL OF THESE TO CORRECT CONTROLLER AND MOVE MOVIESCONRTROLLER CONTENT INTO CORRECT CONTROLLER
+Route::get('/movies/{movie}', [MovieController::class, 'getMovie']);
+Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
+Route::delete('/movies/{movie}/delete', [MovieController::class, 'deleteMovie']);
+Route::patch('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
+
+
+// Review CRUD
+Route::post('store-review', [ReviewController::class, 'store']);
+Route::get('review/{id}', [ReviewController::class, 'show']);
+Route::get('edit-review/{id}', [ReviewController::class, 'edit']);
+Route::put('update-review/{id}', [ReviewController::class, 'update']);
+// Review end
 
 // Breeze start
 // Route::get('/', function () {
