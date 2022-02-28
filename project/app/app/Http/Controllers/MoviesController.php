@@ -10,6 +10,7 @@ class MoviesController extends Controller
     public function getAllMovies()
     {
         $movies = Movie::get();
+        return view('movie', ['movies' => $movies]);
     }
 
     public function getMovie($id)

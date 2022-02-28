@@ -3,6 +3,7 @@
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ContentsArrController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UploadImageController;
 use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 /// Thomas start
 //public: landing page, register, login
+Route::view('/test', 'test');
 Route::view('/home', 'home');
 Route::view('/register', 'register');
 Route::view('/login', 'login');
@@ -31,24 +33,8 @@ Route::post('/register-user', [UserController::class, 'register']);
 //login existing user
 Route::post('login-user', [UserController::class, 'login']);
 
-// show stats
-Route::view('/datavis', 'datavis');
-
-// admin dashboard routes
-// show user details
-//Route::get('dashboard-admin', [UserController::class, 'index']);
-// Route::get('dashboard-admin/{id}', [UserController::class, 'show']); 
-
-// // User CRUD
-// // add a new user to the db
-// Route::post('store-user', [UserController::class, 'store']);
-// //update user details, e.g. role
-// Route::put('dashboard-admin/{id}', [UserController::class, 'update']);
-// //remove user
-// Route::delete('dashboard-admin/{id}', [UserController::class, 'delete']);
-// // search for a user by email
-// Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
-// Thomas end
+// // show admin stats
+// Route::view('/datavis', 'datavis');
 
 // Landing page start
 Route::get('/', function () {
@@ -70,13 +56,16 @@ Route::get('/userpage', function () {
 
 
 // Movie routes
+Route::get('/movie', [MoviesController::class, 'getMovie']);
 Route::get('/movies/{movie}', [MoviesController::class, 'getMovie']);
 Route::get('/search', function() {
     return view('search', [
         'movies' => Movie::all()
     ]);
 });
-// Movie CRUD
+
+// Image CRUD
+Route::post('save', [UploadImageController::class, 'save']);
 // Route::get('reviews', [ReviewController::class, 'index']);
 // Route::post('store-review', [ReviewController::class, 'store']);
 // Route::get('review/{id}', [ReviewController::class, 'show']);
