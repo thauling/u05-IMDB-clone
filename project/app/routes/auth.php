@@ -8,9 +8,9 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\MovieController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UploadImageController; //could move funcs to AdminController but this way perhaps better for reusability
@@ -37,9 +37,6 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.update');
-
-    Route::get('search-movie', [MovieController::class, 'search']);
-
 });
 
 Route::middleware('auth')->group(function () {
@@ -87,6 +84,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('destroy-movie/{id}', [MovieController::class, 'destroy']);
     //Thomas end
 
+    Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
+    Route::delete('/movies/{movie}/delete', [MovieController::class, 'deleteMovie']);
+    Route::post('/movies/{movie}/update', [MovieController::class, 'updateMovie']);
+    //
+    Route::post('store-review', [ReviewController::class, 'store']);
+    Route::put('update-review/{id}', [ReviewController::class, 'update']);
+
+    // BREEZE
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
         ->name('verification.notice');
 
@@ -105,11 +110,4 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
-
-    Route::put('user/update-settings/', [UserController::class, 'updateSettings']);
-    
-    Route::get('user/user-settings', [UserController::class, 'settings']);
-
-
-
 });

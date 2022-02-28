@@ -20,75 +20,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/// Thomas start
-//public: landing page, register, login
-Route::view('/test', 'test');
-Route::view('/home', 'home');
-Route::view('/register', 'register');
-Route::view('/login', 'login');
+// USER 
+// Landing page start
+Route::get('/', function () {
+    return view('landing', [
+        'movies' => Movie::orderBy('avg_rating', 'desc')->get()
+    ]);
 
 
-//register new user
-Route::post('/register-user', [UserController::class, 'register']);
+});
 
-//login existing user
-Route::post('login-user', [UserController::class, 'login']);
+// change to Route::get('/', [MovieController::class, 'getAllMovies']); //do orderBy(), [''] notation in blade.php
 
-// show stats
-Route::view('/datavis', 'datavis');
+Route::get('/userpage', function () {
+    return view('userpage');
+});
 
+/// watchlist
 Route::get('user/watchlist/add/{movie}', [UserController::class, 'updateWatchlist']);
 Route::get('user/watchlist/remove/{movie}', [UserController::class, 'removeFromWatchlist']);
 
-// admin dashboard routes
-// show user details
-//Route::get('dashboard-admin', [UserController::class, 'index']);
-// Route::get('dashboard-admin/{id}', [UserController::class, 'show']); 
-
-// // User CRUD
-// // add a new user to the db
-// Route::post('store-user', [UserController::class, 'store']);
-// //update user details, e.g. role
-// Route::put('dashboard-admin/{id}', [UserController::class, 'update']);
-// //remove user
-// Route::delete('dashboard-admin/{id}', [UserController::class, 'delete']);
-// // search for a user by email
-// Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
-// Thomas end
-
-// Landing page start
-// Route::get('/', function () {
-//     return view('landing', [
-//         'movies' => Movie::all()
-//     ]);
-// });
-
+// MOVIE 
 Route::get('/movies', [MovieController::class, 'getAllMovies']);
-// Landing page end
-
-
-// start User page routes
-Route::get('/userpage', function () {
-    return view('userpage');
-});
-
-Route::get('/userpage', function () {
-    return view('userpage');
-});
-// end user page routes
-
-
-// Movie routes
-Route::view('/movies/new', 'new-movie');
-Route::get('/movie', [MoviesController::class, 'getMovie']);
-Route::get('/movies/{movie}', [MoviesController::class, 'getMovie']);
 Route::get('/search', function() {
     return view('search', [
         'movies' => Movie::all()
     ]);
 });
 
-// UPDATE ALL OF THESE TO CORRECT CONTROLLER AND MOVE MOVIESCONRTROLLER CONTENT INTO CORRECT CONTROLLER
 Route::get('/movies/{movie}', [MovieController::class, 'getMovie']);
 Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
 Route::delete('/movies/{movie}/delete', [MovieController::class, 'deleteMovie']);
@@ -96,32 +55,30 @@ Route::get('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
 Route::post('/movies/{movie}/update', [MovieController::class, 'updateMovie']);
 
 
-// Review CRUD
+// REVIEW
 Route::post('store-review', [ReviewController::class, 'store']);
 Route::get('review/{id}', [ReviewController::class, 'show']);
 Route::get('edit-review/{id}', [ReviewController::class, 'edit']);
 Route::put('update-review/{id}', [ReviewController::class, 'update']);
-// Review end
 
-// Breeze start
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-// Route::get('/', function () {
-//     return view('landing', [
-//         'movies' => Movie::orderBy('avg_rating', 'desc')->get()
-//     ]);
-// })->middleware(['auth'])->name('landing');
+// BREEZE Auth
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+
 
 require __DIR__.'/auth.php';
 
-// Breeze end
 
-// Landing page start
-Route::get('/', function () {
-    return view('landing', [
-        'movies' => Movie::orderBy('avg_rating', 'desc')->get()
-    ]);
-});
-// Landing page end
+
+
+Route::view('/test', 'test'
+
+// DISCARD PILE
+
+
+);
+
+

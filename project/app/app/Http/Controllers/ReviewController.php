@@ -44,12 +44,14 @@ class ReviewController extends Controller
         //     'movie_id' => 'required'
         //         ]);
         //  Review::create($validatedData);
-
+        //dd($request);
         if($request->movie_rating === null){
             return redirect()->back()->with('status', "You have to fill in a rating for this movie!");
                 }
         else{
+            
             $review = new Review;
+            $review->title = $request->title;
             $review->review_content = $request->content;
             $review->review_rating = $request->movie_rating;
             $review->user_id = $request->user_id;
