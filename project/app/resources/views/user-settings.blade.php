@@ -1,6 +1,9 @@
+
+
 @include('_head')
 
 @include('_nav')
+
         <h1 class="text-3xl font-semibold text-gray-900 text-center mt-4">
             Settings
         </h1>
@@ -36,9 +39,9 @@
                 </div>    
             </form>
 
-            @if (session('status'))
+            @if (session()-> has('status'))
                 <div id="status" class="text-green-600 transition-opacity" role="alert">
-                    {{ session('status') }}
+                    {{ session()->get('status') }}
                 </div>
             @endif
         </article>
@@ -49,6 +52,5 @@
 
     </div>
 
-<script src="../js/app.js"></script>
 </body>
 </html>
