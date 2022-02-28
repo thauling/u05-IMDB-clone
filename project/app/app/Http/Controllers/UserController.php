@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+
+
 
 class UserController extends Controller
 {
@@ -20,11 +23,11 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-       // dd('at least I have made it this far');
+        // dd('at least I have made it this far');
         $attributes = request()->validate([
             'name' => 'required', //['required', 'string', 'min:5', 'max:255'],
             'email' => 'required', //['required', 'max:255', 'email', 'unique:users,email'],
-            'password' => 'required'// ['required', 'string', 'confirmed', 'min:7', 'max:255'] // 'confirmed' for user regis
+            'password' => 'required' // ['required', 'string', 'confirmed', 'min:7', 'max:255'] // 'confirmed' for user regis
             //'is_admin' => ['required']
         ]);
 
@@ -58,12 +61,13 @@ class UserController extends Controller
     }
 
     //login with email and password
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
 
         $attributes = request()->validate([
             //'name' => ['required', 'string'],
             'email' => ['required', 'email'],
-            'password' => ['required','string'] // 'confirmed' for user regis
+            'password' => ['required', 'string'] // 'confirmed' for user regis
         ]);
 
         // get (first) user with matching email, will be null if user does not exist
@@ -81,8 +85,8 @@ class UserController extends Controller
         ];
 
         session()->flash('success', 'User logged in',  response($response, 201));
-       // return response($response, 201); //if api, if called from wep.php use:
-       return redirect('home'); //or whatever landig page is called, nneds to be defined
+        // return response($response, 201); //if api, if called from wep.php use:
+        return redirect('home'); //or whatever landig page is called, nneds to be defined
     }
 
 
@@ -91,17 +95,15 @@ class UserController extends Controller
         //show all unsers
         //$users = User::latest()->firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(2)->withQueryString(); //lookup eager loading
         //$users = User::firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(3)->withQueryString(); //
-        // $users = User::paginate(5); 
-        // $users = User::get();
-        $users = User::all();  // same as 'get()' ?
-        return view('dashboard-admin', ['users' => $users]); //->paginate(2);      
+        $users = User::latest()->paginate(5);
+        //$users = User::latest()->get();
+        //$users = User::all();  // same as 'get()' ?
+        return view('admin.admin-main', ['users' => $users]); //->paginate(2);      
+        // return view('admin.admin-main',compact('users'))
+        // ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     // public function create()
     // {
     //     //
@@ -115,76 +117,109 @@ class UserController extends Controller
     //     return view('users.create'); //route needs to be defined
     // }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
-        //dd(request());
-        $request["is_admin"] = $request["is_admin"] ? 1 : 0; //convert checkbox value to tinyint, 1 or 0
-        $attributes = request()->validate([
-            'name' => ['required', 'string', 'min:5', 'max:255'],
-            'email' => ['required', 'max:255', 'email', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:7', 'max:255'], // 'confirmed' for user regis
-            'is_admin' => ['required']
-        ]);
+        if (Auth::check() && Auth::user()->is_admin) :
+            //dd(request());
+            $request["is_admin"] = $request["is_admin"] ? 1 : 0; //convert checkbox value to tinyint, 1 or 0
+            $attributes = request()->validate([
+                'name' => ['required', 'string', 'min:5', 'max:255'],
+                'email' => ['required', 'max:255', 'email', 'unique:users,email'],
+                'password' => ['required', 'string', 'min:7', 'max:255'], // 'confirmed' for user regis
+                'is_admin' => ['required']
+            ]);
 
-        //dd('validation success'); //for debugging, to see if store method is called
-        //User::create($attributes);
-        $user = User::create([
-            'name' => $attributes['name'],
-            'email' => $attributes['email'],
-            'password' => bcrypt($attributes['password']),
-            'is_admin' => $attributes['is_admin'] 
-        ]);
+            //dd('validation success'); //for debugging, to see if store method is called
+            //User::create($attributes);
+            $user = User::create([
+                'name' => $attributes['name'],
+                'email' => $attributes['email'],
+                'password' => bcrypt($attributes['password']),
+                'is_admin' => $attributes['is_admin']
+            ]);
 
-        session()->flash('success', 'User created successfully');
+            session()->flash('success', 'User created successfully');
         //return redirect()->back(); //back() redirects to previous page
-        return redirect('dashboard-admin'); //return redirect()->to('dashboard');
+        endif;
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-        $user = User::find($id);  // same as 'get()' ?
-        return view('dashboard-admin', ['user' => $user]); //->paginate(2);      
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit($id)
     {
-        //
+        $user = User::find($id);  
+        //dd($user);
+        return view('admin.edit-user', ['user' => $user]);
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function search(Request $request) // and/ or $name
+    {
+        
+        $query = $request->input('query');
+        //dd($query);
+        $user = User::where('email', 'like', '%' . $query . '%')->orWhere('name', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
+
+        // grouped orWhere clause should be used instead according to docs but throws error
+        // $user = User::where (function ($query) 
+        // {$query->where('email', 'like', '%' . $query . '%')
+        //     ->orWhere('name', 'like', '%' . $query . '%');})
+        // ->first(); 
+
+        return view('admin.edit-user', ['user' => $user]);
+    }
+
+    
     public function update(Request $request, $id)
     {
         //
         $user = User::find($id);
         $user->update($request->all());
-        return $user;
-        // should nt this be $user->save(); ?
+        
+       // return redirect('dashboard-admin');
+        return redirect('admin-main');
+       
+    }
+    
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateSettings(Request $request)
+    {
+        //
+        $userID = Auth::user('id');
+        $user = User::find($userID)->first();
+
+        // ---------------DOESNT WORK
+        // $updates = $request->validate([
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        // ]);
+
+        // $user::update([
+        //     'name' => $updates['name'],
+        //     'email' => $updates['email'],
+        //     'password' => Hash::make($updates['password'])
+        // ]);
+
+
+        // ------------WORKS BUT IS PROBABLY BAD PRACTICE
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        
+        if(($request->get('password')) === ($request->get('passConfirm'))){
+            $user->password = password_hash($request->get('password'), PASSWORD_BCRYPT); 
+        }
+        $user->save();
+
+        session()->flash('status', 'updated successfully!');
+
+        return redirect('user/user-settings');
     }
 
     /**
@@ -199,15 +234,50 @@ class UserController extends Controller
         User::destroy($id);
         session()->flash('success', 'User deleted');
         //return redirect()->back(); //back() redirects to previous page
-        return redirect('dashboard-admin'); 
+        return redirect()->back();
     }
 
-    public function search($email) // and/ or $name
-    {
-        //
-        return User::where('email', 'like', '%' . $email . '%')->get(); // '%' are regex placeholders, 
-        // for exact search, do
-        //return User::where('email', $email)->get();
+    // public function search($email) // and/ or $name
+    // {
+    //     //
+    //     return User::where('email', 'like', '%' . $email . '%')->get(); // '%' are regex placeholders, 
+    //     // for exact search, do
+    //     //return User::where('email', $email)->get();
 
+    // }
+
+    public function settings()
+    {
+        $user = User::get();
+
+        return view('user-settings', ['user' => $user]);
+    }
+
+    public function updateWatchlist($movieId) 
+    {
+        $user = User::find(Auth::user()->id);
+
+        $watchlist = [];
+
+        if ($user->watchlist != null) {
+            $watchlist = json_decode($user->watchlist);
+        }
+        
+        array_push($watchlist, $movieId);
+
+        $user->watchlist = json_encode($watchlist);
+        $user->update();
+        return redirect()->back()->with('status', 'Movie added to watchlist');
+
+    }
+
+    public function removeFromWatchlist($movieId)
+    {
+        $user = User::find(Auth::user()->id);
+
+        $watchlist = array_diff(json_decode($user->watchlist), $movieId);
+        $user->watchlist = json_encode($watchlist);
+        $user->update();
+        return redirect()->back()->with('status', 'Movie removed from watchlist');
     }
 }

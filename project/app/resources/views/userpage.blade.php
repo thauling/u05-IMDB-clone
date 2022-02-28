@@ -8,10 +8,10 @@
     <title>Userpage</title>
 </head>
 <body>
-    <h1>New IMDB page</h1>
+    <h1 class="user-h1">New IMDB page</h1>
         <h2>Example_user</h2>
     <div class="container">
-        <img src="images/dog.webp" alt="placeholder">
+        <img class="user-avatar" src="images/dog.webp" alt="placeholder">
         <p class="bio">Hello there! I am a big movie fan and love to spend my time browsing the latest movies. My favourite genre is comedy and horror.</p>
     </div>
     <div class="container_2">

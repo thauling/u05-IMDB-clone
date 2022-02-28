@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Movie;
+
 class ReviewController extends Controller
 {
     /**
@@ -14,9 +16,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-     $reviews = DB::table('reviews')->get()->toArray();
-     return view('reviews/reviews', ['reviews'=> $reviews]);
-    
+      //function for showing reviews is in index funtion in MovieController
     }
 
     /**
@@ -26,7 +26,6 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        return view('reviews.create');
     }
 
     /**
@@ -46,18 +45,22 @@ class ReviewController extends Controller
         //         ]);
         //  Review::create($validatedData);
 
-        $review = new Review;
-        $review->review_content = $request->content;
-        $review->review_rating = $request->rating;
-        $review->user_id = $request->user_id;
-        $review->movie_id = $request->movie_id;
+        if($request->movie_rating === null){
+            return redirect()->back()->with('status', "You have to fill in a rating for this movie!");
+                }
+        else{
+            $review = new Review;
+            $review->review_content = $request->content;
+            $review->review_rating = $request->movie_rating;
+            $review->user_id = $request->user_id;
+            $review->movie_id = $request->movie_id;
 
-        $review->save();
-        
-        return redirect('reviews/create')->with('status', 'Creating review was successful!');
-       
-
+            $review->save();
+            return redirect()->back()->with('status', 'Creating review was successful!');
+            }
     }
+        
+
    
     
 
@@ -82,7 +85,12 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Get the review from database
+        $review = Review::find($id);
+
+        //show the form and get data from form
+        return view('reviews/edit')
+        ->with('review', $review);
     }
 
     /**
@@ -95,6 +103,13 @@ class ReviewController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $review = Review::find($id);
+        $review->review_content = $request->input('title');
+        $review->review_content = $request->input('content');
+        $review->review_rating = $request->input('rating');
+        $review->movie_id = $request->input('movie_id');
+        $review->update();
+        return redirect()->back()->with('status','Review Updated Successfully');
     }
 
     /**
@@ -105,6 +120,10 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $review = Review::find($id);
+        $review->delete();
+        return redirect()->back()->with('status','Review Deleted Successfully');
+
+        
     }
 }

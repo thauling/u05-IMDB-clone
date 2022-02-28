@@ -20,16 +20,18 @@ header {
 main {
   padding: 10px 50px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .movie-wrapper {
   width: 1200px;
+  padding:20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-row: auto;
   grid-template-areas: 
-  "title title"
+  "title edit"
   "released rating"
   "media media"
   "genre ."
@@ -38,9 +40,26 @@ main {
   ;
 }
 
+.reviews-section {
+  width: 1200px;
+  padding: 20px;
+  background-color: rgb(238, 232, 232);
+  border-radius: 8px;
+}
+
 .movie-title {
   font-size: 42px;
   grid-area: title;
+}
+
+.movie_poster{
+  height: 90vh;
+}
+
+.edit-link {
+  grid-area: edit;
+  justify-self: end;
+  align-self: center;
 }
 
 .movie-year {
@@ -86,30 +105,37 @@ main {
 .bold-paragraph {
   font-weight: 500;
 }
-* {
+
+.review-wrapper {
+  background-color: #fcf6f5ff;
+  margin: 30px 0;
+  padding: 10px;
+  border-radius: 8px;
+}
+/* * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     text-align: center;
     font-family: sans-serif;
-}
+} */
 body {
     background-color: #fcf6f5ff;
 }
-h1 {
+.user-h1 {
     width: 100%;
     background-color: #990011ff;
     color: #fcf6f5ff;
     padding: 1vh 0 1vh 0;
 }
 
-img {
+.user-avatar {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 5px 5px 5px gray;
-}
+} */
 
 .bio {
     background-color: rgb(238, 207, 207);
@@ -133,9 +159,10 @@ img {
 
 .container_2 {
     display: flex;
-    flex-direction: column;
+    flex-direction: row ;
     align-items: center;
     justify-content: center;
+    
 }
 
 .options {
@@ -159,6 +186,11 @@ img {
     margin-top: 5rem;
 }
 
+.nostyle{
+    text-decoration: none;
+    color: inherit;
+}
+
 @media screen and (max-width: 900px) {
     .container {
         flex-flow: column nowrap;
@@ -166,8 +198,73 @@ img {
     }
 }
 
+
 @media screen and (max-width: 575px) {
     .bio {
         width: 80%;
     }
 }
+
+.star-cb-group {
+  /* remove inline-block whitespace */
+  font-size: 0;
+  /* flip the order so we can use the + and ~ combinators */
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  /* the hidden clearer */
+}
+.star-cb-group * {
+  font-size: 2rem;
+}
+.star-cb-group > input {
+  display: none;
+}
+.star-cb-group > input + label {
+  /* only enough room for the star */
+  display: inline-block;
+  overflow: hidden;
+  text-indent: 9999px;
+  width: 1em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.star-cb-group > input + label:before {
+  display: inline-block;
+  text-indent: -9999px;
+  content: "☆";
+  color: #888;
+}
+.star-cb-group > input:checked ~ label:before,
+.star-cb-group > input + label:hover ~ label:before,
+.star-cb-group > input + label:hover:before {
+  content: "★";
+  color: rgb(247, 234, 58);
+  text-shadow: 0 0 1px #333;
+}
+.star-cb-group > .star-cb-clear + label {
+  text-indent: -9999px;
+  width: 0.5em;
+  margin-left: -0.5em;
+}
+.star-cb-group > .star-cb-clear + label:before {
+  width: 0.5em;
+}
+.star-cb-group:hover > input + label:before {
+  content: "☆";
+  color: #888;
+  text-shadow: none;
+}
+.star-cb-group:hover > input + label:hover ~ label:before,
+.star-cb-group:hover > input + label:hover:before {
+  content: "★";
+  color: rgb(247, 234, 58);
+  text-shadow: 0 0 1px #333;
+}
+
+
+fieldset {
+  border: 0;
+  background: rgb(255, 255, 255);
+  width: 20em;
+  
+} 
