@@ -36,13 +36,7 @@ Route::post('login-user', [UserController::class, 'login']);
 // // show admin stats
 // Route::view('/datavis', 'datavis');
 
-// Landing page start
-Route::get('/', function () {
-    return view('landing', [
-        'movies' => Movie::all()
-    ]);
-});
-// Landing page end
+
 
 // start User page routes
 Route::get('/userpage', function () {
@@ -73,14 +67,24 @@ Route::post('save', [UploadImageController::class, 'save']);
 // Movies end
 
 // Breeze start
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/', function () {
+//     return view('landing', [
+//         'movies' => Movie::orderBy('avg_rating', 'desc')->get()
+//     ]);
+// })->middleware(['auth'])->name('landing');
 
 require __DIR__.'/auth.php';
 
 // Breeze end
+
+// Landing page start
+Route::get('/', function () {
+    return view('landing', [
+        'movies' => Movie::orderBy('avg_rating', 'desc')->get()
+    ]);
+});
+// Landing page end
