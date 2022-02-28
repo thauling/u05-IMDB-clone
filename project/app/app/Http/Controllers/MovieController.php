@@ -6,6 +6,9 @@ use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+// this to access/ store images 
+use Image;
+use Storage;
 
 
 class MovieController extends Controller
@@ -44,7 +47,7 @@ class MovieController extends Controller
                 'url_trailer' => ['required'],
             ]);
 
-            dd('validation success'); //for debugging, to see if store method is called
+            //dd('validation success'); //for debugging, to see if store method is called
             Movie::create($attributes);
             // Movie::create([
             //     'title' => $attributes['title'],
@@ -96,11 +99,6 @@ class MovieController extends Controller
         //dd($query);
         $movie = Movie::where('title', 'like', '%' . $query . '%')->orWhere('abstract', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
 
-        // grouped orWhere clause should be used instead according to docs but throws error
-        // $user = User::where (function ($query) 
-        // {$query->where('email', 'like', '%' . $query . '%')
-        //     ->orWhere('name', 'like', '%' . $query . '%');})
-        // ->first(); 
 
         return view('admin.movie-cast', ['movie' => $movie]);
     }
@@ -131,6 +129,26 @@ class MovieController extends Controller
         //return redirect()->back(); //back() redirects to previous page
         return redirect()->back();
     }
+
+
+    // needs to be modified: from https://medium.com/geekculture/how-to-upload-multiple-images-in-laravel-b98c95324594
+//     public function addImage(Request $request)
+//    {
+//       $this->validate($request, [
+//          'name' => 'required|string|max:255',
+//          'description' => 'required|string|max:855',
+//    ]);
+//    $movie = new Movie;
+//    $movie->name = $request->name;
+//    $movie->abstract = $request->abstract;
+//    $movie->save();
+//    foreach ($request->file('images') as $imagefile) {
+//      $image = new Image;
+//      $path = $imagefile->store('/images/resource', ['disk' =>   'my_files']);
+//      $image->url = $path;
+//      $image->movie_id = $movie->id;
+//      $image->save();
+//    }}
 
 }
 

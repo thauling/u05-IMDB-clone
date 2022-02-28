@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 /// Thomas start
 //public: landing page, register, login
+Route::view('/test', 'test');
 Route::view('/home', 'home');
 Route::view('/register', 'register');
 Route::view('/login', 'login');

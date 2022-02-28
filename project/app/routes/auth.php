@@ -47,6 +47,18 @@ Route::middleware('auth')->group(function () {
      Route::view('/datavis', 'datavis');
     // User CRUD
     // add a new user to the db
+    // could also group these: 
+    // Route::controller(OrderController::class)->group(function () {
+    //     Route::get('/orders/{id}', 'show');
+    //     Route::post('/orders', 'store');
+    // });
+    // and prefix all admin routes
+    // Route::prefix('admin')->group(function () {
+    //     Route::get('/users', function () {
+    //         // Matches The "/admin/users" URL
+    //     });
+    // });
+    
     Route::post('store-user', [UserController::class, 'store']); //called by admin-main create user/ admin form
     //edit, search and update user details, e.g. role
     Route::view('edit-user', 'admin.edit-user'); 
