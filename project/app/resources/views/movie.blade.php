@@ -4,8 +4,8 @@
     <p class="movie-year">Released <span class="bold-paragraph">{{ $movie['released'] }}</span></p>
     <p class="movie-rating">Rating <span class="bold-paragraph">{{ $movie['avg_rating'] }}/10</span> </p>
     <div class="movie-media">
-      <img class="movie_poster" src="{{ $movie['urls_images'] }}" alt="movie poster" />
-      <iframe class="movie_trailer" src="{{ $movie['url_trailer'] }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <img height="505" src="{{ $movie['urls_images'] }}" alt="movie poster" />
+      <iframe width="853" height="505" class="movie_trailer" src="{{ $movie['url_trailer'] }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <p class="movie-genre">{{ $movie['genre'] }}</p>
     <div class="movie-cast">

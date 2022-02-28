@@ -18,7 +18,7 @@ class MovieFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'genre' => $this->faker->sentence(),
+            'genre' => $this->faker->word(),
             'cast' => json_encode(array($this->faker->name(), $this->faker->name(), $this->faker->name())),
             'abstract' => $this->faker->paragraph(),
             'urls_images' => json_encode(array($this->faker->imageUrl(100,100), $this->faker->imageUrl(100,100))), //file >
