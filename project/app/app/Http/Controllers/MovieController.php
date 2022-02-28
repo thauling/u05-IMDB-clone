@@ -7,6 +7,8 @@ use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 use Illuminate\Support\Facades\Hash;
 // this to access/ store images 
 use Image;
@@ -208,16 +210,16 @@ class MovieController extends Controller
     }
 
      
-    public function search(Request $request) // and/ or $name
-    {
+    // public function search(Request $request) // and/ or $name
+    // {
         
-        $query = $request->input('query');
-        //dd($query);
-        $movie = Movie::where('title', 'like', '%' . $query . '%')->orWhere('abstract', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
+    //     $query = $request->input('query');
+    //     //dd($query);
+    //     $movie = Movie::where('title', 'like', '%' . $query . '%')->orWhere('abstract', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
 
 
-        return view('admin.movie-cast', ['movie' => $movie]);
-    }
+    //     return view('admin.movie-cast', ['movie' => $movie]);
+    // }
 
     
     public function update(Request $request, $id)
@@ -266,6 +268,43 @@ class MovieController extends Controller
 //      $image->save();
 //    }}
 
+    public function search(Request $request) // and/ or $name
+    {
+        $movies = Movie::all();
+        $query = $request->input('s');
+        $results = [];
+        $actors = [];
+
+        foreach($movies as $movie) {
+
+           foreach (json_decode($movie->cast) as $actor) {
+               
+                if (Str::contains(strtolower($actor), strtolower($query))) {
+                array_push($actors, $actor);
+                }
+            }
+                   
+            if (Str::contains(strtolower($movie->title), strtolower($query)) || 
+            Str::contains(strtolower($movie->genre), strtolower($query)) || !empty($actors)) {
+                
+                array_push($results, $movie);
+            }
+            
+            $actors = [];
+        }
+
+        if($query === null || $query === '') {
+            $results = $movies;
+        }
+
+
+        // $results = Movie::where('title', 'like', '%' . $query . '%')
+        //                     ->orWhere('genre', 'like', '%' . $query . '%')
+        //                     ->orWhere('cast', 'like', '%' . $query . '%')
+        //                     ->get(); 
+
+        return view('landing', ['results' => $results]);
+    }
 }
 
 
