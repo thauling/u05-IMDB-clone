@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+
+
 
 class UserController extends Controller
 {
@@ -197,30 +200,34 @@ class UserController extends Controller
     {
         //
         $userID = Auth::user('id');
-        
         $user = User::find($userID)->first();
-        // dd($user);
-        // request()->validate([
-        //     'name' => 'required',
-        //     'email' => 'required',
-        //     'password' => 'required',
-        //     'passConfirm' => 'required'
 
+        // ---------------DOESNT WORK
+        // $updates = $request->validate([
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
         // ]);
 
+        // $user::update([
+        //     'name' => $updates['name'],
+        //     'email' => $updates['email'],
+        //     'password' => Hash::make($updates['password'])
+        // ]);
+
+
+        // ------------WORKS BUT IS PROBABLY BAD PRACTICE
         $user->name = $request->get('name');
         $user->email = $request->get('email');
+        
+        if(($request->get('password')) === ($request->get('passConfirm'))){
+            $user->password = password_hash($request->get('password'), PASSWORD_BCRYPT); 
+        }
         $user->save();
 
+        session()->flash('status', 'updated successfully!');
 
-        // if($request->get('password')===$request->get('passConfirm')){
-        //     $user->update([
-        //         'password' => $request->get('password'),    
-        //     ]);
-        // }
-        
-        return redirect('user/user-settings')
-                            ->with('status', 'updated successfully!');
+        return redirect('user/user-settings');
     }
 
     /**

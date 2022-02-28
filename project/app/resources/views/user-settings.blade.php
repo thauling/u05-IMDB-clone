@@ -40,8 +40,11 @@
             </form>
 
             @if (session()-> has('status'))
-                <div id="status" class="text-green-600 transition-opacity" role="alert">
-                    {{ session()->get('status') }}
+                <div x-data="{ show: true }"
+                    x-init="setTimeout(() => show = false, 3000)"
+                    x-show="show"
+                    id="status" class="text-green-600 transition-opacity" role="alert">
+                    {{ session('status') }}
                 </div>
             @endif
         </article>
