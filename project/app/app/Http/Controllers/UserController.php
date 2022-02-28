@@ -210,4 +210,32 @@ class UserController extends Controller
         //return User::where('email', $email)->get();
 
     }
+
+    public function updateWatchlist($movieId) 
+    {
+        $user = User::find(Auth::user()->id);
+
+        $watchlist = [];
+
+        if ($user->watchlist != null) {
+            $watchlist = json_decode($user->watchlist);
+        }
+        
+        array_push($watchlist, $movieId);
+
+        $user->watchlist = json_encode($watchlist);
+        $user->update();
+        return redirect()->back()->with('status', 'Movie added to watchlist');
+
+    }
+
+    public function removeFromWatchlist($movieId)
+    {
+        $user = User::find(Auth::user()->id);
+
+        $watchlist = array_diff(json_decode($user->watchlist), $movieId);
+        $user->watchlist = json_encode($watchlist);
+        $user->update();
+        return redirect()->back()->with('status', 'Movie removed from watchlist');
+    }
 }

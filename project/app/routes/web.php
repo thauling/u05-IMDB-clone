@@ -35,6 +35,9 @@ Route::post('login-user', [UserController::class, 'login']);
 // show stats
 Route::view('/datavis', 'datavis');
 
+Route::get('user/watchlist/add/{movie}', [UserController::class, 'updateWatchlist']);
+Route::get('user/watchlist/remove/{movie}', [UserController::class, 'removeFromWatchlist']);
+
 // admin dashboard routes
 // show user details
 //Route::get('dashboard-admin', [UserController::class, 'index']);
