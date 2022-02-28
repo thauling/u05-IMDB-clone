@@ -1,6 +1,18 @@
 <x-layout>
   <section class="movie-wrapper">
     <h1 class="movie-title">{{ $movie['title'] }}</h1>
+    <div class="movie-controls">
+      @if (Auth::check())
+        @if (in_array($movie['id'], json_decode(Auth::user()->watchlist)))
+          <a class="watchlist-link" href="/user/watchlist/remove/{{$movie['id']}}">remove from watchlist</a>
+        @else
+          <a class="watchlist-link" href="/user/watchlist/add/{{$movie['id']}}">add to watchlist</a>
+        @endif
+        @if (Auth::check() && Auth::user()->is_admin)
+          <a class="edit-link" href="/movies/{{$movie['id']}}/edit">edit movie</a>
+        @endif
+      @endif
+    </div>
     <p class="movie-year">Released <span class="bold-paragraph">{{ $movie['released'] }}</span></p>
     <p class="movie-rating">Rating <span class="bold-paragraph">{{ $movie['avg_rating'] }}/10</span> </p>
     <div class="movie-media container_2">

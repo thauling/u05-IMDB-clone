@@ -31,7 +31,7 @@ main {
   grid-template-columns: 1fr 1fr;
   grid-row: auto;
   grid-template-areas: 
-  "title title"
+  "title edit"
   "released rating"
   "media media"
   "genre ."
@@ -54,6 +54,12 @@ main {
 
 .movie_poster{
   height: 90vh;
+}
+
+.edit-link {
+  grid-area: edit;
+  justify-self: end;
+  align-self: center;
 }
 
 .movie-year {

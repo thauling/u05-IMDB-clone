@@ -34,15 +34,34 @@ Route::post('/register-user', [UserController::class, 'register']);
 //login existing user
 Route::post('login-user', [UserController::class, 'login']);
 
-// // show admin stats
-// Route::view('/datavis', 'datavis');
+// show stats
+Route::view('/datavis', 'datavis');
+
+Route::get('user/watchlist/add/{movie}', [UserController::class, 'updateWatchlist']);
+Route::get('user/watchlist/remove/{movie}', [UserController::class, 'removeFromWatchlist']);
+
+// admin dashboard routes
+// show user details
+//Route::get('dashboard-admin', [UserController::class, 'index']);
+// Route::get('dashboard-admin/{id}', [UserController::class, 'show']); 
+
+// // User CRUD
+// // add a new user to the db
+// Route::post('store-user', [UserController::class, 'store']);
+// //update user details, e.g. role
+// Route::put('dashboard-admin/{id}', [UserController::class, 'update']);
+// //remove user
+// Route::delete('dashboard-admin/{id}', [UserController::class, 'delete']);
+// // search for a user by email
+// Route::get('dashboard-admin/{email}', [UserController::class, 'search']);
+// Thomas end
 
 // Landing page start
-Route::get('/', function () {
-    return view('landing', [
-        'movies' => Movie::all()
-    ]);
-});
+// Route::get('/', function () {
+//     return view('landing', [
+//         'movies' => Movie::all()
+//     ]);
+// });
 
 Route::get('/movies', [MovieController::class, 'getAllMovies']);
 // Landing page end
@@ -73,7 +92,8 @@ Route::get('/search', function() {
 Route::get('/movies/{movie}', [MovieController::class, 'getMovie']);
 Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
 Route::delete('/movies/{movie}/delete', [MovieController::class, 'deleteMovie']);
-Route::patch('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
+Route::get('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
+Route::post('/movies/{movie}/update', [MovieController::class, 'updateMovie']);
 
 
 // Review CRUD
