@@ -1,4 +1,5 @@
 <?php
+//use App\Models\Movie;
 // initialize row index for users and movies tables
 $rownumber = 0;
 ?>
@@ -9,7 +10,7 @@ $rownumber = 0;
     <h1>You are not signed in.</h1>
     @endunless
     @if (Auth::check() && Auth::user()->is_admin)
-   
+
     <div class="block text-gray-500 font-bold">
         <h1 class="">Dashboard</h1>
         <span class=""> Hi admin {{Auth::user()->name}} ! </span>
@@ -25,7 +26,7 @@ $rownumber = 0;
 -->
     <section class="flex">
         <div class="flex-col p-20">
-            <h2>CRUD Movie Details</h2>
+            <h2>Add a Movie</h2>
 
             <form class="w-full max-w-sm" method="post" action="{{url('store-movie')}}">
                 @csrf
@@ -105,7 +106,7 @@ $rownumber = 0;
         </div>
 
         <div class="flex-col p-20">
-            <h2>CRUD User Details and Permissions</h2>
+            <h2>Add a User</h2>
             <!-- Search for user and update details -->
             <form class="w-full max-w-sm" method="post" action="{{url('store-user')}}">
                 @csrf
@@ -140,7 +141,7 @@ $rownumber = 0;
                     </div>
                 </div>
                 <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3"></div>
+                    <!-- <div class="md:w-1/3"></div> -->
                     <label class="md:w-2/3 block text-gray-500 font-bold" for="is_admin">
                         <input class="mr-2 leading-tight" type="checkbox" name="is_admin" value="yes">
                         Is admin?
@@ -242,7 +243,9 @@ $rownumber = 0;
                                 @endforeach
                             </tbody>
                         </table>
-                        <!-- "in double curly braces $users->links() }}" -->
+                        <!-- show pagination -->
+                        {{ $users->links() }}
+
                     </div>
                 </div>
             </div>
@@ -313,10 +316,10 @@ $rownumber = 0;
                                     </td>
                                     @auth
                                     <td class="flex flex-col">
-                                   
+
                                         <a class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" href="/movies/{{$movie['id']}}/edit">Edit</a>
                                         <!-- "flex justify-start content-start" -->
-                                        
+
                                         <form method="post" action="{{url('destroy-movie',$movie->id)}}">
                                             @csrf
                                             @method('DELETE')
@@ -330,7 +333,111 @@ $rownumber = 0;
                                 @endforeach
                             </tbody>
                         </table>
-                        <!-- "in double curly braces $users->links() }}" -->
+                        <!-- show pagination -->
+                        {{ $movies->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @else
+    <p>
+        No movies found.
+    </p>
+    @endif
+
+    <section>
+        <h2>CRUD Review Tracking</h2>
+        <!-- table and/ or chart on user stats -->
+        @if ($reviews->count())
+        <!-- "$movies->links" to be used with paginate-->
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full">
+                            <thead class="bg-gray-100 border-b">
+                                <tr>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        #
+                                    </th>
+                                    <!-- <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Id
+                                </th> -->
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        Title
+                                    </th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left max-w-sm">
+                                        Content
+                                    </th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left max-w-sm">
+                                        Rating
+                                    </th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        User
+                                    </th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        Movie
+                                    </th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        Created 
+                                    </th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- fix pagination -->
+                                @foreach ($reviews as $review)
+                                <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        {{++$rownumber}}
+                                    </td>
+                                    <!-- <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    {{$user->id}}
+                                </td> -->
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{$review->title}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-normal max-w-sm">
+                                        {{$review->review_content}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-normal max-w-xs">
+                                        {{$review->review_rating}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 max-w-xs">
+                                        {{$review->user_id}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 max-w-xs">
+                                        {{$review->movie_id}}                
+                                        <!-- //json_encode(Movie::where('id', '=', $review->movie_id)->get()->only(['title'])->all());                                             -->
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 max-w-xs">
+                                        {{$review->created_at}}
+                                    </td>
+                                    @auth
+                                    <td class="flex flex-col">
+
+                                        <a class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" href="/review/{{$review['id']}}/edit">Edit</a>
+                                        <!-- "flex justify-start content-start" -->
+
+                                        <form method="post" action="{{url('destroy-review',$review->id)}}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="md:w-1/6">
+                                                <button class="shadow bg-red-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" type="submit">Delete</button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    @endauth
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <!-- show pagination -->
+                        {{ $reviews->links() }}
                     </div>
                 </div>
             </div>

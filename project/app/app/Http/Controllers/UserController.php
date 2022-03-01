@@ -173,12 +173,13 @@ class UserController extends Controller
     
     public function update(Request $request, $id)
     {
-        //
+        //dd($request["is_admin"]);
         $user = User::find($id);
+        $request["is_admin"] = $request["is_admin"] ? 1 : 0; 
         $user->update($request->all());
         
-       // return redirect('dashboard-admin');
         return redirect('admin-main');
+        //return redirect()->back();
        
     }
     

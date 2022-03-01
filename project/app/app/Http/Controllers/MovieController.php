@@ -230,12 +230,11 @@ class MovieController extends Controller
     
     public function update(Request $request, $id)
     {
-        //
         $movie = Movie::find($id);
         $movie->update($request->all());
         
-       // return redirect('dashboard-admin');
-        return redirect('admin-main');
+        //return redirect('admin-main');
+        return redirect()->back();
        
     }
 
