@@ -15,7 +15,7 @@
             </a>
 
             <div class="my-2">
-                <form class="flex gap-x-1" action="{{ url('search-movie') }}" method="get">
+                <form class="flex gap-x-1" action="{{ url('/search-movie') }}" method="get">
                     @csrf
                     <input class="rounded border border-solid border-gray-400 py-2 px-2" type="text" placeholder="search" name="s">
                     

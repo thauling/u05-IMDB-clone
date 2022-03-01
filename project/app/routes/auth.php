@@ -40,56 +40,51 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    //Thomas
-    // image CRUD
-    Route::get('upload-image', [UploadImageController::class, 'index']);
-    //Route::post('save', [UploadImageController::class, 'save']);
-    // need extra 'is_admin check'  
-    Route::get('admin-main', [AdminController::class, 'showUsersAndMovies']); // redirected to from UserController methods, no direct access implemented
-    //Route::get('admin-main', [UserController::class, 'index']);
-    // show auth user stats
+  // ADMIN
+
+    Route::get('/upload-image', [UploadImageController::class, 'index']); 
+    Route::get('/admin-main', [AdminController::class, 'showUsersAndMovies']); // redirected to from UserController methods, no direct access implemented
     Route::view('/datavis', 'datavis');
-    // User CRUD
-    // add a new user to the db
-    // could also group these: 
-    // Route::controller(OrderController::class)->group(function () {
-    //     Route::get('/orders/{id}', 'show');
-    //     Route::post('/orders', 'store');
-    // });
-    // and prefix all admin routes
-    // Route::prefix('admin')->group(function () {
-    //     Route::get('/users', function () {
-    //         // Matches The "/admin/users" URL
-    //     });
-    // });
+  
+// USER
+    Route::view('/edit-user', 'admin.edit-user');
+    Route::post('/store-user', [UserController::class, 'store']); 
+    Route::post('/edit-user/{id}', [UserController::class, 'edit']); //called by admin-main search form
+    Route::get('/search-user', [UserController::class, 'search']); //called by admin-main search form
+    Route::put('/update-user/{id}', [UserController::class, 'update']); //called by admin-edit form
+    Route::delete('/destroy-user/{id}', [UserController::class, 'destroy']);
 
-    Route::post('store-user', [UserController::class, 'store']); //called by admin-main create user/ admin form
-    //edit, search and update user details, e.g. role
-    Route::view('edit-user', 'admin.edit-user');
-    Route::post('edit-user/{id}', [UserController::class, 'edit']); //called by admin-main search form
-    Route::get('search-user', [UserController::class, 'search']); //called by admin-main search form
-    Route::put('update-user/{id}', [UserController::class, 'update']); //called by admin-edit form
-    //remove user
-    Route::delete('destroy-user/{id}', [UserController::class, 'destroy']);
-    // Movie CRUD
-    // add a new movie to the db
-    Route::post('store-movie', [MovieController::class, 'store']); //c
-    // show cast and images forms
-    Route::view('movie-cast', 'admin.movie-cast');
-    Route::view('movie-images', 'admin.movie-images');
-    Route::post('edit-movie/{id}', [MovieController::class, 'edit']);
-    Route::get('search-movie', [MovieController::class, 'search']); //
-    Route::put('update-movie/{id}', [MovieController::class, 'update']); //
-    //remove user
-    Route::delete('destroy-movie/{id}', [MovieController::class, 'destroy']);
-    //Thomas end
+// MOVIE
+  
+    Route::view('/movie-cast', 'admin.movie-cast');
+    Route::view('/movie-images', 'admin.movie-images');
 
-    Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
-    Route::delete('/movies/{movie}/delete', [MovieController::class, 'deleteMovie']);
+    Route::get('/search-movie', [MovieController::class, 'search']); 
+    //Route::post('/movies/{movie}/edit', [MovieController::class, 'edit']);
+    Route::get('/movies/{movie}/edit', [MovieController::class, 'edit']);
+
+    Route::post('/store-movie', [MovieController::class, 'store']); //c
     Route::post('/movies/{movie}/update', [MovieController::class, 'updateMovie']);
-    //
-    Route::post('store-review', [ReviewController::class, 'store']);
-    Route::put('update-review/{id}', [ReviewController::class, 'update']);
+   
+   // Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
+  
+
+    Route::put('/update-movie/{id}', [MovieController::class, 'update']); //
+  
+
+    Route::delete('/movies/{movie}/delete', [MovieController::class, 'destroy']);
+    Route::delete('/destroy-movie/{id}', [MovieController::class, 'destroy']);
+  
+
+    // MOVIE watchlist
+    Route::get('/user/watchlist/add/{movie}', [UserController::class, 'updateWatchlist']);
+    Route::get('/user/watchlist/remove/{movie}', [UserController::class, 'removeFromWatchlist']);
+
+    //REVIEW 
+    Route::get('/edit-review/{id}', [ReviewController::class, 'edit']);
+    Route::post('/store-review', [ReviewController::class, 'store']);
+    Route::put('/update-review/{id}', [ReviewController::class, 'update']);
+
 
     // BREEZE
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])

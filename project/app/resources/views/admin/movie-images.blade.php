@@ -9,10 +9,8 @@
         @endif
 
         <div class="">
-
-            <h1>Edit images of a movie</h1>
-            <div class="card-header text-center font-weight-bold">
-                <h2>Upload Movie Images</h2>
+            <div class="">
+                <h1 class="block text-gray-500 font-bold">Upload Movie Images</h1>
             </div>
 
             <div class="">

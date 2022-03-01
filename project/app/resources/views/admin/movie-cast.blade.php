@@ -18,8 +18,8 @@ if (isset($_GET['dynaInput'])) {
 
 <x-admin>
     <div class="flex flex-col p-10">
-        <h2 class="block text-gray-500 font-bold">Find movie by title or abstract (should add cast)</h2>
-        <form class="w-full max-w-sm" method="get" action="{{url('search-movie')}}">
+        <h1 class="block text-gray-500 font-bold">Find movie by title or abstract (should add cast)</h1>
+        <form class="w-full max-w-sm" method="get" action="{{url('/search-movie')}}">
             <!-- need to fix this -->
             @csrf
             <!-- <div class="md:flex md:items-center mb-6"> -->
@@ -98,19 +98,7 @@ if (isset($_GET['dynaInput'])) {
         });
     </script>
     @endif
-    <!-- <form method="post" action="">          
-    @csrf
 
-        <label for="cast1">Cast1</label>
-        <input type="text" name="cast1" value="" class="" placeholder="" />
-        <label for="cast1">Cast1</label>
-        <input type="text" name="cast1" value="" class="" placeholder="" />
-        <label for="cast1">Cast1</label>
-        <input type="text" name="cast1" value="" class="" placeholder="" />
-        <label for="cast1">Cast1</label>
-        <input type="text" name="cast1" value="" class="" placeholder="" />
-        <button type="submit">Submit</button>
-    </form> -->
 
     @endif
 

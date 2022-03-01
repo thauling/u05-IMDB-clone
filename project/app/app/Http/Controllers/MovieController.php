@@ -115,28 +115,28 @@ class MovieController extends Controller
         return redirect('dashboard-admin'); // Correct redirect? Since only admins are supposed to be able to delete?
     }
 
-    public function editMovie($id)
-    {   
-        // Needs validator
-        $movie = Movie::find($id);
+    // public function editMovie($id)
+    // {   
+    //     // Needs validator
+    //     $movie = Movie::find($id);
 
-        $imgsToArray = json_decode($movie->urls_images); 
+    //     $imgsToArray = json_decode($movie->urls_images); 
 
-        $alteredMovie = [
-            'id' => $movie->id,
-            'title' => $movie->title,
-            'genre' => $movie->genre,
-            'cast' => json_decode($movie->cast),
-            'abstract' => $movie->abstract,
-            'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
-            'url_trailer' => $movie->url_trailer,
-            'avg_rating' => $movie->avg_rating,
-            'released' => $movie->released
-        ];
+    //     $alteredMovie = [
+    //         'id' => $movie->id,
+    //         'title' => $movie->title,
+    //         'genre' => $movie->genre,
+    //         'cast' => json_decode($movie->cast),
+    //         'abstract' => $movie->abstract,
+    //         'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
+    //         'url_trailer' => $movie->url_trailer,
+    //         'avg_rating' => $movie->avg_rating,
+    //         'released' => $movie->released
+    //     ];
 
-        return view('edit-movie', ['movie' => $alteredMovie]);
+    //     return view('edit-movie', ['movie' => $alteredMovie]);
         
-    }
+    // }
 
     public function updateMovie(Request $req, $id) 
     {
@@ -179,23 +179,25 @@ class MovieController extends Controller
             $attributes = request()->validate([
                 'title' => ['required'],
                 'genre' => ['required'],
-                //'cast' => ['required'],
+                'released' => ['required'],
                 'abstract' => ['required'],
                 //'urls_images' => ['required'],
                 'url_trailer' => ['required'],
             ]);
 
             //dd('validation success'); //for debugging, to see if store method is called
-            Movie::create($attributes);
-            // Movie::create([
-            //     'title' => $attributes['title'],
-            //     'genre' => $attributes['genre'],
-            //    // 'cast' => json_encode($attributes['cast']), //json_encode(array($attributes['cast'])),
-            //     'abstract' => $attributes['abstract'],
-            //     //'urls_images' => json_encode($attributes['urls_images']),
-            //     'url_trailer' => $attributes['url_trailer']
-                
-            // ]);
+            //Movie::create($attributes);
+         
+            Movie::create([ // How to protect from injections? Look this up
+                'title' => $attributes['title'],
+                'genre' => $attributes['genre'],
+               // 'cast' => json_encode(array($rattributes->cast)), // Depending on how the user gets to submit the cast, explode by ","?
+                'abstract' => $attributes['abstract'],
+               // 'urls_images' => json_encode(array($attributes->images)), // How does the user get to submit img paths?
+                'url_trailer' => $attributes['trailer'], // This should be the movie id on YT, not the entire url
+               // 'avg_rating' => $attributes->rating, // Should not be manually submitted?
+                'released' => (int)$attributes['released']
+            ]);
 
 
             session()->flash('success', 'Movie added');
@@ -259,7 +261,7 @@ class MovieController extends Controller
     }
 
 
-    // needs to be modified: from https://medium.com/geekculture/how-to-upload-multiple-images-in-laravel-b98c95324594
+    //needs to be modified: from https://medium.com/geekculture/how-to-upload-multiple-images-in-laravel-b98c95324594
 //     public function addImage(Request $request)
 //    {
 //       $this->validate($request, [
@@ -278,44 +280,57 @@ class MovieController extends Controller
 //      $image->save();
 //    }}
 
-// Simon s search()
+// Simon s search() // cast search needs fix
+public function searchSimon(Request $request) // and/ or $name
+{
+    $movies = Movie::all();
+    $query = $request->input('s');
+    $results = [];
+    $actors = [];
+
+    foreach($movies as $movie) {
+
+       foreach (json_decode($movie->cast) as $actor) {
+           
+            if (Str::contains(strtolower($actor), strtolower($query))) {
+            array_push($actors, $actor);
+            }
+        }
+               
+        if (Str::contains(strtolower($movie->title), strtolower($query)) || 
+        Str::contains(strtolower($movie->genre), strtolower($query)) || !empty($actors)) {
+            
+            array_push($results, $movie);
+        }
+        
+        $actors = [];
+    }
+
+    if($query === null || $query === '') {
+        $results = $movies;
+    }
+
+
+    $results = Movie::where('title', 'like', '%' . $query . '%')
+                        ->orWhere('genre', 'like', '%' . $query . '%')
+                        ->orWhere('cast', 'like', '%' . $query . '%')
+                        ->get(); 
+
+    return view('landing', ['results' => $results]);
+}
+    // admin movie search  
     public function search(Request $request) // and/ or $name
     {
-        $movies = Movie::all();
-        $query = $request->input('s');
-        $results = [];
-        $actors = [];
-
-        foreach($movies as $movie) {
-
-           foreach (json_decode($movie->cast) as $actor) {
-               
-                if (Str::contains(strtolower($actor), strtolower($query))) {
-                array_push($actors, $actor);
-                }
-            }
-                   
-            if (Str::contains(strtolower($movie->title), strtolower($query)) || 
-            Str::contains(strtolower($movie->genre), strtolower($query)) || !empty($actors)) {
-                
-                array_push($results, $movie);
-            }
-            
-            $actors = [];
-        }
-
-        if($query === null || $query === '') {
-            $results = $movies;
-        }
+        
+        $query = $request->input('query');
+        //dd($query);
+        $movie = Movie::where('title', 'like', '%' . $query . '%')->orWhere('abstract', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
 
 
-        $results = Movie::where('title', 'like', '%' . $query . '%')
-                            ->orWhere('genre', 'like', '%' . $query . '%')
-                            ->orWhere('cast', 'like', '%' . $query . '%')
-                            ->get(); 
-
-        return view('landing', ['results' => $results]);
+        return view('admin.movie-cast', ['movie' => $movie]);
     }
+
+
 }
 
 

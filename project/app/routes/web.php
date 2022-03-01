@@ -26,19 +26,15 @@ Route::get('/', function () {
     return view('landing', [
         'movies' => Movie::orderBy('avg_rating', 'desc')->get()
     ]);
-
+// change to Route::get('/', [MovieController::class, 'getAllMovies']); //do orderBy(), [''] notation in blade.php
 
 });
 
-// change to Route::get('/', [MovieController::class, 'getAllMovies']); //do orderBy(), [''] notation in blade.php
+
 
 Route::get('/userpage', function () {
     return view('userpage');
 });
-
-/// watchlist
-Route::get('user/watchlist/add/{movie}', [UserController::class, 'updateWatchlist']);
-Route::get('user/watchlist/remove/{movie}', [UserController::class, 'removeFromWatchlist']);
 
 // MOVIE 
 Route::get('/movies', [MovieController::class, 'getAllMovies']);
@@ -49,18 +45,11 @@ Route::get('/search', function() {
 });
 
 Route::get('/movies/{movie}', [MovieController::class, 'getMovie']);
-Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
-Route::delete('/movies/{movie}/delete', [MovieController::class, 'deleteMovie']);
-Route::get('/movies/{movie}/edit', [MovieController::class, 'editMovie']);
-Route::post('/movies/{movie}/update', [MovieController::class, 'updateMovie']);
 
 
 // REVIEW
-Route::post('store-review', [ReviewController::class, 'store']);
-Route::get('review/{id}', [ReviewController::class, 'show']);
-Route::get('edit-review/{id}', [ReviewController::class, 'edit']);
-Route::put('update-review/{id}', [ReviewController::class, 'update']);
 
+Route::get('review/{id}', [ReviewController::class, 'show']);
 
 // BREEZE Auth
 Route::get('/dashboard', function () {

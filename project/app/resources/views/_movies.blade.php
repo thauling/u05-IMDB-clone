@@ -29,6 +29,7 @@
                         <div class="ml-10 pt-10">
                             <h3 class="font-bold">Cast</h3>
                             <ul class="text-sm sm:text-base">
+                
                             @foreach(json_decode($movie->cast) as $actor)
                                 <li>{{ $actor }}</li>
                             @endforeach
