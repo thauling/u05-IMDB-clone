@@ -37,6 +37,8 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.update');
+
+    Route::get('/search-movie', [MovieController::class, 'movieSearch']); 
 });
 
 Route::middleware('auth')->group(function () {
@@ -59,7 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/movie-cast', 'admin.movie-cast');
     Route::view('/movie-images', 'admin.movie-images');
 
-    Route::get('/search-movie', [MovieController::class, 'search']); 
+
     //Route::post('/movies/{movie}/edit', [MovieController::class, 'edit']);
     Route::get('/movies/{movie}/edit', [MovieController::class, 'edit']);
 
