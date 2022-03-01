@@ -9,7 +9,7 @@ $rownumber = 0;
     <h1>You are not signed in.</h1>
     @endunless
     @if (Auth::check() && Auth::user()->is_admin)
-
+   
     <div class="block text-gray-500 font-bold">
         <h1 class="">Dashboard</h1>
         <span class=""> Hi admin {{Auth::user()->name}} ! </span>
@@ -311,12 +311,12 @@ $rownumber = 0;
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 max-w-xs">
                                         {{$movie->avg_rating}}
                                     </td>
-
+                                    @auth
                                     <td class="flex flex-col">
-
+                                   
                                         <a class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" href="/movies/{{$movie['id']}}/edit">Edit</a>
                                         <!-- "flex justify-start content-start" -->
-
+                                        
                                         <form method="post" action="{{url('destroy-movie',$movie->id)}}">
                                             @csrf
                                             @method('DELETE')
@@ -325,6 +325,7 @@ $rownumber = 0;
                                             </div>
                                         </form>
                                     </td>
+                                    @endauth
                                 </tr>
                                 @endforeach
                             </tbody>

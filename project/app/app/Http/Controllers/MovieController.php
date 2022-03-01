@@ -109,11 +109,11 @@ class MovieController extends Controller
         return view('movie', ['movie' => $movie]);
     }
 
-    public function deleteMovie($id)
-    {
-        Movie::destroy($id);
-        return redirect('dashboard-admin'); // Correct redirect? Since only admins are supposed to be able to delete?
-    }
+    // public function deleteMovie($id)
+    // {
+    //     Movie::destroy($id);
+    //     return redirect('dashboard-admin'); // Correct redirect? Since only admins are supposed to be able to delete?
+    // }
 
     // public function editMovie($id)
     // {   
@@ -161,12 +161,6 @@ class MovieController extends Controller
         $movies = Movie::latest()->get();
         //$users = User::all();  // same as 'get()' ?
         return view('admin.admin-main', ['moviess' => $movies]); //->paginate(2);
-    }
-
-
-    public function create()
-    {
-        //
     }
 
 
@@ -281,7 +275,7 @@ class MovieController extends Controller
 //    }}
 
 // Simon s search() // cast search needs fix
-public function searchSimon(Request $request) // and/ or $name
+public function search(Request $request) // and/ or $name
 {
     $movies = Movie::all();
     $query = $request->input('s');
@@ -311,20 +305,21 @@ public function searchSimon(Request $request) // and/ or $name
     }
 
 
-    $results = Movie::where('title', 'like', '%' . $query . '%')
-                        ->orWhere('genre', 'like', '%' . $query . '%')
-                        ->orWhere('cast', 'like', '%' . $query . '%')
-                        ->get(); 
+    // $results = Movie::where('title', 'like', '%' . $query . '%')
+    //                     ->orWhere('genre', 'like', '%' . $query . '%')
+    //                     ->orWhere('cast', 'like', '%' . $query . '%')
+    //                     ->get(); 
 
     return view('landing', ['results' => $results]);
 }
     // admin movie search  
-    public function search(Request $request) // and/ or $name
+    public function adminSearchMovie(Request $request) // and/ or $name
     {
         
         $query = $request->input('query');
         //dd($query);
-        $movie = Movie::where('title', 'like', '%' . $query . '%')->orWhere('abstract', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
+        $movie = Movie::where('title', 'like', '%' . $query . '%')
+        ->orWhere('abstract', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
 
 
         return view('admin.movie-cast', ['movie' => $movie]);

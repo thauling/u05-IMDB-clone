@@ -58,8 +58,8 @@ Route::middleware('auth')->group(function () {
   
     Route::view('/movie-cast', 'admin.movie-cast');
     Route::view('/movie-images', 'admin.movie-images');
-
-    Route::get('/search-movie', [MovieController::class, 'search']); 
+    Route::get('/search-movie', [MovieController::class, 'Search']); 
+    Route::get('/admin-search-movie', [MovieController::class, 'adminSearchMovie']); 
     //Route::post('/movies/{movie}/edit', [MovieController::class, 'edit']);
     Route::get('/movies/{movie}/edit', [MovieController::class, 'edit']);
 

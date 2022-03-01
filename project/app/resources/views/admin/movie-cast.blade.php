@@ -19,7 +19,7 @@ if (isset($_GET['dynaInput'])) {
 <x-admin>
     <div class="flex flex-col p-10">
         <h1 class="block text-gray-500 font-bold">Find movie by title or abstract (should add cast)</h1>
-        <form class="w-full max-w-sm" method="get" action="{{url('/search-movie')}}">
+        <form class="w-full max-w-sm" method="get" action="{{url('/admin-search-movie')}}">
             <!-- need to fix this -->
             @csrf
             <!-- <div class="md:flex md:items-center mb-6"> -->
