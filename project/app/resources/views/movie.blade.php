@@ -31,9 +31,11 @@
   </section>
   <section class="reviews-section">
     <h2>Reviews</h2>
+    @if(Auth::check())
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Rate this movie
     </button>
+    @endif
     @if (session('status'))
     <h6>{{ session('status') }}</h6>
     @endif

@@ -26,8 +26,11 @@ class ReviewController extends Controller
      */
     public function showUserRatings($id)
     {
-        $reviews = Review::where('id', $id);
-        return view('reviews/userratings')->with('reviews', $reviews);
+
+        $reviews = Review::where('user_id', $id)->get()->toArray();
+        return view('reviews/userratings',[
+            'reviews' => $reviews
+        ]);
     }
 
     /**
@@ -89,12 +92,19 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
+        $movieId = Review::where('id', $id)->value('movie_id');
+         //$movieId = Movie::where('user_id', $userId)->value('movie_id');
+
+         $movie = Movie::find($movieId);
         //Get the review from database
         $review = Review::find($id);
 
+        
         //show the form and get data from form
-        return view('reviews/edit')
-        ->with('review', $review);
+        return view('reviews/edit', [
+            'review' => $review,
+             'movie' => $movie
+        ]);
     }
 
     /**
