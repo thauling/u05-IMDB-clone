@@ -9,7 +9,7 @@ class UploadImageController extends Controller
 {
     public function index()
     {
-        return view('admin.movie-images'); // 'should be route that displays image'
+        return view('upload_img'); // 'should be route that displays image'
     }
 
     public function save(Request $request)
