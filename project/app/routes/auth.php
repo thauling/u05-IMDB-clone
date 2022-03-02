@@ -43,17 +43,16 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
   // ADMIN
-
     Route::get('/upload-image', [UploadImageController::class, 'index']); 
-    Route::get('/admin-main', [AdminController::class, 'showUsersAndMovies']); // redirected to from UserController methods, no direct access implemented
+    Route::get('/admin-main', [AdminController::class, 'showUsersAndMovies']);
     Route::view('/datavis', 'datavis');
   
 // USER
     Route::view('/edit-user', 'admin.edit-user');
     Route::post('/store-user', [UserController::class, 'store']); 
-    Route::post('/edit-user/{id}', [UserController::class, 'edit']); //called by admin-main search form
-    Route::get('/search-user', [UserController::class, 'search']); //called by admin-main search form
-    Route::put('/update-user/{id}', [UserController::class, 'update']); //called by admin-edit form
+    Route::post('/edit-user/{id}', [UserController::class, 'edit']); 
+    Route::get('/search-user', [UserController::class, 'search']); 
+    Route::put('/update-user/{id}', [UserController::class, 'update']);
     Route::delete('/destroy-user/{id}', [UserController::class, 'destroy']);
 
 // MOVIE
@@ -63,16 +62,11 @@ Route::middleware('auth')->group(function () {
  
     Route::get('/admin-search-movie', [MovieController::class, 'adminSearchMovie']); 
 
-
-    //Route::post('/movies/{movie}/edit', [MovieController::class, 'edit']);
     Route::get('/movies/{movie}/edit', [MovieController::class, 'edit']);
 
     Route::post('/store-movie', [MovieController::class, 'store']); //c
     Route::post('/movies/{movie}/update', [MovieController::class, 'updateMovie']);
    
-   // Route::post('/movies/new/create', [MovieController::class, 'postMovie']);
-  
-
     Route::put('/update-movie/{id}', [MovieController::class, 'update']); //
   
 
