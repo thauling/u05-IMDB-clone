@@ -1,9 +1,13 @@
 <?php
-//use App\Models\Movie;
-// initialize row index for users and movies tables
-$rownumber = 0;
+// use App\Models\Movie;
+// $myId = 11;
+//echo Movie::where('id', $myId)->get()->first()->title;
+// print_r(array_values($allMovies)); //keys()->all());
+// print_r(array_keys($allMovies)); 
+// print_r(array_search($myId, $allMovies)); 
+//print_r(gettype($allMovies)); 
+//dd(($allMovies->keys()))
 ?>
-
 <x-admin>
     <!-- logic for handling site visibility, permission dependent -->
     @unless (Auth::check())
@@ -159,6 +163,19 @@ $rownumber = 0;
         </div>
     </section>
 
+    <section>
+    <div class="flex-col px-20 py-10">
+    @if ($users->count() || $movies->count() || $reviews->count())
+    <h2>Total number of Movies, Users, Reviews</h2>
+    <div class="container">
+        <div id="columnGraph"> </div> <!--  style="height: 600px; width: 100%"> replace this with tailwind-->
+    </div>
+    </div>
+
+
+
+    @endif
+    </section>
     <!-- Display a CRUD action message -->
     <section class="bg-red-500">
         <!-- class ="message"-->
@@ -182,21 +199,16 @@ $rownumber = 0;
                         <table class="min-w-full">
                             <thead class="bg-gray-100 border-b">
                                 <tr>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                        #
-                                    </th>
-                                    <!-- <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Id
-                                </th> -->
+
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Name
                                     </th>
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Email
                                     </th>
-                                    <!-- <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Password
-                                </th> -->
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        Created
+                                    </th>
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Action
                                     </th>
@@ -206,21 +218,15 @@ $rownumber = 0;
                                 <!-- fix pagination -->
                                 @foreach ($users as $user)
                                 <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {{++$rownumber}}
-                                    </td>
-                                    <!-- <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    {{$user->id}}
-                                </td> -->
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                         {{$user->name}}
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                         {{$user->email}}
                                     </td>
-                                    <!-- <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    {{$user->password}}
-                                </td> -->
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{$user->created_at}}
+                                    </td>
 
                                     <td class="flex flex-col">
                                         <form method="post" action="{{url('edit-user',$user->id)}}">
@@ -270,12 +276,6 @@ $rownumber = 0;
                             <thead class="bg-gray-100 border-b">
                                 <tr>
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                        #
-                                    </th>
-                                    <!-- <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Id
-                                </th> -->
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Title
                                     </th>
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left max-w-sm">
@@ -296,12 +296,6 @@ $rownumber = 0;
                                 <!-- fix pagination -->
                                 @foreach ($movies as $movie)
                                 <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {{++$rownumber}}
-                                    </td>
-                                    <!-- <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    {{$user->id}}
-                                </td> -->
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                         {{$movie->title}}
                                     </td>
@@ -360,12 +354,6 @@ $rownumber = 0;
                             <thead class="bg-gray-100 border-b">
                                 <tr>
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                        #
-                                    </th>
-                                    <!-- <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                    Id
-                                </th> -->
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Title
                                     </th>
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left max-w-sm">
@@ -381,7 +369,7 @@ $rownumber = 0;
                                         Movie
                                     </th>
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                        Created 
+                                        Created
                                     </th>
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Action
@@ -392,12 +380,6 @@ $rownumber = 0;
                                 <!-- fix pagination -->
                                 @foreach ($reviews as $review)
                                 <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {{++$rownumber}}
-                                    </td>
-                                    <!-- <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    {{$user->id}}
-                                </td> -->
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                         {{$review->title}}
                                     </td>
@@ -408,11 +390,10 @@ $rownumber = 0;
                                         {{$review->review_rating}}
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 max-w-xs">
-                                        {{$review->user_id}}
+                                        {{array_search($review->user_id, $allUsers) ? array_search($review->user_id, $allUsers) : 'anonymous';}}
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 max-w-xs">
-                                        {{$review->movie_id}}                
-                                        <!-- //json_encode(Movie::where('id', '=', $review->movie_id)->get()->only(['title'])->all());                                             -->
+                                        {{array_search($review->movie_id, $allMovies) ? array_search($review->movie_id, $allMovies) : 'not available';}}
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 max-w-xs">
                                         {{$review->created_at}}
@@ -453,4 +434,38 @@ $rownumber = 0;
     @else
     <h1>Sorry mate, you must me an ADMIN to view this.</h1>
     @endif
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+
+        // Draw the bar chart that displays total numbers of users, movies, reviews.
+        google.charts.setOnLoadCallback(drawBarChart);
+
+        function drawBarChart() {
+
+            const data = new google.visualization.DataTable();
+            data.addColumn('string', 'Table');
+            data.addColumn('number', 'total');
+            data.addRows([
+                ['Users', <?php echo $usercount ?>],
+                ['Movies', <?php echo $moviecount ?>],
+                ['Reviews', <?php echo $reviewcount ?>]
+            ]);
+
+            const options = {
+                width: 400,
+                height: 240,
+                is3D: true,
+                title: 'Total number of users, movies, reviews',
+                isStacked: true
+            };
+
+            // instantiate and draw the chart
+            const chart = new google.visualization.ColumnChart(document.querySelector('#columnGraph'));
+            chart.draw(data, options);
+        }
+    </script>
 </x-admin>

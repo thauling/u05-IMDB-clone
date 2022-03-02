@@ -16,11 +16,17 @@ class AdminController extends Controller
     // get all users and movies
     function showUsersAndMovies()
     {
-        $users =  User::latest()->paginate(5); //User::all(); // paginate(5);
+        $users =  User::latest()->paginate(5); 
         $movies = Movie::latest()->paginate(5);
         $reviews = Review::latest()->paginate(5);
+        $usercount = Review::count();
+        $moviecount = Movie::count();
+        $reviewcount = Review::count();
+        $allUsers = User::pluck('id', 'name')->all();
+        $allMovies = Movie::pluck('id', 'title')->all();
+        //dd($allMovies);
        // dd(compact('users',  'movies'));
-        return view('admin.admin-main', compact('users',  'movies', 'reviews')); // does not work with collections 
+        return view('admin.admin-main', compact('users',  'movies', 'reviews', 'usercount', 'moviecount', 'reviewcount', 'allUsers', 'allMovies')); 
     }
 
     // public function showImage()
