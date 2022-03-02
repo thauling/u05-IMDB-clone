@@ -36,7 +36,7 @@ $rownumber = 0;
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="title" type="text" value="">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="title" type="text" value="" required>
                     </div>
                 </div>
                 <div class="md:flex md:items-center mb-6">
@@ -46,19 +46,20 @@ $rownumber = 0;
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="abstract" type="abstract" value="">
+                        <textarea rows="5" cols="50" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="abstract" required>
+                    </textarea>
                     </div>
                 </div>
-                <!-- <div class="md:flex md:items-center mb-6">
-                <div class="md:w-1/3">
-                    <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="cast">
-                        Cast
-                    </label>
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
+                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="released">
+                            Released
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="released" type="number" value="" required>
+                    </div>
                 </div>
-                <div class="md:w-2/3">
-                    <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="cast" type="text" value="">
-                </div>
-            </div> -->
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="genre">
@@ -66,7 +67,7 @@ $rownumber = 0;
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="genre" type="text" value="">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="genre" type="text" value="" required>
                     </div>
                 </div>
                 <!-- <div class="md:flex md:items-center mb-6">
@@ -310,16 +311,12 @@ $rownumber = 0;
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 max-w-xs">
                                         {{$movie->avg_rating}}
                                     </td>
-
+                                    @auth
                                     <td class="flex flex-col">
-                                        <form method="post" action="{{url('edit-movie',$movie->id)}}">
-                                            <!-- "flex justify-start content-start" -->
-                                            @csrf
-
-                                            <div class="md:w-1/6">
-                                                <button class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" type="submit">Edit</button>
-                                            </div>
-                                        </form>
+                                   
+                                        <a class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" href="/movies/{{$movie['id']}}/edit">Edit</a>
+                                        <!-- "flex justify-start content-start" -->
+                                        
                                         <form method="post" action="{{url('destroy-movie',$movie->id)}}">
                                             @csrf
                                             @method('DELETE')
@@ -328,6 +325,7 @@ $rownumber = 0;
                                             </div>
                                         </form>
                                     </td>
+                                    @endauth
                                 </tr>
                                 @endforeach
                             </tbody>
