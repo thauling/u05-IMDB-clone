@@ -37,6 +37,8 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.update');
+
+    Route::get('/search-movie', [MovieController::class, 'movieSearch']); 
 });
 
 Route::middleware('auth')->group(function () {
@@ -58,8 +60,10 @@ Route::middleware('auth')->group(function () {
   
     Route::view('/movie-cast', 'admin.movie-cast');
     Route::view('/movie-images', 'admin.movie-images');
-    Route::get('/search-movie', [MovieController::class, 'Search']); 
+ 
     Route::get('/admin-search-movie', [MovieController::class, 'adminSearchMovie']); 
+
+
     //Route::post('/movies/{movie}/edit', [MovieController::class, 'edit']);
     Route::get('/movies/{movie}/edit', [MovieController::class, 'edit']);
 
@@ -105,4 +109,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    Route::put('user/update-settings/', [UserController::class, 'updateSettings']);
+    
+    Route::get('user/user-settings', [UserController::class, 'settings']);
+
 });

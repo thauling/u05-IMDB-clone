@@ -39,12 +39,13 @@
                 </div>    
             </form>
 
-            @if (session()-> has('status'))
+            @if (session()-> has('success') || session()-> has('status'))
                 <div x-data="{ show: true }"
-                    x-init="setTimeout(() => show = false, 3000)"
+                    x-init="setTimeout(() => show = false, 10000)"
                     x-show="show"
-                    id="status" class="text-green-600 transition-opacity" role="alert">
-                    {{ session('status') }}
+                    id="status" role="alert">
+                    <p class="text-green-600">{{ session('success') }}</p>
+                    <p class="text-red-600">{{ session('status') }}</p> 
                 </div>
             @endif
         </article>

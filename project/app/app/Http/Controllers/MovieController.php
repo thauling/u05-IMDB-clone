@@ -274,8 +274,9 @@ class MovieController extends Controller
 //      $image->save();
 //    }}
 
-// Simon s search() // cast search needs fix
-public function search(Request $request) // and/ or $name
+// Search functionality for movies
+// The code works but is overly complicated
+public function movieSearch(Request $request) // and/ or $name
 {
     $movies = Movie::all();
     $query = $request->input('s');
@@ -304,11 +305,12 @@ public function search(Request $request) // and/ or $name
         $results = $movies;
     }
 
-
+    // ↓↓↓↓↓↓ DOESNT WORK ↓↓↓↓↓↓↓
     // $results = Movie::where('title', 'like', '%' . $query . '%')
     //                     ->orWhere('genre', 'like', '%' . $query . '%')
     //                     ->orWhere('cast', 'like', '%' . $query . '%')
     //                     ->get(); 
+    // ↑↑↑↑↑↑ DOESNT WORK ↑↑↑↑↑↑↑
 
     return view('landing', ['results' => $results]);
 }
