@@ -58,20 +58,21 @@ class ReviewController extends Controller
             $review->save();
 
             $reviews = Review::where('movie_id', $request->movie_id)->get()->toArray();
-            $ratings = [$request->movie_rating];
 
             if ($reviews) {
+                $ratings = [$request->movie_rating];
+
                 foreach ($reviews as $review) {
                     array_push($ratings, $review['review_rating']);
                 }
+
+                $movie = Movie::find($request->movie_id);
+                $movie->avg_rating = array_sum($ratings)/count($ratings);
+                $movie->update();
             }
 
-            $movie = Movie::find($request->movie_id);
-            $movie->avg_rating = array_sum($ratings)/count($ratings);
-            $movie->update();
-
-            return redirect()->back()->with('status', 'Creating review was successful!');
-            }
+                return redirect()->back()->with('status', 'Creating review was successful!');
+        }
     }
         
 
