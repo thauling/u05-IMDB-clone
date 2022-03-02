@@ -24,8 +24,10 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function showUserRatings($id)
     {
+        $reviews = Review::where('id', $id);
+        return view('reviews/userratings')->with('reviews', $reviews);
     }
 
     /**

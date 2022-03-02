@@ -1,116 +1,115 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,400;1,500&display=swap");
 
 * {
-  font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
 }
 
 body {
-  margin: 0;
+    margin: 0;
 }
 
 header {
-  background-color: rgb(77, 77, 77);
-  padding: 10px 50px;
+    background-color: rgb(77, 77, 77);
+    padding: 10px 50px;
 }
 
 .logo {
-  height: 60px;
+    height: 60px;
 }
 
 main {
-  padding: 10px 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    padding: 10px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .movie-wrapper {
-  width: 1200px;
-  padding:20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-row: auto;
-  grid-template-areas: 
-  "title edit"
-  "released rating"
-  "media media"
-  "genre ."
-  "cast cast"
-  "abstract abstract"
-  ;
+    width: 1200px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row: auto;
+    grid-template-areas:
+        "title edit"
+        "released rating"
+        "media media"
+        "genre ."
+        "cast cast"
+        "abstract abstract";
 }
 
 .reviews-section {
-  width: 1200px;
-  padding: 20px;
-  background-color: rgb(238, 232, 232);
-  border-radius: 8px;
+    width: 1200px;
+    padding: 20px;
+    background-color: rgb(238, 232, 232);
+    border-radius: 8px;
 }
 
 .movie-title {
-  font-size: 42px;
-  grid-area: title;
+    font-size: 42px;
+    grid-area: title;
 }
 
-.movie_poster{
-  height: 90vh;
+.movie_poster {
+    height: 90vh;
 }
 
 .edit-link {
-  grid-area: edit;
-  justify-self: end;
-  align-self: center;
+    grid-area: edit;
+    justify-self: end;
+    align-self: center;
 }
 
 .movie-year {
-  grid-area: released;
-  font-size: 22px;
+    grid-area: released;
+    font-size: 22px;
 }
 
 .movie-rating {
-  grid-area: rating;
-  justify-self: end;
-  font-size: 22px;
+    grid-area: rating;
+    justify-self: end;
+    font-size: 22px;
 }
 
 .movie-media {
-  grid-area: media;
-} 
+    grid-area: media;
+}
 
 .movie-genre {
-  grid-area: genre;
-  font-size: 22px;
-  border: 1px solid #000000;
-  border-radius: 45%;
-  justify-self: start;
-  padding: 8px;
+    grid-area: genre;
+    font-size: 22px;
+    border: 1px solid #000000;
+    border-radius: 45%;
+    justify-self: start;
+    padding: 8px;
 }
 
 .movie-cast {
-  display: flex;
-  grid-area: cast;
-  justify-self: stretch;
-  font-size: 20px;
+    display: flex;
+    grid-area: cast;
+    justify-self: stretch;
+    font-size: 20px;
 }
 
 .movie-cast p {
-  margin-right: 20px;
+    margin-right: 20px;
 }
 
 .movie-abstract {
-  grid-area: abstract;
-  font-size: 24px;
+    grid-area: abstract;
+    font-size: 24px;
 }
 
 .bold-paragraph {
-  font-weight: 500;
+    font-weight: 500;
 }
 
 .review-wrapper {
-  background-color: #fcf6f5ff;
-  margin: 30px 0;
-  padding: 10px;
-  border-radius: 8px;
+    background-color: #fcf6f5ff;
+    margin: 30px 0;
+    padding: 10px;
+    border-radius: 8px;
 }
 /* * {
     padding: 0;
@@ -135,17 +134,6 @@ body {
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 5px 5px 5px gray;
-} */
-
-.bio {
-    background-color: rgb(238, 207, 207);
-    width: 50%;
-    justify-content: center;
-    margin: 5vw 0 5rem 0;
-    font-size: 1.5rem;
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 1px 1px 5px gray;
 }
 
 .container {
@@ -159,25 +147,24 @@ body {
 
 .container_2 {
     display: flex;
-    flex-direction: row ;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    
 }
 
 .options {
-    width: 80%;
-    background-color: #990011ff;
+    width: 70vh;
+    background-color: rgb(155, 207, 241);
     margin: 1vw;
     border-radius: 8px;
     border: black 1px solid;
-    color: #fcf6f5ff;
+    color: rgb(0, 0, 0);
     height: 10vh;
     box-shadow: 1px 1px 5px gray;
 }
 
 .options:hover {
-    background-color: rgb(109, 2, 14);
+    background-color: rgb(119, 190, 238);
 }
 
 .footer {
@@ -186,7 +173,7 @@ body {
     margin-top: 5rem;
 }
 
-.nostyle{
+.nostyle {
     text-decoration: none;
     color: inherit;
 }
@@ -198,7 +185,6 @@ body {
     }
 }
 
-
 @media screen and (max-width: 575px) {
     .bio {
         width: 80%;
@@ -206,65 +192,63 @@ body {
 }
 
 .star-cb-group {
-  /* remove inline-block whitespace */
-  font-size: 0;
-  /* flip the order so we can use the + and ~ combinators */
-  unicode-bidi: bidi-override;
-  direction: rtl;
-  /* the hidden clearer */
+    /* remove inline-block whitespace */
+    font-size: 0;
+    /* flip the order so we can use the + and ~ combinators */
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    /* the hidden clearer */
 }
 .star-cb-group * {
-  font-size: 2rem;
+    font-size: 2rem;
 }
 .star-cb-group > input {
-  display: none;
+    display: none;
 }
 .star-cb-group > input + label {
-  /* only enough room for the star */
-  display: inline-block;
-  overflow: hidden;
-  text-indent: 9999px;
-  width: 1em;
-  white-space: nowrap;
-  cursor: pointer;
+    /* only enough room for the star */
+    display: inline-block;
+    overflow: hidden;
+    text-indent: 9999px;
+    width: 1em;
+    white-space: nowrap;
+    cursor: pointer;
 }
 .star-cb-group > input + label:before {
-  display: inline-block;
-  text-indent: -9999px;
-  content: "☆";
-  color: #888;
+    display: inline-block;
+    text-indent: -9999px;
+    content: "☆";
+    color: #888;
 }
 .star-cb-group > input:checked ~ label:before,
 .star-cb-group > input + label:hover ~ label:before,
 .star-cb-group > input + label:hover:before {
-  content: "★";
-  color: rgb(247, 234, 58);
-  text-shadow: 0 0 1px #333;
+    content: "★";
+    color: rgb(247, 234, 58);
+    text-shadow: 0 0 1px #333;
 }
 .star-cb-group > .star-cb-clear + label {
-  text-indent: -9999px;
-  width: 0.5em;
-  margin-left: -0.5em;
+    text-indent: -9999px;
+    width: 0.5em;
+    margin-left: -0.5em;
 }
 .star-cb-group > .star-cb-clear + label:before {
-  width: 0.5em;
+    width: 0.5em;
 }
 .star-cb-group:hover > input + label:before {
-  content: "☆";
-  color: #888;
-  text-shadow: none;
+    content: "☆";
+    color: #888;
+    text-shadow: none;
 }
 .star-cb-group:hover > input + label:hover ~ label:before,
 .star-cb-group:hover > input + label:hover:before {
-  content: "★";
-  color: rgb(247, 234, 58);
-  text-shadow: 0 0 1px #333;
+    content: "★";
+    color: rgb(247, 234, 58);
+    text-shadow: 0 0 1px #333;
 }
 
-
 fieldset {
-  border: 0;
-  background: rgb(255, 255, 255);
-  width: 20em;
-  
-} 
+    border: 0;
+    background: rgb(255, 255, 255);
+    width: 20em;
+}
