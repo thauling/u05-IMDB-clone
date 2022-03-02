@@ -73,24 +73,20 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         Review::factory(50)->create();
 
-        $movies2 = Movie::all();
+        $movies = Movie::all();
 
-        foreach ($movies2 as $movie) {
+        foreach ($movies as $movie) {
             $reviews = Review::where('movie_id', $movie->id)->get()->toArray();
             $ratings = [];
 
             if ($reviews) {
                 foreach ($reviews as $review) {
-                    array_push($ratings, $review->review_rating);
+                    array_push($ratings, $review['review_rating']);
                 }
     
-                $movie2 = Movie::find($movie->id);
-                $movie2->avg_rating = array_sum($ratings)/count($ratings);
-                $movie2->update();
+                $movie->avg_rating = array_sum($ratings)/count($ratings);
+                $movie->update();
             }
-            
-
         }
-
     }
 }
