@@ -18,12 +18,8 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        User::factory(10)->create();
-        Review::factory(50)->create();
-        
+    {   
 
-        /**** SHOULD THESE API REQUESTS BE SOMEWHERE ELSE? IN THE MOVIE FACTORY FILE? ****/
         // Get popular movies from TMDB
         $movies = Http::get('https://api.themoviedb.org/3/movie/popular?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US&page=1');
         $moviesToArray = json_decode($movies); // Convert to array
@@ -72,6 +68,28 @@ class DatabaseSeeder extends Seeder
                 'avg_rating' => $movie->vote_average,
                 'released' => (int)substr($movie->release_date, 0, 4)
             ]);
+        }
+
+        User::factory(10)->create();
+        Review::factory(50)->create();
+
+        $movies2 = Movie::all();
+
+        foreach ($movies2 as $movie) {
+            $reviews = Review::where('movie_id', $movie->id)->get()->toArray();
+            $ratings = [];
+
+            if ($reviews) {
+                foreach ($reviews as $review) {
+                    array_push($ratings, $review->review_rating);
+                }
+    
+                $movie2 = Movie::find($movie->id);
+                $movie2->avg_rating = array_sum($ratings)/count($ratings);
+                $movie2->update();
+            }
+            
+
         }
 
     }

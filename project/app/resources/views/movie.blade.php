@@ -3,16 +3,14 @@
     <h1 class="movie-title">{{ $movie['title'] }}</h1>
     <div class="movie-controls">
       @if (Auth::check())
-      @if (!json_decode(Auth::user()->watchlist))
-      <a class="watchlist-link" href="/user/watchlist/add/{{$movie['id']}}">add to watchlist</a>
-      @elseif (in_array($movie['id'], json_decode(Auth::user()->watchlist)))
-      <a class="watchlist-link" href="/user/watchlist/remove/{{$movie['id']}}">remove from watchlist</a>
-      @else
-      <a class="watchlist-link" href="/user/watchlist/add/{{$movie['id']}}">add to watchlist</a>
-      @endif
-      @if (Auth::check() && Auth::user()->is_admin)
-      <a class="edit-link" href="/movies/{{$movie['id']}}/edit">edit movie</a>
-      @endif
+        @if (!json_decode(Auth::user()->watchlist) || !in_array($movie['id'], json_decode(Auth::user()->watchlist)))
+          <a class="watchlist-link" href="/user/watchlist/add/{{$movie['id']}}">add to watchlist</a>
+        @elseif (in_array($movie['id'], json_decode(Auth::user()->watchlist)))
+          <a class="watchlist-link" href="/user/watchlist/remove/{{$movie['id']}}">remove from watchlist</a>
+        @endif
+        @if (Auth::check() && Auth::user()->is_admin)
+          <a class="edit-link" href="/movies/{{$movie['id']}}/edit">edit movie</a>
+        @endif
       @endif
     </div>
     <p class="movie-year">Released <span class="bold-paragraph">{{ $movie['released'] }}</span></p>
@@ -31,9 +29,13 @@
   </section>
   <section class="reviews-section">
     <h2>Reviews</h2>
+    @if (Auth::check())
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Rate this movie
     </button>
+    @else 
+    <a href="/login">Log in to rate this movie</a>
+    @endif
     @if (session('status'))
     <h6>{{ session('status') }}</h6>
     @endif
@@ -68,6 +70,7 @@
               <h5 class="modal-title" id="exampleModalLabel">{{$movie['title']}}</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            @if (Auth::check())
             <div class="modal-body">
               <form action="{{url('store-review')}}" method="post">
                 @csrf
@@ -105,6 +108,7 @@
                           </div>
               </form>
             </div>
+            @endif
             <div class="modal-footer">
             </div>
           </div>
