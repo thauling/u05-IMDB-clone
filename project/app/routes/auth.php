@@ -81,7 +81,7 @@ Route::middleware('auth')->group(function () {
     //REVIEW 
     Route::get('/edit-review/{id}', [ReviewController::class, 'edit']);
     Route::post('/store-review', [ReviewController::class, 'store']);
-    Route::put('/edit-review/update-review/{id}', [ReviewController::class, 'update']);
+    Route::put('/update-review/{id}', [ReviewController::class, 'update']);
     Route::get('/userratings/{id}', [ReviewController::class, 'showUserRatings']);
     Route::get('/delete-review/{id}', [ReviewController::class, 'destroy']);
 

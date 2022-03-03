@@ -120,7 +120,7 @@ class ReviewController extends Controller
         $review = Review::find($id);
         $review->review_content = $request->input('title');
         $review->review_content = $request->input('content');
-        $review->review_rating = $request->input('rating');
+        $review->review_rating = $request->input('movie_rating');
         $review->movie_id = $request->input('movie_id');
         $review->update();
         return redirect()->back()->with('status','Review Updated Successfully');

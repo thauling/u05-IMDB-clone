@@ -1,4 +1,3 @@
-@if(Auth::check())
 
 @include('_head')
 
@@ -11,8 +10,9 @@
 @if (session('status'))
                 <h6>{{ session('status') }}</h6>
 @endif
-<form action="update-review/{{$review->id}}" method="put">
+<form action="{{url('update-review', $review->id)}}" method="post">
                 @csrf
+                @method('PUT')
                 <div class="shadow sm:rounded-md sm:overflow-hidden">
                   <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                     <div class="grid grid-cols-3 gap-6">
@@ -47,5 +47,3 @@
                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Update</button>
                           </div>
               </form>
-
-@endif
