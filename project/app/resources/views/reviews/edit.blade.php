@@ -1,14 +1,9 @@
-
 @include('_head')
 
+@include('_nav')
 
-<head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="/app.css">
-
-</head>
 @if (session('status'))
-                <h6>{{ session('status') }}</h6>
+  <h6>{{ session('status') }}</h6>
 @endif
 <form action="{{url('update-review', $review->id)}}" method="post">
                 @csrf

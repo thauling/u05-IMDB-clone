@@ -1,4 +1,7 @@
-<x-layout>
+@include('_head')
+
+@include('_nav')
+  
   <section class="movie-wrapper">
     <h1 class="movie-title">{{ $movie['title'] }}</h1>
     <div class="movie-controls">
@@ -54,8 +57,8 @@
     @if (session('status'))
     <h6>{{ session('status') }}</h6>
     @endif
-
     @foreach ($reviews as $review)
+    @if($review['is_approved'] == 1)
     <?php $date = date_create($review['created_at']); ?>
     <!-- <div class="review-wrapper"> -->
     <div class="mb-2 shadow-lg rounded-t-8xl rounded-b-5xl overflow-hidden">
@@ -77,9 +80,11 @@
         <p class="mb-8 max-w-2xl text-darkBlueGray-400 leading-loose">{{ $review['review_content'] }}</p>
       </div>
       <br>
+      @endif
       @endforeach
 
 <!-- Modal -->
+@if(Auth::check())
 <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
   id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog relative w-auto pointer-events-none">
@@ -165,8 +170,7 @@
     </div>
   </div>
 </div>
-          </div>
-        </div>
-      </div>
+</div>
+@endif
+
   </section>
-</x-layout>
