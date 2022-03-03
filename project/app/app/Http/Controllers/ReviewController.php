@@ -92,10 +92,10 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
+        //Get the id of the movie for showing title of movie
         $movieId = Review::where('id', $id)->value('movie_id');
-         //$movieId = Movie::where('user_id', $userId)->value('movie_id');
+        $movie = Movie::find($movieId);
 
-         $movie = Movie::find($movieId);
         //Get the review from database
         $review = Review::find($id);
 

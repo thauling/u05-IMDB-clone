@@ -83,6 +83,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-review', [ReviewController::class, 'store']);
     Route::put('/edit-review/update-review/{id}', [ReviewController::class, 'update']);
     Route::get('/userratings/{id}', [ReviewController::class, 'showUserRatings']);
+    Route::get('/delete-review/{id}', [ReviewController::class, 'destroy']);
 
 
     // BREEZE

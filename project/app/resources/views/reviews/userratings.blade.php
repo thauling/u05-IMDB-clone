@@ -1,10 +1,10 @@
-@if(Auth::check())
-
 @include('_head')
 
 @include('_nav')
-
 <h1 class="text-center sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Your reviews!</h1>
+@if (session('status'))
+    <h6>{{ session('status') }}</h6>
+@endif
 @foreach($reviews as $review)
 <div class="mb-2 shadow-lg rounded-t-8xl rounded-b-5xl overflow-hidden">
       <div class="pt-3 pb-3 md:pb-1 px-4 md:px-16 bg-white bg-opacity-40">
@@ -39,10 +39,16 @@
                 </div>
               </div>
           </div>
+          <br>
+          <div class="-mb-2">
+              <div class="inline-flex w-full md:w-auto md:mr-2 mb-2">
+                <div class="flex items-center h-12 pl-2 pr-6 bg-red-100 border-2 border-red-500 rounded-full">
+                  <a href="/delete-review/{{$review['id']}}" class="text-red-500 font-heading font-medium">Delete</a>
+                </div>
+              </div>
+          </div>
         </div>
       </div>
     </div>
     <br>
 @endforeach
-
-@endif
