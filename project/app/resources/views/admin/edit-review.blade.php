@@ -61,7 +61,7 @@
             <div class="md:flex md:items-center mb-6">
             <label class="md:w-2/3 block text-gray-500 font-bold" for="is_approved">
                 <input class="mr-2 leading-tight" type="checkbox" name="is_approved" id="is_approved" value="yes" <?php echo $review->is_approved ? "checked":""; ?>>
-                Is approved?
+                Is approved.
             </label>
             </div>
 

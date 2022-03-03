@@ -415,7 +415,7 @@
                                     </td>
                                     @auth
                                     <td class="flex flex-col">
-                                    @if ($review->is_approved)
+                                    @if (!$review->is_approved)
                                     <span class="text-red-600 font-bold">Approved ?</span>
                                     @endif
                                         <a class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" href="/review/{{$review['id']}}/edit">Edit</a>
