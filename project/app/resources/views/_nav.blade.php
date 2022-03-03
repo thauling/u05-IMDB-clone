@@ -40,6 +40,11 @@
                         </form>
                         <a href="user/user-settings" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Settings</a>
 
+                        @if (Auth::user()->is_admin)
+                        <div>
+                        <a href="{{ url('/admin-main') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Dashboard</a>
+                        </div>
+                        @endif
 
                     @else
                         
