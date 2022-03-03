@@ -141,6 +141,17 @@ class ReviewController extends Controller
         return redirect()->back()->with('status','Review Updated Successfully');
     }
 
+    // combine with above? 
+    public function updateApprove(Request $request, $id)
+    {
+        $review = Review::find($id);
+        $request["is_approved"] = $request["is_approved"] ? 1 : 0; 
+        $review->update($request->all());
+        
+        return redirect('admin-main')->with('status','Review data updated.');
+        //return redirect()->back(); // results in error if called from update page
+       
+    }
     /**
      * Remove the specified resource from storage.
      *

@@ -146,7 +146,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="password_confirmation">
@@ -179,17 +179,17 @@
     </section>
 
     <section>
-    <div class="flex-col px-20 py-10">
-    @if ($users->count() || $movies->count() || $reviews->count())
-    <h2>Total number of Movies, Users, Reviews</h2>
-    <div class="container">
-        <div id="columnGraph"> </div> <!--  style="height: 600px; width: 100%"> replace this with tailwind-->
-    </div>
-    </div>
+        <div class="flex-col px-20 py-10">
+            @if ($users->count() || $movies->count() || $reviews->count())
+            <h2>Total number of Movies, Users, Reviews</h2>
+            <div class="container">
+                <div id="columnGraph"> </div> <!--  style="height: 600px; width: 100%"> replace this with tailwind-->
+            </div>
+        </div>
 
 
 
-    @endif
+        @endif
     </section>
     <!-- Display a CRUD action message -->
     <section class="bg-red-500">
@@ -203,7 +203,7 @@
     </section>
 
     <section>
-        <h2>CRUD User Tracking</h2>
+        <h2>User Tracking</h2>
         <!-- table and/ or chart on user stats -->
         @if ($users->count())
         <!-- "$users->links" to be used with paginate-->
@@ -279,7 +279,7 @@
     @endif
 
     <section>
-        <h2>CRUD Movie Tracking</h2>
+        <h2>Movie Tracking</h2>
         <!-- table and/ or chart on user stats -->
         @if ($movies->count())
         <!-- "$movies->links" to be used with paginate-->
@@ -415,10 +415,10 @@
                                     </td>
                                     @auth
                                     <td class="flex flex-col">
-
+                                    @if (!$review->is_approved)
+                                    <span class="text-red-600 font-bold">Approved ?</span>
+                                    @endif
                                         <a class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" href="/review/{{$review['id']}}/edit">Edit</a>
-                                        <!-- "flex justify-start content-start" -->
-
                                         <form method="post" action="{{url('destroy-review',$review->id)}}">
                                             @csrf
                                             @method('DELETE')

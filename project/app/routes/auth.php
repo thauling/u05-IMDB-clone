@@ -43,16 +43,17 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
   // ADMIN
-    Route::get('/upload-image', [UploadImageController::class, 'index']); 
     Route::get('/admin-main', [AdminController::class, 'showUsersAndMovies']);
     Route::view('/datavis', 'datavis');
   
 // USER
+    Route::get('/upload-image', [UploadImageController::class, 'index']); 
+    Route::post('save', [UploadImageController::class, 'save']);
     Route::view('/edit-user', 'admin.edit-user');
-    Route::post('/store-user', [UserController::class, 'store']);  //should direct to RegisteredUserController::class, 'store' but need to add is_admin field
-    Route::post('/edit-user/{id}', [UserController::class, 'edit']); //called by admin-main search form
-    Route::get('/search-user', [UserController::class, 'search']); //called by admin-main search form
-    Route::put('/update-user/{id}', [UserController::class, 'update']); //called by admin-edit form
+    Route::post('/store-user', [UserController::class, 'store']); // needs fix/ change use corresponding breeze method
+    Route::post('/edit-user/{id}', [UserController::class, 'edit']); 
+    Route::get('/search-user', [UserController::class, 'search']); 
+    Route::put('/update-user/{id}', [UserController::class, 'update']);
     Route::delete('/destroy-user/{id}', [UserController::class, 'destroy']);
 
 // MOVIE
@@ -85,6 +86,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/userratings/{id}', [ReviewController::class, 'showUserRatings']);
     Route::get('/delete-review/{id}', [ReviewController::class, 'destroy']);
 
+    Route::put('/update-approve-review/{id}', [ReviewController::class, 'updateApprove']);
     Route::get('/review/{review}/edit', [ReviewController::class, 'edit']); // used by admin-main
     Route::delete('/destroy-review/{id}', [ReviewController::class, 'destroy']);
     Route::get('/admin-search-review', [ReviewController::class, 'adminSearchReview']); //not implemented/ already exists?

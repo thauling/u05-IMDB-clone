@@ -20,6 +20,7 @@ return new class extends Migration
             $table->tinyInteger('review_rating')->unsigned();
             //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 
             //$table->foreignId('user_id')->constrained('users'); //ought to work as of L8
+            $table->boolean('is_approved')->default(false);
             $table->foreignId('user_id');
             $table->foreignId('movie_id');
             //$table->foreignId('movie_id')->constrained('movies'); //supposedly this auto-assumes 'id' in movies table 

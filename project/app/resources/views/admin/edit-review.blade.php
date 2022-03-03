@@ -46,7 +46,7 @@
     <div class="flex flex-col p-10">
     <h2 class="block text-gray-500 font-bold">Edit Review</h2>
 
-        <form class="w-full max-w-sm" action="{{ url('update-review', $review->id) }}" method="POST">
+        <form class="w-full max-w-sm" action="{{ url('update-approve-review', $review->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -57,6 +57,13 @@
             <input type="text" name="review_content" value="{{ $review->review_content }}" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="">
             <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="review_rating">Rating</label>
             <input type="text" name="review_rating" value="{{ $review->review_rating }}" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="">
+
+            <div class="md:flex md:items-center mb-6">
+            <label class="md:w-2/3 block text-gray-500 font-bold" for="is_approved">
+                <input class="mr-2 leading-tight" type="checkbox" name="is_approved" id="is_approved" value="yes" <?php echo $review->is_approved ? "checked":""; ?>>
+                Is approved.
+            </label>
+            </div>
 
             <button type="submit" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Update</button>
         </form>

@@ -7,7 +7,11 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
+let preview = document.getElementById('preview');
 
+if (preview.src === "(unknown)") {
+    preview.style.display = 'none';
+}
 
 
 

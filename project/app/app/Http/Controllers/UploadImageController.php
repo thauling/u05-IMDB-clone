@@ -9,7 +9,7 @@ class UploadImageController extends Controller
 {
     public function index()
     {
-        return view('admin.movie-images'); // 'should be route that displays image'
+        return view('upload_img');
     }
 
     public function save(Request $request)
@@ -19,19 +19,21 @@ class UploadImageController extends Controller
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
 
         ]);
-        //dd('validated');
+        
         $name = $request->file('image')->getClientOriginalName();
-
-        $path = $request->file('image')->store('public/assets/images'); //make sure this folder exists
+        $user_id = $request->user_id;
+        $path = $request->file('image')->store('public/assets/images');
+    
 
 
         $save = new Image;
 
         $save->name = $name;
         $save->path = $path;
+        $save->user_id = $user_id;
 
         $save->save();
-    // dd('validated');
+    
         return redirect()->back()->with('status', "{$name} has been uploaded");
     }
 }
