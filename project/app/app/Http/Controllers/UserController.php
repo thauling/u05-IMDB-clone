@@ -90,18 +90,18 @@ class UserController extends Controller
     }
 
 
-    public function index()
-    {
-        //show all unsers
-        //$users = User::latest()->firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(2)->withQueryString(); //lookup eager loading
-        //$users = User::firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(3)->withQueryString(); //
-        $users = User::latest()->paginate(5);
-        //$users = User::latest()->get();
-        //$users = User::all();  // same as 'get()' ?
-        return view('admin.admin-main', ['users' => $users]); //->paginate(2);      
-        // return view('admin.admin-main',compact('users'))
-        // ->with('i', (request()->input('page', 1) - 1) * 5);
-    }
+    // public function index()
+    // {
+    //     //show all unsers
+    //     //$users = User::latest()->firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(2)->withQueryString(); //lookup eager loading
+    //     //$users = User::firstWhere(request(['name', 'email', 'password','watchlist']))->paginate(3)->withQueryString(); //
+    //     $users = User::latest()->paginate(5);
+    //     //$users = User::latest()->get();
+    //     //$users = User::all();  // same as 'get()' ?
+    //     return view('admin.admin-main', ['users' => $users]); //->paginate(2);      
+    //     // return view('admin.admin-main',compact('users'))
+    //     // ->with('i', (request()->input('page', 1) - 1) * 5);
+    // }
 
    
     // public function create()
@@ -178,7 +178,7 @@ class UserController extends Controller
         $request["is_admin"] = $request["is_admin"] ? 1 : 0; 
         $user->update($request->all());
         
-        return redirect('admin-main');
+        return redirect('admin-main')->with('status','User data updated.');
         //return redirect()->back();
        
     }

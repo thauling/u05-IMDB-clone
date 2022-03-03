@@ -16,9 +16,9 @@ class AdminController extends Controller
     // get all users and movies
     function showUsersAndMovies()
     {
-        $users =  User::latest()->paginate(5); 
-        $movies = Movie::latest()->paginate(5);
-        $reviews = Review::latest()->paginate(5);
+        $users =  User::orderBy('name')->paginate(5); 
+        $movies = Movie::orderBy('title')->paginate(5);
+        $reviews = Review::orderBy('title')->paginate(5);
         $usercount = Review::count();
         $moviecount = Movie::count();
         $reviewcount = Review::count();

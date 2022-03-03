@@ -44,7 +44,7 @@ if (isset($_GET['dynaInput'])) {
     </div>
     @if (isset($movie))
     <div class="flex flex-col p-10">
-    <h2 class="block text-gray-500 font-bold">Edit User</h2>
+    <h2 class="block text-gray-500 font-bold">Edit Movie Info</h2>
 
         <form class="w-full max-w-sm" action="{{ url('update-movie', $movie->id) }}" method="POST">
             @csrf
@@ -71,7 +71,7 @@ if (isset($_GET['dynaInput'])) {
                 <div class="block" id="dynaForm">
                     <label for="dynaInput[0][row]" class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">Cast</label>
                     <input type="text" name="dynaInput[0][row]" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" />
-                    <button type="button" id="btnAdd" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add</button>
+                    <button type="button" id="btnAdd" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add row</button>
                     <button type="button" id="btnRemove" class="shadow bg-red-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Remove</button>
 
                 </div>
