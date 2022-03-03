@@ -49,7 +49,7 @@ Route::middleware('auth')->group(function () {
   
 // USER
     Route::view('/edit-user', 'admin.edit-user');
-    Route::post('/store-user', [UserController::class, 'store']); 
+    Route::post('/store-user', [UserController::class, 'store']); // needs fix/ change use corresponding breeze method
     Route::post('/edit-user/{id}', [UserController::class, 'edit']); 
     Route::get('/search-user', [UserController::class, 'search']); 
     Route::put('/update-user/{id}', [UserController::class, 'update']);
@@ -70,7 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/update-movie/{id}', [MovieController::class, 'update']); //
   
 
-    Route::delete('/movies/{movie}/delete', [MovieController::class, 'destroy']);
+    //Route::delete('/movies/{movie}/delete', [MovieController::class, 'destroy']); // not used?
     Route::delete('/destroy-movie/{id}', [MovieController::class, 'destroy']);
   
 
@@ -79,10 +79,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/watchlist/remove/{movie}', [UserController::class, 'removeFromWatchlist']);
 
     //REVIEW 
-    Route::get('/edit-review/{id}', [ReviewController::class, 'edit']);
+    //Route::get('/edit-review/{id}', [ReviewController::class, 'edit']); // used?
     Route::post('/store-review', [ReviewController::class, 'store']);
     Route::put('/update-review/{id}', [ReviewController::class, 'update']);
-
+    Route::get('/review/{review}/edit', [ReviewController::class, 'edit']); // used by admin-main
+    Route::delete('/destroy-review/{id}', [ReviewController::class, 'destroy']);
+    Route::get('/admin-search-review', [ReviewController::class, 'adminSearchReview']); //not implemented/ already exists?
 
     // BREEZE
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
