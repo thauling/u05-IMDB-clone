@@ -82,6 +82,7 @@ Route::middleware('auth')->group(function () {
     //Route::get('/edit-review/{id}', [ReviewController::class, 'edit']); // used?
     Route::post('/store-review', [ReviewController::class, 'store']);
     Route::put('/update-review/{id}', [ReviewController::class, 'update']);
+    Route::put('/update-approve-review/{id}', [ReviewController::class, 'updateApprove']);
     Route::get('/review/{review}/edit', [ReviewController::class, 'edit']); // used by admin-main
     Route::delete('/destroy-review/{id}', [ReviewController::class, 'destroy']);
     Route::get('/admin-search-review', [ReviewController::class, 'adminSearchReview']); //not implemented/ already exists?
