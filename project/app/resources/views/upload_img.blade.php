@@ -17,6 +17,8 @@
             <div class="mb-6">
                 <form class="w-full max-w-sm" method="POST" enctype="multipart/form-data" id="upload-image" action="{{ url('save') }}">
                     @csrf
+                    <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id}}">
+                    
                     <div class="mb-6 flex">
                         <div class="w-full flex">
                             <input type="file" name="image" placeholder="Choose image" id="image">
