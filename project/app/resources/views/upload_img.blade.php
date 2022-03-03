@@ -1,5 +1,5 @@
 @include ('_head')
-@include (_nav)
+@include ('_nav')
 
     <div class="">
 
@@ -69,4 +69,5 @@
         });
     </script>
 
-</x-admin>
+</body>
+</html>
