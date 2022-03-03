@@ -85,14 +85,23 @@ class ReviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     // OLD
+    // public function edit($id)
+    // {
+    //     //Get the review from database
+    //     $review = Review::find($id);
+
+    //     //show the form and get data from form
+    //     return view('reviews/edit')
+    //     ->with('review', $review);
+    // }
+
     public function edit($id)
     {
-        //Get the review from database
-        $review = Review::find($id);
+        $review = Review::find($id);  
+        return view('admin.edit-review', ['review' => $review]);
 
-        //show the form and get data from form
-        return view('reviews/edit')
-        ->with('review', $review);
     }
 
     /**
@@ -114,6 +123,17 @@ class ReviewController extends Controller
         return redirect()->back()->with('status','Review Updated Successfully');
     }
 
+    // combine with above? 
+    public function updateApprove(Request $request, $id)
+    {
+        $review = Review::find($id);
+        $request["is_approved"] = $request["is_approved"] ? 1 : 0; 
+        $review->update($request->all());
+        
+        return redirect('admin-main')->with('status','Review data updated.');
+        //return redirect()->back(); // results in error if called from update page
+       
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -124,7 +144,8 @@ class ReviewController extends Controller
     {
         $review = Review::find($id);
         $review->delete();
-        return redirect()->back()->with('status','Review Deleted Successfully');
+        session()->flash('success', 'Review deleted.');
+        return redirect()->back(); //->with('status','Review deleted.');
 
         
     }

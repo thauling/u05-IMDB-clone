@@ -38,6 +38,11 @@
                             @csrf
                             <a href="/logout" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline" onclick="this.closest('form').submit(); event.preventDefault();">Logout</a>
                         </form>
+                        @if (Auth::user()->is_admin)
+                        <div>
+                        <a href="{{ url('/admin-main') }}" class="text-sm text-gray-700 hover:text-gray-500 dark:text-gray-500 underline">Dashboard</a>
+                        </div>
+                        @endif
 
                     @else
                         
