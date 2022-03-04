@@ -47,8 +47,9 @@ Route::middleware('auth')->group(function () {
     Route::view('/datavis', 'datavis');
   
 // USER
-    Route::get('/upload-image', [UploadImageController::class, 'index']); 
+    Route::get('/user/upload-image', [UploadImageController::class, 'index']); 
     Route::post('save', [UploadImageController::class, 'save']);
+    Route::delete('/delete-image/{id}', [UploadImageController::class, 'delete']);
     Route::view('/edit-user', 'admin.edit-user');
     Route::post('/store-user', [UserController::class, 'store']); 
     Route::post('/edit-user/{id}', [UserController::class, 'edit']); 

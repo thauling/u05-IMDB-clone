@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Image;
+use Illuminate\Support\Facades\Auth;
 
 class UploadImageController extends Controller
 {
@@ -23,17 +24,37 @@ class UploadImageController extends Controller
         $name = $request->file('image')->getClientOriginalName();
         $user_id = $request->user_id;
         $path = $request->file('image')->store('public/assets/images');
+        $image = Image::where('user_id', $request->user_id);
+
+        if($image->exists()) {
+            $image->update([
+                'name' => $name,
+                'path' => $path,
+                'user_id' => $user_id
+            ]);
+        } else {
+            $save = new Image;
+
+            $save->name = $name;
+            $save->path = $path;
+            $save->user_id = $user_id;
+
+            $save->save();
+        }
+
+        
     
+        return redirect()->route('/user/user-settings')->with('status', "{$name} has been uploaded");
+    }
 
+    public function delete($id) 
+    {
 
-        $save = new Image;
+        $image = Image::where('user_id', $id);
+        $image->delete();
 
-        $save->name = $name;
-        $save->path = $path;
-        $save->user_id = $user_id;
+        session()->flash('success', 'Avatar deleted');
 
-        $save->save();
-    
-        return redirect()->back()->with('status', "{$name} has been uploaded");
+        return redirect()->back();
     }
 }
