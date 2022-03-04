@@ -15,7 +15,9 @@
 
          <!-- include tailwind via CDN for testing, change this to local installation later  -->
     <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" type="text/css" href="/css/output.css">
+    <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="/css/output.css"> -->
  
     <!-- also include alpine and hard-code version later -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
