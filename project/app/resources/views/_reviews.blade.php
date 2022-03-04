@@ -26,7 +26,7 @@
     <h6>{{ session('status') }}</h6>
   @endif
   @foreach ($reviews as $review)
-  @if($review['is_approved'] == 1)
+    @if($review['is_approved'] == 1)
     <?php $date = date_create($review['created_at']); ?>
     <!-- <div class="review-wrapper"> -->
     <div class="mb-2 shadow-lg rounded-t-8xl rounded-b-5xl overflow-hidden">
@@ -46,11 +46,11 @@
             </div>
           </div>
           <h3 class="w-full md:w-auto text-l font-heading font-medium"><a class="nostyle" href="{{url('review', ['id' => $review['id']] )}}">{{$review['title']}} </a></h3>
-          <p class="mb-8 max-w-2xl text-darkBlueGray-400 leading-loose">{{ $date }}</p>
+          <p class="mb-8 max-w-2xl text-darkBlueGray-400 leading-loose">{{ $review['review_content'] }}</p>
         </div>
         <br>
-        @endif
-        @endforeach
+    @endif
+  @endforeach
         @if (Auth::check())
               <!-- Modal -->
               <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
