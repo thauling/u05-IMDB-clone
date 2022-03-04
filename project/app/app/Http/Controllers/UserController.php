@@ -290,7 +290,13 @@ class UserController extends Controller
     {
         $user = User::find(Auth::user()->id);
 
-        $watchlist = array_diff(json_decode($user->watchlist), $movieId);
+        $watchlist = [];
+        foreach (json_decode($user->watchlist) as $value) {
+            if ($value != $movieId) {
+                array_push($watchlist, $value);
+            }
+        }
+
         $user->watchlist = json_encode($watchlist);
         $user->update();
         return redirect()->back()->with('status', 'Movie removed from watchlist');

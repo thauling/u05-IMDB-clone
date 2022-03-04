@@ -42,7 +42,6 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 
-        /**** SHOULD THESE API REQUESTS BE SOMEWHERE ELSE? IN THE MOVIE FACTORY FILE? ****/
         // Get popular movies from TMDB
         $movies = Http::get('https://api.themoviedb.org/3/movie/popular?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US&page=1');
         $moviesToArray = json_decode($movies); // Convert to array
@@ -93,5 +92,24 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        User::factory(10)->create();
+        Review::factory(50)->create();
+
+        $movies = Movie::all();
+
+        foreach ($movies as $movie) {
+            $reviews = Review::where('movie_id', $movie->id)->get()->toArray();
+            $ratings = [];
+
+            if ($reviews) {
+                foreach ($reviews as $review) {
+                    array_push($ratings, $review['review_rating']);
+                }
+    
+                $movie->avg_rating = array_sum($ratings)/count($ratings);
+                $movie->update();
+            }
+        }
     }
 }
+

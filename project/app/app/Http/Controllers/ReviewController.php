@@ -50,10 +50,9 @@ class ReviewController extends Controller
         //         ]);
         //  Review::create($validatedData);
         //dd($request);
-        if($request->movie_rating === null){
+        if ($request->movie_rating === null) {
             return redirect()->back()->with('status', "You have to fill in a rating for this movie!");
-                }
-        else{
+        } else {
             
             $review = new Review;
             $review->title = $request->title;
@@ -61,10 +60,24 @@ class ReviewController extends Controller
             $review->review_rating = $request->movie_rating;
             $review->user_id = $request->user_id;
             $review->movie_id = $request->movie_id;
-
             $review->save();
-            return redirect()->back()->with('status', 'Creating review was successful!');
+
+            $reviews = Review::where('movie_id', $request->movie_id)->get()->toArray();
+
+            if ($reviews) {
+                $ratings = [$request->movie_rating];
+
+                foreach ($reviews as $review) {
+                    array_push($ratings, $review['review_rating']);
+                }
+
+                $movie = Movie::find($request->movie_id);
+                $movie->avg_rating = array_sum($ratings)/count($ratings);
+                $movie->update();
             }
+
+                return redirect()->back()->with('status', 'Creating review was successful!');
+        }
     }
         
 
