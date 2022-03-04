@@ -44,7 +44,7 @@ class UploadImageController extends Controller
 
         
     
-        return redirect()->route('/user/user-settings')->with('status', "{$name} has been uploaded");
+        return redirect('user/user-settings')->with('success', "{$name} has been uploaded");
     }
 
     public function delete($id) 
