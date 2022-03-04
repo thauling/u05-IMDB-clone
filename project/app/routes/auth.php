@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::post('save', [UploadImageController::class, 'save']);
     Route::view('/edit-user', 'admin.edit-user');
     Route::post('/store-user', [UserController::class, 'store']); // needs fix/ change use corresponding breeze method
-    Route::post('/edit-user/{id}', [UserController::class, 'edit']); 
+    Route::get('/edit-user/{id}', [UserController::class, 'edit']); 
     Route::get('/search-user', [UserController::class, 'search']); 
     Route::put('/update-user/{id}', [UserController::class, 'update']);
     Route::delete('/destroy-user/{id}', [UserController::class, 'destroy']);
