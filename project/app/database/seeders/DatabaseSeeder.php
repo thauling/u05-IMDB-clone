@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use App\Models\Movie;
 use App\Models\Review;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +23,24 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         // Review::factory(50)->create();
-        
+        User::create([
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('12345678'),
+            'remember_token' => Str::random(10),
+            'is_admin' => 1,
+        ]);
+        for ($i = 0; $i < 10; $i++){
+        User::create([
+            'name' => Str::random(10),
+            'email' => Str::random(10).'@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('12345678'),
+            'remember_token' => Str::random(10),
+            'is_admin' => 0,
+        ]);
+    }
 
         /**** SHOULD THESE API REQUESTS BE SOMEWHERE ELSE? IN THE MOVIE FACTORY FILE? ****/
         // Get popular movies from TMDB
