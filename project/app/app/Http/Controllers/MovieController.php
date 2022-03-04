@@ -79,6 +79,7 @@ class MovieController extends Controller
                 "user_id" => $review['user_id'],
                 "user_name" => $user['name'],
                 "movie_id" => $review['movie_id'],
+                "is_approved" => $review['is_approved'],
                 "created_at" => $review['created_at'],
                 "updated_at" => $review['updated_at']
             ];

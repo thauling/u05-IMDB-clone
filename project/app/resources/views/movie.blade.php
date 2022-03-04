@@ -1,4 +1,7 @@
-<x-layout>
+@include('_head')
+
+@include('_nav')
+  
   <section class="movie-wrapper">
     <h1 class="movie-title">{{ $movie['title'] }}</h1>
     <div class="movie-controls">
@@ -31,14 +34,31 @@
   </section>
   <section class="reviews-section">
     <h2>Reviews</h2>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Rate this movie
-    </button>
+    @if(Auth::check())
+    <button type="button" class="px-6
+      py-2.5
+      bg-blue-600
+      text-white
+      font-medium
+      text-xs
+      leading-tight
+      uppercase
+      rounded
+      shadow-md
+      hover:bg-blue-700 hover:shadow-lg
+      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-blue-800 active:shadow-lg
+      transition
+      duration-150
+      ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Rate this movie
+</button>
+    @endif
     @if (session('status'))
     <h6>{{ session('status') }}</h6>
     @endif
-
     @foreach ($reviews as $review)
+    @if($review['is_approved'] == 1)
     <?php $date = date_create($review['created_at']); ?>
     <!-- <div class="review-wrapper"> -->
     <div class="mb-2 shadow-lg rounded-t-8xl rounded-b-5xl overflow-hidden">
@@ -60,18 +80,27 @@
         <p class="mb-8 max-w-2xl text-darkBlueGray-400 leading-loose">{{ $review['review_content'] }}</p>
       </div>
       <br>
+      @endif
       @endforeach
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">{{$movie['title']}}</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form action="{{url('store-review')}}" method="post">
+
+<!-- Modal -->
+@if(Auth::check())
+<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog relative w-auto pointer-events-none">
+    <div
+      class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+      <div
+        class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+        <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">{{$movie['title']}}</h5>
+        <button type="button"
+          class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+          data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body relative p-4">
+      <form action="{{url('store-review')}}" method="post">
                 @csrf
-                <div class="shadow sm:rounded-md sm:overflow-hidden">
+      <div class="shadow sm:rounded-md sm:overflow-hidden">
                   <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                     <div class="grid grid-cols-3 gap-6">
                       <div class="col-span-3 sm:col-span-2">
@@ -95,20 +124,53 @@
                             <input class="appearance-none block w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="title" name="title">
                           </div>
                         </div>
-                        <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Content</label>
+                        <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" >Content</label>
                         <div class="mt-1">
-                          <input type="text" id="content" name="content" class="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="">
+                          <input type="text" id="content" name="content" class="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                           <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id}}">
-                          <input type="hidden" id="movie_id" name="movie_id" value="{{$movie['id']}}">
-                          <div class="flex items-center justify-between">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Submit</button>
+                          <input type="hidden" id="movie_id" name="movie_id" value="{{$review['movie_id']}}">
                           </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-            </div>
-          </div>
-        </div>
+              </form>     
+      <div
+        class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+        <button type="button" class="px-6
+          py-2.5
+          bg-purple-600
+          text-white
+          font-medium
+          text-xs
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          hover:bg-purple-700 hover:shadow-lg
+          focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-purple-800 active:shadow-lg
+          transition
+          duration-150
+          ease-in-out" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="px-6
+      py-2.5
+      bg-blue-600
+      text-white
+      font-medium
+      text-xs
+      leading-tight
+      uppercase
+      rounded
+      shadow-md
+      hover:bg-blue-700 hover:shadow-lg
+      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-blue-800 active:shadow-lg
+      transition
+      duration-150
+      ease-in-out
+      ml-1">Submit</button>
       </div>
+    </div>
+  </div>
+</div>
+</div>
+@endif
+
   </section>
-</x-layout>

@@ -24,8 +24,13 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function showUserRatings($id)
     {
+
+        $reviews = Review::where('user_id', $id)->get()->toArray();
+        return view('reviews/userratings',[
+            'reviews' => $reviews
+        ]);
     }
 
     /**
@@ -99,6 +104,19 @@ class ReviewController extends Controller
 
     public function edit($id)
     {
+        //Get the id of the movie for showing title of movie
+        $movieId = Review::where('id', $id)->value('movie_id');
+        $movie = Movie::find($movieId);
+
+        //Get the review from database
+        $review = Review::find($id);
+
+        
+        //show the form and get data from form
+        return view('reviews/edit', [
+            'review' => $review,
+             'movie' => $movie
+        ]);
         $review = Review::find($id);  
         return view('admin.edit-review', ['review' => $review]);
 
@@ -117,7 +135,7 @@ class ReviewController extends Controller
         $review = Review::find($id);
         $review->review_content = $request->input('title');
         $review->review_content = $request->input('content');
-        $review->review_rating = $request->input('rating');
+        $review->review_rating = $request->input('movie_rating');
         $review->movie_id = $request->input('movie_id');
         $review->update();
         return redirect()->back()->with('status','Review Updated Successfully');
