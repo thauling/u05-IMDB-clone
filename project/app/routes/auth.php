@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/search-user', [UserController::class, 'search']); 
     Route::put('/update-user/{id}', [UserController::class, 'update']);
     Route::delete('/destroy-user/{id}', [UserController::class, 'destroy']);
+    Route::get('/userpage', [UserController::class, 'showWatchlist']);
+
 
 // MOVIE
   

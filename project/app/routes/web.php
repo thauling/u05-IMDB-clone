@@ -31,11 +31,6 @@ Route::get('/', function () {
 });
 
 
-
-Route::get('/userpage', function () {
-    return view('userpage');
-});
-
 // MOVIE 
 Route::get('/movies', [MovieController::class, 'getAllMovies']);
 Route::get('/search', function() {

@@ -1,6 +1,7 @@
 @include('_head')
 
 @include('_nav')
+<section class="reviews-section">
 <h1 class="text-center sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Your reviews!</h1>
 @if (session('status'))
     <h6>{{ session('status') }}</h6>
@@ -52,3 +53,5 @@
     </div>
     <br>
 @endforeach
+</section>
+<a class="goback" href="{{ url()->previous() }}"> Go back</a>

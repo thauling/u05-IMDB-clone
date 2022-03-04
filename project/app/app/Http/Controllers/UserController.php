@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Movie;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -300,5 +302,32 @@ class UserController extends Controller
         $user->watchlist = json_encode($watchlist);
         $user->update();
         return redirect()->back()->with('status', 'Movie removed from watchlist');
+    }
+
+    public function showWatchlist(){
+        $user = User::find(Auth::user()->id);
+
+        $watchlistMovies= [];
+
+            foreach(json_decode($user->watchlist) as $id){
+                $movie = Movie::where('id', $id)->first();
+                $imgsToArray = json_decode($movie->urls_images); 
+
+                $watchlistMovie = [
+                    'id' => $movie->id,
+                    'title' => $movie->title,
+                    'genre' => $movie->genre,
+                    'cast' => json_decode($movie->cast),
+                    'abstract' => $movie->abstract,
+                    'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
+                    'url_trailer' => $movie->url_trailer,
+                    'avg_rating' => $movie->avg_rating,
+                    'released' => $movie->released
+                ];
+                array_push($watchlistMovies, $watchlistMovie);
+            }
+         return view('/userpage')->with('watchlist', $watchlistMovies);
+
+
     }
 }
