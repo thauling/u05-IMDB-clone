@@ -43,11 +43,12 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
   // ADMIN
-    Route::get('/upload-image', [UploadImageController::class, 'index']); 
     Route::get('/admin-main', [AdminController::class, 'showUsersAndMovies']);
     Route::view('/datavis', 'datavis');
   
 // USER
+    Route::get('/upload-image', [UploadImageController::class, 'index']); 
+    Route::post('save', [UploadImageController::class, 'save']);
     Route::view('/edit-user', 'admin.edit-user');
     Route::post('/store-user', [UserController::class, 'store']); // needs fix/ change use corresponding breeze method
     Route::post('/edit-user/{id}', [UserController::class, 'edit']); 
