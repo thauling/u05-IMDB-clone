@@ -7,6 +7,7 @@
 // print_r(array_search($myId, $allMovies)); 
 //print_r(gettype($allMovies)); 
 //dd(($allMovies->keys()))
+var_dump($usercount, $moviecount, $reviewcount);
 ?>
 <x-admin>
     <!-- logic for handling site visibility, permission dependent -->
@@ -20,14 +21,8 @@
         <span class=""> Hi admin {{Auth::user()->name}} ! </span>
 
     </div>
-    <!-- dashboard 
-- able to add new movies and information about movies in an ordered way.
-- ability to separate movies into different categories and provide additional metadata about each movie, 
-    as well as linking them to actors, directors and so on.
-- able to track what users of the website are doing in terms of reviewing movies and putting in their watchlists
-- able to grant and remove roles to different users, granting them access to specific functionality as either 
-    an admin or restricting them to a regular user.
--->
+
+
     <section class="flex">
         <div class="flex-col p-20">
             <h2>Add a Movie</h2>
@@ -442,7 +437,7 @@
 
     @else
     <p>
-        No movies found.
+        No reviews found.
     </p>
     @endif
 
