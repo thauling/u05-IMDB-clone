@@ -7,7 +7,7 @@
                         @endif
                         
                         @if ($movie->urls_images)
-                        <img src=" {{ $imgPath }}" alt="movie comver image" width="100%" height="auto" class="opacity-80 hover:opacity-100 min-w-">
+                        <img src=" {{ $imgPath }}" alt="movie comver image" width="100%" height="auto" class="opacity-80 hover:opacity-100">
                         @else
                             NO IMG
                         @endif
