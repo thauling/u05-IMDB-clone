@@ -119,13 +119,6 @@ main {
     font-family: sans-serif;
 } */
 
-.user-h1 {
-    width: 100%;
-    background-color: #990011ff;
-    color: #fcf6f5ff;
-    padding: 1vh 0 1vh 0;
-}
-
 .user-avatar {
     width: 200px;
     height: 200px;
@@ -137,10 +130,9 @@ main {
 .container {
     display: flex;
     align-items: center;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     align-content: space-around;
     justify-content: center;
-    gap: 5rem;
 }
 
 .container_2 {
@@ -150,26 +142,6 @@ main {
     justify-content: center;
 }
 
-.options {
-    width: 70vh;
-    background-color: rgb(155, 207, 241);
-    margin: 1vw;
-    border-radius: 8px;
-    border: black 1px solid;
-    color: rgb(0, 0, 0);
-    height: 10vh;
-    box-shadow: 1px 1px 5px gray;
-}
-
-.options:hover {
-    background-color: rgb(119, 190, 238);
-}
-
-.footer {
-    background-color: black;
-    color: #fcf6f5ff;
-    margin-top: 5rem;
-}
 
 .nostyle {
     text-decoration: none;
@@ -182,13 +154,7 @@ main {
         gap: 1rem;
     }
 }
-
-@media screen and (max-width: 575px) {
-    .bio {
-        width: 80%;
-    }
-}
-
+/* Star rating start*/
 .star-cb-group {
     /* remove inline-block whitespace */
     font-size: 0;
@@ -250,3 +216,4 @@ fieldset {
     background: rgb(255, 255, 255);
     width: 20em;
 }
+/* star rating end */

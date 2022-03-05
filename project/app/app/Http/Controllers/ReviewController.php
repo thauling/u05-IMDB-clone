@@ -27,9 +27,10 @@ class ReviewController extends Controller
     public function showUserRatings($id)
     {
 
-        $reviews = Review::where('user_id', $id)->get()->toArray();
+        $reviews = Review::where('user_id', $id)->get();
+
         return view('reviews/userratings',[
-            'reviews' => $reviews
+            'reviews' => $reviews,
         ]);
     }
 
