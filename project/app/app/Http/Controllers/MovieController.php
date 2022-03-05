@@ -327,6 +327,14 @@ public function movieSearch(Request $request) // and/ or $name
         return view('admin.movie-cast', ['movie' => $movie]);
     }
 
+    public function getByGenre($genre) 
+    {
+        return view('genre', [
+            'movies' => Movie::where('genre', $genre)->orderBy('avg_rating', 'desc')->get(),
+            'genre' => $genre
+        ]);
+    }
+
 
 }
 
