@@ -72,7 +72,7 @@
                 
                     <!-- ACTIONS -->
                 <a href="{{ url('movies/genre/action') }}">
-                <article class="max-w-fw mx-auto flex justify-center border-solid border-2 border-white max-h-full my-5 bg-white rounded relative before:bg-black before:w-full before: h-full before:z-10 before:absolute before:inset-0 before:opacity-50">
+                <article class="max-w-fw mx-auto flex justify-center border-solid border-2 border-white max-h-full my-5 bg-white rounded relative before:bg-black before:w-full before: h-full before:z-10 before:absolute before:inset-0 before:opacity-50 hover:before:opacity-40">
                     <h3 class="text-3xl font-semibold text-white absolute self-center z-20">Action</h3>
                 @foreach ($actions as $action)
                 
@@ -105,7 +105,7 @@
                    <!-- HORRORS -->
 
                    <a href="{{ url('movies/genre/horror') }}">
-                <article class="max-w-fw mx-auto flex justify-center border-solid border-2 border-white max-h-full my-5 bg-white rounded relative before:bg-black before:w-full before: h-full before:z-10 before:absolute before:inset-0 before:opacity-50">
+                <article class="max-w-fw mx-auto flex justify-center border-solid border-2 border-white max-h-full my-5 bg-white rounded relative before:bg-black before:w-full before: h-full before:z-10 before:absolute before:inset-0 before:opacity-50 hover:before:opacity-40">
                     <h3 class="text-3xl font-semibold text-white absolute self-center z-20">Horror</h3>
                 @foreach ($horrors as $horror)
                 
@@ -138,7 +138,7 @@
                     ?>
                   
                    <a href="{{ url('movies/genre/animation') }}">
-                <article class="max-w-fw mx-auto flex justify-center border-solid border-2 border-white max-h-full my-5 bg-white rounded relative before:bg-black before:w-full before: h-full before:z-10 before:absolute before:inset-0 before:opacity-50">
+                <article class="max-w-fw mx-auto flex justify-center border-solid border-2 border-white max-h-full my-5 bg-white rounded relative before:bg-black before:w-full before: h-full before:z-10 before:absolute before:inset-0 before:opacity-50 hover:before:opacity-40">
                     <h3 class="text-3xl font-semibold text-white absolute self-center z-20">Animated</h3>
                 @foreach ($animations as $animation)
                 
