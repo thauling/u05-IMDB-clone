@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     @include('_head')
-    <body class="bg-gray-300">
+    <body class="bg-gray-300 font-sans antialiased">
 
         <div class="container block mx-auto px-2 py-4">
             @include('_nav')

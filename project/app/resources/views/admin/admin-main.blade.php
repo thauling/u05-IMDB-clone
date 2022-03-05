@@ -216,7 +216,7 @@
                                     <td class="">
 
                                         <a class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" href="{{url('edit-user',$user->id)}}">Edit</a>
-
+                                        <a class="shadow bg-green-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" href="{{url('show-user',$user->id)}}">Details</a>
 
                                         <form method="post" action="{{url('destroy-user',$user->id)}}">
                                             @csrf
@@ -385,7 +385,7 @@
                                         @if (!$review->is_approved)
                                         <span class="text-red-600 font-bold">Approved ?</span>
                                         @endif
-                                        <a class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" href="/review/{{$review['id']}}/edit">Edit</a>
+                                        <a class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded" href="{{url('edit-review',$review->id)}}">Edit</a>
                                         <form method="post" action="{{url('destroy-review',$review->id)}}">
                                             @csrf
                                             @method('DELETE')

@@ -24,39 +24,11 @@ class AdminController extends Controller
         $reviewcount = Review::count();
         $allUsers = User::pluck('id', 'name')->all();
         $allMovies = Movie::pluck('id', 'title')->all();
-        //dd($allMovies);
-       // dd(compact('users',  'movies'));
+       
         return view('admin.admin-main', compact('users',  'movies', 'reviews', 'usercount', 'moviecount', 'reviewcount', 'allUsers', 'allMovies')); 
     }
 
-    // public function showImage()
-    // {
-    //     return view('image');
-    // }
- 
-    // public function saveImage(Request $request)
-    // {
-         
-    //     $validatedData = $request->validate([
-    //      'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
- 
-    //     ]);
- 
-    //     $name = $request->file('image')->getClientOriginalName();
- 
-    //     $path = $request->file('image')->store('public/images');
- 
- 
-    //     $save = new Image;
- 
-    //     $save->name = $name;
-    //     $save->path = $path;
- 
-    //     $save->save();
- 
-    //     return redirect('upload-image')->with('status', 'Image Has been uploaded');
- 
-    // }
+   
 }
 
 

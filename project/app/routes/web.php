@@ -1,24 +1,13 @@
 <?php
 
 use App\Http\Controllers\MovieController;
-use App\Http\Controllers\ContentsArrController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UploadImageController;
+// use App\Http\Controllers\ContentsArrController;
+// use App\Http\Controllers\UserController;
+// use App\Http\Controllers\UploadImageController;
 use App\Http\Controllers\ReviewController;
 use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 // USER 
 // Landing page start
@@ -59,12 +48,5 @@ Route::get('/search-movie', [MovieController::class, 'movieSearch']);
     
 Route::get('movies/genre/{slug}', [MovieController::class, 'getByGenre']);
 
-
-Route::view('/test', 'test'
-
-// DISCARD PILE
-
-
-);
 
 

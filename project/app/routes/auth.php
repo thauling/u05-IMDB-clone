@@ -13,8 +13,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UploadImageController; //could move funcs to AdminController but this way perhaps better for reusability
-use App\Models\Movie;
+use App\Http\Controllers\UploadImageController; 
+
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -43,7 +43,6 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
   // ADMIN
     Route::get('/admin-main', [AdminController::class, 'showUsersAndMovies']);
-    Route::view('/datavis', 'datavis');
   
 // USER
     Route::get('/user/upload-image', [UploadImageController::class, 'index']); 
@@ -51,7 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/delete-image/{id}', [UploadImageController::class, 'delete']);
     Route::view('/edit-user', 'admin.edit-user');
     Route::post('/store-user', [UserController::class, 'store']); // needs fix/ change use corresponding breeze method
-    Route::post('/edit-user/{id}', [UserController::class, 'edit']); 
+    Route::get('/edit-user/{id}', [UserController::class, 'edit']); 
+    Route::get('/show-user/{id}', [UserController::class, 'showWatchlist']); 
     Route::get('/search-user', [UserController::class, 'search']); 
     Route::put('/update-user/{id}', [UserController::class, 'update']);
     Route::delete('/destroy-user/{id}', [UserController::class, 'destroy']);
@@ -83,15 +83,14 @@ Route::middleware('auth')->group(function () {
 
     //REVIEW 
     
-    Route::get('/edit-review/{id}', [ReviewController::class, 'edit']); // used?
+    Route::get('/edit-review/{id}', [ReviewController::class, 'editApprove']); // used?
     Route::post('/store-review', [ReviewController::class, 'store']);
     Route::put('/update-review/{id}', [ReviewController::class, 'update']);
     Route::get('/userratings/{id}', [ReviewController::class, 'showUserRatings']);
-    Route::get('/delete-review/{id}', [ReviewController::class, 'destroy']);
-
     Route::put('/update-approve-review/{id}', [ReviewController::class, 'updateApprove']);
     Route::get('/review/{review}/edit', [ReviewController::class, 'edit']); // used by admin-main
-    Route::delete('/destroy-review/{id}', [ReviewController::class, 'destroy']);
+    Route::delete('/destroy-review/{id}', [ReviewController::class, 'destroy']); 
+    Route::get('/delete-review/{id}', [ReviewController::class, 'destroy']);  // is this redundant and better use DELETE as in ln 93? 
     Route::get('/admin-search-review', [ReviewController::class, 'adminSearchReview']); //not implemented/ already exists?
 
     // BREEZE
