@@ -1,6 +1,7 @@
 @include('_head')
 
 @include('_nav')
+<section class="reviews-section">
 <h1 class="text-center sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Your reviews!</h1>
 @if (session('status'))
     <h6>{{ session('status') }}</h6>
@@ -35,7 +36,7 @@
             <div class="-mb-2">
               <div class="inline-flex w-full md:w-auto md:mr-2 mb-2">
                 <div class="flex items-center h-12 pl-2 pr-6 bg-green-100 border-2 border-green-500 rounded-full">
-                  <a href="{{url('edit-review'/$review['id'])}}" class="text-green-500 font-heading font-medium">Edit</a>
+                  <a href="/edit-review/{{$review['id']}}" class="text-green-500 font-heading font-medium">Edit</a>
                 </div>
               </div>
           </div>
@@ -52,3 +53,5 @@
     </div>
     <br>
 @endforeach
+</section>
+<a class="goback" href="{{ url()->previous() }}"> Go back</a>

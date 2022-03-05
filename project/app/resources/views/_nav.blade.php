@@ -4,9 +4,7 @@
 ?>
 
 
-<body class="bg-gray-300">
 
-    <div class="container mx-auto px-2 py-4">
 
         <nav class="flex justify-between  md:flex-row items-center">
             

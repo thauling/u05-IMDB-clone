@@ -47,14 +47,17 @@ Route::middleware('auth')->group(function () {
     Route::view('/datavis', 'datavis');
   
 // USER
-    Route::get('/upload-image', [UploadImageController::class, 'index']); 
+    Route::get('/user/upload-image', [UploadImageController::class, 'index']); 
     Route::post('save', [UploadImageController::class, 'save']);
+    Route::delete('/delete-image/{id}', [UploadImageController::class, 'delete']);
     Route::view('/edit-user', 'admin.edit-user');
     Route::post('/store-user', [UserController::class, 'store']); // needs fix/ change use corresponding breeze method
-    Route::get('/edit-user/{id}', [UserController::class, 'edit']); 
+    Route::post('/edit-user/{id}', [UserController::class, 'edit']); 
     Route::get('/search-user', [UserController::class, 'search']); 
     Route::put('/update-user/{id}', [UserController::class, 'update']);
     Route::delete('/destroy-user/{id}', [UserController::class, 'destroy']);
+    Route::get('/userpage', [UserController::class, 'showWatchlist']);
+
 
 // MOVIE
   
@@ -80,7 +83,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/watchlist/remove/{movie}', [UserController::class, 'removeFromWatchlist']);
 
     //REVIEW 
-    //Route::get('/edit-review/{id}', [ReviewController::class, 'edit']); // used?
+    
+    Route::get('/edit-review/{id}', [ReviewController::class, 'edit']); // used?
     Route::post('/store-review', [ReviewController::class, 'store']);
     Route::put('/update-review/{id}', [ReviewController::class, 'update']);
     Route::get('/userratings/{id}', [ReviewController::class, 'showUserRatings']);

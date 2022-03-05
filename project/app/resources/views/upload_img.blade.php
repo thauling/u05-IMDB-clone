@@ -1,15 +1,21 @@
 @include ('_head')
 @include ('_nav')
 
-    <div class="max-w-fw mx-auto flex border-solid border-2 border-white max-h-64 my-5 bg-white rounded ">
+    <div class="max-w-fw mx-auto flex border-solid border-2 border-white max-h-full my-5 bg-white rounded ">
 
-        @if(session('status'))
-        <div class="alert alert-success">
-            {{ session('status') }}
-        </div>
-        @endif
+        
 
         <div class="p-4 mx-auto">
+            <a href="{{ url('user/user-settings') }}" class="mb-4 text-sm text-gray-700 hover:text-gray-900 dark:text-gray-500 underline">←Back</a>
+
+            @if(session('status'))
+            <div x-data="{ show: true }"
+                    x-init="setTimeout(() => show = false, 4000)"
+                    x-show="show"
+                    id="status" role="alert">
+                    <p class="text-green-600">{{ session('status') }}</p> 
+                </div>
+            @endif
             <div class="my-6">
                 <h1 class="block text-black text-lg font-bold">Upload Movie Images</h1>
             </div>
@@ -37,7 +43,7 @@
                         <img id="preview" src="" alt="preview image" style="max-height: 250px;">
                     </div>
 
-                    <div class="md:w-2/3">
+                    <div class="mb-4 md:w-2/3">
                         <button type="submit" class="bg-gray-500 text-white border border-gray-600 hover:bg-blue-300 font-bold py-2 px-4 rounded" id="submit">Upload</button>
                     </div>
             </div>

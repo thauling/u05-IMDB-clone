@@ -1,36 +1,34 @@
-@if(Auth::check())
 
 @include('_head')
 
 @include('_nav')
-<head>
-<link rel="stylesheet" type="text/css" href="/app.css">
-
-</head>
-        <h2>{{@Auth::user()->name}}</h2>
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-wrap w-full mb-20">
+      <div class="lg:w-1/2 w-full mb-6 lg:mb-0">
+        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">{{@Auth::user()->name}}</h1>
+        <div class="h-1 w-20 bg-indigo-500 rounded"></div>
+      </div>
+      <p class="lg:w-1/2 w-full leading-relaxed text-gray-500">Here is all the movies you have put on your watchlist so far!</p>
+    </div>
+    @foreach($watchlist as $movie)
+    <div class="flex flex-wrap -m-4">
+      <div class="xl:w-1/4 md:w-1/2 p-4">
+        <div class="bg-gray-100 p-6 rounded-lg">
+          <img class="h-40 rounded w-full object-cover object-center mb-6" src="{{ $movie['urls_images'] }}" alt="content">
+          <h3 class="tracking-widest text-indigo-500 text-xs font-medium title-font">{{$movie['genre']}}</h3>
+          <h2 class="text-lg text-gray-900 font-medium title-font mb-4">{{$movie['title']}}</h2>
+          <p class="leading-relaxed text-base">{{$movie['abstract']}}</p>
+        </div>
+      </div>
+    </div>
+    @endforeach
+</section>
     <div class="container">
         <input  type="file" name="userimage" placeholder="Choose profile picture" id="userimage">
     </div>
     <section class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto flex flex-wrap">
-    <div class="flex flex-wrap -m-4">
-      <div class="p-4 lg:w-1/2 md:w-full">
-        <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col">
-          <div class="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
-          </svg>
-          </div>
-          <div class="flex-grow">
-            <h2 class="text-gray-900 text-lg title-font font-medium mb-3">Your Watchlist</h2>
-            <p class="leading-relaxed text-base">Here you can see, add, delete and update the movies on your watchlist</p>
-              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+
       <div class="p-4 lg:w-1/2 md:w-full">
         <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col">
           <div class="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
@@ -41,14 +39,9 @@
           <div class="flex-grow">
             <h2 class="text-gray-900 text-lg title-font font-medium mb-3"><a href="userratings/{{Auth::id()}}">Your Reviews/Ratings</a></h2>
             <p class="leading-relaxed text-base">Here you can see all the ratings and reviews you have left on movies.</p>
-              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7"></path>
-              </svg>
-            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-@endif
