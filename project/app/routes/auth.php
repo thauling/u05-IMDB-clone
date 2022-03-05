@@ -38,10 +38,6 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.update');
-
-    Route::get('/search-movie', [MovieController::class, 'movieSearch']);
-    
-    Route::get('movies/genre/{slug}', [MovieController::class, 'getByGenre']);
 });
 
 Route::middleware('auth')->group(function () {

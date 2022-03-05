@@ -55,7 +55,9 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-
+Route::get('/search-movie', [MovieController::class, 'movieSearch']);
+    
+Route::get('movies/genre/{slug}', [MovieController::class, 'getByGenre']);
 
 
 Route::view('/test', 'test'
