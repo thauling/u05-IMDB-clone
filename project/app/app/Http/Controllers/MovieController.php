@@ -67,9 +67,14 @@ class MovieController extends Controller
         $reviews = Review::where('movie_id', $id)->get()->toArray();
         $alteredReviews = [];
 
+        // need to check that user (still) exists - she/he might have been deleted
         foreach ($reviews as $review) {
-
-            $user = User::find($review['user_id']);
+            if (User::find($review['user_id'])) {
+                $user = User::find($review['user_id'])['name'];
+            } else {
+                $user = 'anonymous';
+            };
+            
 
             $alteredReview = [
                 "id" => $review['id'],
@@ -77,7 +82,7 @@ class MovieController extends Controller
                 "review_content" => $review['review_content'],
                 "review_rating" => $review['review_rating'],
                 "user_id" => $review['user_id'],
-                "user_name" => $user['name'],
+                "user_name" => $user,//$user['name'],
                 "movie_id" => $review['movie_id'],
                 "is_approved" => $review['is_approved'],
                 "created_at" => $review['created_at'],
