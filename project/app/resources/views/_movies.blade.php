@@ -1,13 +1,13 @@
-<article class="max-w-fw mx-auto flex border-solid border-2 border-white max-h-64 my-5 bg-white rounded ">
+<article class="max-w-fw mx-auto flex border-solid border-2 border-white max-h-full my-5 bg-white rounded ">
                         
-                        <div class="w-1/4 border mr-10">
+                        <div class="w-1/4 h-full border mr-10">
                             <a href="/movies/{{ $movie->id }}">
                         @if (isset($result))
                             $movie = $result
                         @endif
                         
                         @if ($movie->urls_images)
-                            <img src=" {{ $imgPath }}" alt="movie comver image" width="100%" height= "auto" class="opacity-30 hover:opacity-100">
+                        <img src=" {{ $imgPath }}" alt="movie comver image" width="100%" height="auto" class="opacity-80 hover:opacity-100">
                         @else
                             NO IMG
                         @endif

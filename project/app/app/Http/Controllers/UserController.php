@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\User;
 use App\Models\Movie;
 
@@ -266,8 +267,9 @@ class UserController extends Controller
     public function settings()
     {
         $user = User::get();
+        $image = Image::where('user_id', Auth::user()->id)->first();
 
-        return view('user-settings', ['user' => $user]);
+        return view('user-settings', ['image' => $image]);
     }
 
     public function updateWatchlist($movieId) 
