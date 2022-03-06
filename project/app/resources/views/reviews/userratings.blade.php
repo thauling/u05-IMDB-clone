@@ -52,7 +52,7 @@
                             <div class="inline-flex w-full md:w-auto md:mr-2 mb-2">
                                 <div
                                     class="flex items-center h-12 pl-2 pr-6 bg-green-100 border-2 border-green-500 rounded-full">
-                                    <a href="/edit-review/{{ $review['id'] }}"
+                                    <a href="{{ url('userratings/edit-review', $review['id']) }}"
                                         class="text-green-500 font-heading font-medium">Edit</a>
                                 </div>
                             </div>

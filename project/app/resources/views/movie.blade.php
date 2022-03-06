@@ -1,4 +1,3 @@
-</section>
 <!DOCTYPE html>
 <html lang="en">
 @include('_head')
