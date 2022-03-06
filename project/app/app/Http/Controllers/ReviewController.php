@@ -42,27 +42,11 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // $validatedData = $request->validate([
-        //     'content' => 'nullable|max:1000',
-        //     'title' => 'nullable',
-        //     'movie_rating' => 'required',
-        //     'user_id' => 'required',
-        //     'movie_id' => 'required'
-        //         ]);
-        //  Review::create($validatedData);
-        //dd($request);
+        
         if ($request->review_rating === null) {
             return redirect()->back()->with('status', "You have to fill in a rating for this movie!");
         } else {
             
-            // $review = new Review;
-            // $review->title = $request->title;
-            // $review->review_content = $request->content;
-            // $review->review_rating = $request->movie_rating;
-            // $review->user_id = $request->user_id;
-            // $review->movie_id = $request->movie_id;
-            // $review->save();
             $validatedData = $request->validate([
                 'review_content' => 'nullable|max:1000',
                 'title' => 'nullable',
