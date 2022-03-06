@@ -23,11 +23,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if (Auth::check() && Auth::user()->is_admin) :
-            $request["is_admin"] = $request["is_admin"] ? 1 : 0; 
+            $request["is_admin"] = $request["is_admin"] ? 1 : 0;
             $attributes = request()->validate([
                 'name' => ['required', 'string', 'min:5', 'max:255'],
                 'email' => ['required', 'max:255', 'email', 'unique:users,email'],
-                'password' => ['required', 'string', 'min:7', 'max:255'], 
+                'password' => ['required', 'string', 'min:7', 'max:255'],
                 'is_admin' => ['required']
             ]);
 
@@ -52,11 +52,11 @@ class UserController extends Controller
     }
 
 
-    public function search(Request $request) 
+    public function search(Request $request)
     {
 
         $query = $request->input('query');
-        $user = User::where('email', 'like', '%' . $query . '%')->orWhere('name', 'like', '%' . $query . '%')->first(); 
+        $user = User::where('email', 'like', '%' . $query . '%')->orWhere('name', 'like', '%' . $query . '%')->first();
         return view('admin.edit-user', ['user' => $user]);
     }
 
@@ -68,10 +68,9 @@ class UserController extends Controller
         $user->update($request->all());
 
         return redirect('admin-main')->with('status', 'User data updated.');
-
     }
 
-    
+
     public function updateSettings(Request $request)
     {
         //
@@ -121,7 +120,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        
+
         User::destroy($id);
         session()->flash('success', 'User deleted');
         return redirect()->back();
@@ -168,13 +167,11 @@ class UserController extends Controller
         return redirect()->back()->with('status', 'Movie removed from watchlist');
     }
 
-    public function showWatchlist($id = null)
+    public function showWatchlist()
     {
-        if (isset($id)) {
-            $user = User::find(intval($id));
-        } else {
-            $user = User::find(Auth::user()->id);
-        }
+
+        $user = User::find(Auth::user()->id);
+
         $image = Image::where('user_id', $user)->first();
 
 
@@ -190,17 +187,14 @@ class UserController extends Controller
                     'genre' => $movie->genre,
                     'cast' => json_decode($movie->cast),
                     'abstract' => $movie->abstract,
-                    'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
+                    'urls_images' => $imgsToArray[0],
                     'avg_rating' => $movie->avg_rating,
                     'released' => $movie->released
                 ];
                 array_push($watchlistMovies, $watchlistMovie);
             }
         }
-        if (isset($id)) {
-            return view('/usersdetails',  ['watchlist' => $watchlistMovies, 'image' => $image]);
-        } else {
+
         return view('/userpage', ['watchlist' => $watchlistMovies, 'image' => $image]);
-        }
     }
 }

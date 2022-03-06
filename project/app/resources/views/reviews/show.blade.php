@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<body>
-
-
     @include('_head')
+    
+<body class="bg-gray-300 font-sans antialiased">
+    <div class="container block mx-auto px-2 py-4">
     @include('_nav')
 
 
@@ -45,6 +45,7 @@
             </div>
         </div>
         <br>
+    </div>
     </div>
 </body>
 

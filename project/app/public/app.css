@@ -36,6 +36,8 @@
     align-self: center;
     font-size: 14px;
     text-decoration: underline;
+    display: flex;
+    flex-direction: column;
 }
 
 .movie-year {
@@ -153,6 +155,7 @@
 
   .movie-poster {
     width: 30%;
+    margin-right: 10px;
   }
 
   .movie-title {

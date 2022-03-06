@@ -6,6 +6,7 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Movie;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -108,8 +109,10 @@ class ReviewController extends Controller
      // for approval by admin
     public function editApprove($id)
     {
+        if (Auth::check() && Auth::user()->is_admin){
         $review = Review::find($id);  
         return view('admin.edit-review', ['review' => $review]);
+        }
     }
 
     // for registered user
