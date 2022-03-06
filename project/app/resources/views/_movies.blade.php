@@ -26,7 +26,7 @@
                             </p>
                         </div>
 
-                        <div class="ml-10 pt-10">
+                        <div class="ml-10 pt-10 md:block hidden">
                             <h3 class="font-bold">Cast</h3>
                             <ul class="text-sm sm:text-base">
                 

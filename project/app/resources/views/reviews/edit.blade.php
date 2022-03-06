@@ -22,7 +22,7 @@
             <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                 <div class="grid grid-cols-3 gap-6">
                     <div class="col-span-3 sm:col-span-2">
-                        <h4 class="w-full md:w-auto text-xl font-heading font-medium">{{ $movie->title }}</h4>
+                        <h1 class="w-full md:w-auto text-xl font-heading font-medium">{{ $movie->title }}</h1>
                         <fieldset>
                             <span class="star-cb-group">
                                 <input id="rating-10" type="radio" name="movie_rating" value="10" /><label

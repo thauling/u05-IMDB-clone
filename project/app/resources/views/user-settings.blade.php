@@ -2,7 +2,11 @@
 
 @include('_head')
 
-@include('_nav')
+<body class="bg-gray-300">
+
+    <div class="container block mx-auto px-2 py-4">
+
+    @include('_nav')
 
         <h1 class="text-3xl font-semibold text-gray-900 text-center mt-4">
             Settings
@@ -13,7 +17,6 @@
         ?>
         
         <article class="max-w-fw mx-auto flex flex-col items-center border-solid border-2 border-white max-h-full my-5 bg-white rounded p-5">
-
     
             <div class="py-8">
                  
@@ -96,6 +99,6 @@
                 
 
     </div>
-
+<script src="../js/app.js"></script>
 </body>
 </html>

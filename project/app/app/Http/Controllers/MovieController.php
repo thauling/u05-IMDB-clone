@@ -32,7 +32,7 @@ class MovieController extends Controller
                 'genre' => $movie->genre,
                 'cast' => json_decode($movie->cast),
                 'abstract' => $movie->abstract,
-                'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
+                'urls_images' => $imgsToArray[0],
                 'url_trailer' => $movie->url_trailer,
                 'avg_rating' => $movie->avg_rating,
                 'released' => $movie->released
@@ -58,7 +58,7 @@ class MovieController extends Controller
             'genre' => $movie->genre,
             'cast' => json_decode($movie->cast),
             'abstract' => $movie->abstract,
-            'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
+            'urls_images' => $imgsToArray[0],
             'url_trailer' => $movie->url_trailer,
             'avg_rating' => $movie->avg_rating,
             'released' => $movie->released
@@ -114,8 +114,6 @@ class MovieController extends Controller
 
         return view('movie', ['movie' => $movie]);
     }
-
-   
 
     public function updateMovie(Request $req, $id)
     {
