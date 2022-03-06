@@ -57,6 +57,7 @@
                 </form>
                 @endif
             </div>
+            @if(isset($user))
             @if (!empty(json_decode($user->watchlist)))
             <div class="py-5">
                 <h2 class="block text-gray-500 font-bold">Movie Watchlist of {{$user->name}}</h2>
@@ -80,6 +81,7 @@
                     </tbody>
                 </table>
             </div>
+            @endif
             @endif
         </div>
         <div class="shadow bg-yellow-400 text-gray-500 font-bold md:text-left mb-1 md:mb-0 py-2 px-4 rounded"><a href="{{url('admin-main')}}">Back</a></div>
