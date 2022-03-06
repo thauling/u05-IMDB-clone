@@ -34,8 +34,6 @@
                         <h4 class="w-full md:w-auto text-l font-heading font-medium">{{ $review->title }} </h4>
                         <p class="mb-8 max-w-2xl text-darkBlueGray-400 leading-loose">{{ $review->review_content }}
                         </p>
-                        <div class="-mb-2">
-                        </div>
                     </div>
                     <div class="w-full md:w-1/3 text-right">
                         <?php $date = date_create($review['created_at']); ?>

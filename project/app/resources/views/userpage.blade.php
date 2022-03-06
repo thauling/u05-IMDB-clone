@@ -64,36 +64,44 @@
             </div>
         </div>
     </section>
-
-    <section class="text-gray-600 body-font">
-        <h1 class="text-center sm:text-3xl text-2xl font-medium title-font  text-gray-900">Your watchlist!</h1>
-        <div class="container px-5 py-24 mx-auto">
-            <div class="flex flex-wrap -m-4">
-                @foreach ($watchlist as $movie)
-                    <div class="p-4 md:w-1/3">
-                        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                            <img class="lg:h-48 md:h-36 w-full object-cover object-center"
-                                src="{{ $movie['urls_images'] }}" alt="movie-poster">
-                            <div class="p-6">
-                                <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                                    {{ $movie['genre'] }}</h2>
-                                <h1 class="title-font text-lg font-medium text-gray-900 mb-3"><a
-                                        href="{{ url('movies', $movie['id']) }}">{{ $movie['title'] }}</a></h1>
-                                <p class="leading-relaxed mb-3">{{ $movie['abstract'] }}</p>
-                                <div class="flex items-center flex-wrap ">
-                                    <a href="{{ url('/user/watchlist/remove', $movie['id']) }}"
-                                        class="text-red-500 inline-flex items-center md:mb-2 lg:mb-0">Remove from
-                                        watchlist
-                                    </a>
+    @if (!empty($watchlist))
+        <section class="text-gray-600 body-font">
+            <h2 class="text-center sm:text-3xl text-2xl font-medium title-font  text-gray-900">Your watchlist!</h2>
+            <div class="container px-5 py-24 mx-auto">
+                <div class="flex flex-wrap -m-4">
+                    @foreach ($watchlist as $movie)
+                        <div class="p-4 md:w-1/3">
+                            <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                                <a href="{{ url('movies', $movie['id']) }}"><img
+                                        class="lg:h-48 md:h-36 w-full object-cover object-center"
+                                        src="{{ $movie['urls_images'] }}" alt="movie-poster"> </a>
+                                <div class="p-6">
+                                    <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                                        {{ $movie['genre'] }}</h2>
+                                    <h2 class="title-font text-lg font-medium text-gray-900 mb-3"><a
+                                            href="{{ url('movies', $movie['id']) }}">{{ $movie['title'] }}</a></h2>
+                                    <p class="leading-relaxed mb-3">{{ $movie['abstract'] }}</p>
+                                    <div class="flex items-center flex-wrap ">
+                                        <a href="{{ url('/user/watchlist/remove', $movie['id']) }}"
+                                            class="text-red-500 inline-flex items-center md:mb-2 lg:mb-0">Remove from
+                                            watchlist
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @else
+        <h2 class="text-center sm:text-3xl text-2xl font-medium title-font  text-gray-900">Your watchlist!</h2>
 
+        <h2
+            class="text-center ml-4 mr-4 md:ml-28 md:mr-28 bg-white pt-2 pb-2 text-black border-4 border-b-8 border-indigo-500">
+            Your
+            watchlist is empty, try adding a movie to it!</h2>
+    @endif
 </body>
 
 </html>

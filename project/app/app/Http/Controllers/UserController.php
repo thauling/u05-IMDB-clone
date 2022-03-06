@@ -223,7 +223,6 @@ class UserController extends Controller
                     'cast' => json_decode($movie->cast),
                     'abstract' => $movie->abstract,
                     'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
-                    'url_trailer' => $movie->url_trailer,
                     'avg_rating' => $movie->avg_rating,
                     'released' => $movie->released
                 ];
