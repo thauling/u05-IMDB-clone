@@ -27,10 +27,11 @@ class ReviewController extends Controller
     public function showUserRatings($id)
     {
 
-        $reviews = Review::where('user_id', $id)->get()->toArray();
-        return view('reviews/userratings',[
-            'reviews' => $reviews
-        ]);
+        $reviews = Review::where('user_id', $id)->get();
+        $allMovies = Movie::pluck('id', 'title')->all();
+
+
+        return view('reviews/userratings', compact('reviews', 'allMovies'));
     }
 
     /**
