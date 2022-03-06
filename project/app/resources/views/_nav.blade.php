@@ -5,7 +5,7 @@ $logo = asset('assets/images/imdb_logo.png');
 
 
 
-<nav class="flex justify-evenly  md:flex-row items-center">
+<nav class="flex justify-between  md:flex-row flex-col items-center">
 
     <a href="/">
         <img src="{{ $logo }}" alt="IMDb" width="80px">
