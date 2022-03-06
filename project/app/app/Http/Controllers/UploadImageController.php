@@ -10,7 +10,7 @@ class UploadImageController extends Controller
 {
     public function index()
     {
-        return view('upload_img');
+        return view('img_modal');
     }
 
     public function save(Request $request)

@@ -49,7 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::post('save', [UploadImageController::class, 'save']);
     Route::delete('/delete-image/{id}', [UploadImageController::class, 'delete']);
     Route::view('/edit-user', 'admin.edit-user');
-    Route::post('/store-user', [UserController::class, 'store']); // needs fix/ change use corresponding breeze method
+    Route::post('/store-user', [UserController::class, 'store']); 
     Route::get('/edit-user/{id}', [UserController::class, 'edit']); 
     Route::get('/show-user/{id}', [UserController::class, 'showWatchlist']); 
     Route::get('/search-user', [UserController::class, 'search']); 
@@ -72,8 +72,6 @@ Route::middleware('auth')->group(function () {
    
     Route::put('/update-movie/{id}', [MovieController::class, 'update']); 
   
-
-    //Route::delete('/movies/{movie}/delete', [MovieController::class, 'destroy']); // not used?
     Route::delete('/destroy-movie/{id}', [MovieController::class, 'destroy']);
   
 
@@ -83,15 +81,14 @@ Route::middleware('auth')->group(function () {
 
     //REVIEW 
     Route::get('/userratings/edit-review/{id}', [ReviewController::class, 'edit']);
-    Route::get('/edit-review/{id}', [ReviewController::class, 'editApprove']); // used?
+    Route::get('/edit-review/{id}', [ReviewController::class, 'editApprove']); 
     Route::post('/store-review', [ReviewController::class, 'store']);
     Route::put('/update-review/{id}', [ReviewController::class, 'update']);
     Route::get('/userratings/{id}', [ReviewController::class, 'showUserRatings']);
     Route::put('/update-approve-review/{id}', [ReviewController::class, 'updateApprove']);
-    // Route::get('/review/{review}/edit', [ReviewController::class, 'edit']); // used by admin-main
     Route::delete('/destroy-review/{id}', [ReviewController::class, 'destroy']); 
-    Route::get('/delete-review/{id}', [ReviewController::class, 'destroy']);  // is this redundant and better use DELETE as in ln 93? 
-    Route::get('/admin-search-review', [ReviewController::class, 'adminSearchReview']); //not implemented/ already exists?
+    Route::get('/delete-review/{id}', [ReviewController::class, 'destroy']);  
+    Route::get('/admin-search-review', [ReviewController::class, 'adminSearchReview']); 
 
     // BREEZE
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])

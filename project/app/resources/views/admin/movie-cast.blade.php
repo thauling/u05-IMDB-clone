@@ -14,8 +14,8 @@ else {
             <p>{{ session()->get('success') }}</p>
         </div>
         @endif
-        <div class="flex flex-col p-5">
-            <h1 class="block text-gray-500 text-center font-bold pb-5"">Find movie by title or abstract</h1>
+        <div class="flex flex-col">
+            <h1 class="block text-gray-500 text-center font-bold py-5">Find movie by title or abstract</h1>
             <form class=" w-full max-w-sm" method="get" action="{{url('/admin-search-movie')}}">
 
                 @csrf
