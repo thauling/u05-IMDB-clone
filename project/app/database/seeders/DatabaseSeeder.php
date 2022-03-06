@@ -21,8 +21,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create();
-        // Review::factory(50)->create();
+        // Create random users
         User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
@@ -31,23 +30,35 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
             'is_admin' => 1,
         ]);
-        for ($i = 0; $i < 10; $i++){
-        User::create([
-            'name' => Str::random(10),
-            'email' => Str::random(10).'@gmail.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('12345678'),
-            'remember_token' => Str::random(10),
-            'is_admin' => 0,
-        ]);
-    }
+        for ($i = 0; $i < 10; $i++) {
+            User::create([
+                'name' => Str::random(10),
+                'email' => Str::random(10) . '@gmail.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('12345678'),
+                'remember_token' => Str::random(10),
+                'is_admin' => 0,
+            ]);
+        }
 
+        // Create random reviews
+        for ($i = 0; $i < 10; $i++) {
+            Review::create([
+                'title' => Str::random(10),
+                'review_content' => Str::random(100),
+                'review_rating' => rand(1, 10),
+                'is_approved' => rand(0, 1),
+                'user_id' =>  rand(1, 11),
+                'movie_id' => rand(1, 20),
+            ]);
+        }
         // Get popular movies from TMDB
         $movies = Http::get('https://api.themoviedb.org/3/movie/popular?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US&page=1');
         $moviesToArray = json_decode($movies); // Convert to array
 
         // Genres are defined as a seperate endpoint and are refered to by their ID in the movie object
-        function getGenre ($id) { // Get the genre by the genre ID in the movie object
+        function getGenre($id)
+        { // Get the genre by the genre ID in the movie object
             $genres = Http::get('https://api.themoviedb.org/3/genre/movie/list?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US');
             $genresToArray = json_decode($genres);
 
@@ -59,18 +70,19 @@ class DatabaseSeeder extends Seeder
         }
 
         // Trailers are defined as a seperate endpoint
-        function getTrailer ($id) { // Get the trailer youtube key with the movie ID
+        function getTrailer($id)
+        { // Get the trailer youtube key with the movie ID
             $trailer = Http::get("https://api.themoviedb.org/3/movie/$id/videos?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US");
             $trailerToArray = json_decode($trailer);
 
             if (!$trailerToArray->results == []) { // If results is NOT empty array
-                
+
                 $trailerId = $trailerToArray->results[0]->key;
 
                 return "https://www.youtube.com/embed/$trailerId"; // Return embed url
             } else {
                 return "";
-            } 
+            }
         }
 
         // Loop through API response
@@ -94,8 +106,8 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        User::factory(10)->create();
-        Review::factory(50)->create();
+        // User::factory(10)->create();
+        // Review::factory(50)->create();
 
         $movies = Movie::all();
 
@@ -107,11 +119,10 @@ class DatabaseSeeder extends Seeder
                 foreach ($reviews as $review) {
                     array_push($ratings, $review['review_rating']);
                 }
-    
-                $movie->avg_rating = array_sum($ratings)/count($ratings);
+
+                $movie->avg_rating = array_sum($ratings) / count($ratings);
                 $movie->update();
             }
         }
     }
 }
-
