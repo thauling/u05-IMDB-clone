@@ -439,6 +439,8 @@
                     width: 400,
                     height: 240,
                     is3D: true,
+                    fontSize: 16,
+                    legend: 'none',
                     title: 'Total number of users, movies, reviews',
                     isStacked: true
                 };
