@@ -77,7 +77,7 @@ class ReviewController extends Controller
                 $movie->update();
             }
 
-                return redirect()->back()->with('status', 'Creating review was successful!');
+                return redirect()->back()->with('status', 'Creating review was successful! It will show up on the page once an admin has approved it.');
         }
     }
         
@@ -145,7 +145,9 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->movie_rating === null) {
+            return redirect()->back()->with('status', "You have to fill in a rating for this movie!");
+        } else {
         $review = Review::find($id);
         $review->review_content = $request->input('title');
         $review->review_content = $request->input('content');
@@ -153,7 +155,7 @@ class ReviewController extends Controller
         $review->movie_id = $request->input('movie_id');
         $review->update();
         return redirect()->back()->with('status','Review Updated Successfully');
-    }
+    }}
 
     // combine with above? 
     public function updateApprove(Request $request, $id)

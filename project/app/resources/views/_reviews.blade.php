@@ -25,9 +25,6 @@
             <a href="/login">Log in to rate this movie</a>
         @endif
     </div>
-    @if (session('status'))
-        <h6>{{ session('status') }}</h6>
-    @endif
     @foreach ($reviews as $review)
         @if ($review['is_approved'] == 1)
             <?php $date = date_create($review['created_at']); ?>
@@ -35,7 +32,7 @@
                 <div class="pt-3 pb-3 md:pb-1 px-4 md:px-16 bg-white bg-opacity-40">
                     <div class="flex flex-wrap items-center">
                         <h3 class="w-full md:w-auto text-xl font-heading font-medium">{{ $review['user_name'] }}</h3>
-                        <p class="mb-8 text-sm text-gray-300">{{ date_format($date, 'Y-m-d') }}</p>
+                        <p class="mb-8 text-sm text-gray-600">{{ date_format($date, 'Y-m-d') }}</p>
                         <div class="w-full md:w-px h-2 md:h-8 mx-8 bg-transparent md:bg-gray-200"></div>
                         <div class="inline-flex">
                             @for ($i = 0; $i < $review['review_rating']; $i++)
@@ -115,7 +112,7 @@
                                             </div>
                                             <div class="mt-1">
                                                 <label for="content"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Content</label>
+                                                    class="block mb-2 text-sm font-medium text-gray-900">Content</label>
                                                 <input type="text" id="content" name="content"
                                                     class="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
                                                     value="">

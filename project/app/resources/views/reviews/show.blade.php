@@ -1,4 +1,13 @@
-<x-layout>
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+
+    @include('_head')
+    @include('_nav')
+
+
     <div>
         <div class="mb-2 shadow-lg rounded-t-8xl rounded-b-5xl overflow-hidden">
             <div class="pt-3 pb-3 md:pb-1 px-4 md:px-16 bg-white bg-opacity-40">
@@ -23,17 +32,22 @@
                 <div class="flex flex-wrap">
                     <div class="w-full md:w-2/3 mb-6 md:mb-0">
                         <h4 class="w-full md:w-auto text-l font-heading font-medium">{{ $review->title }} </h4>
-                        <p class="mb-8 max-w-2xl text-darkBlueGray-400 leading-loose">{{ $review->review_content }}</p>
+                        <p class="mb-8 max-w-2xl text-darkBlueGray-400 leading-loose">{{ $review->review_content }}
+                        </p>
                         <div class="-mb-2">
                         </div>
                     </div>
                     <div class="w-full md:w-1/3 text-right">
-                        <p class="mb-8 text-sm text-gray-300">Created at {{ $review->created_at }}</p>
+                        <?php $date = date_create($review['created_at']); ?>
+                        <p class="mb-8 text-sm text-gray-600">Created at {{ date_format($date, 'Y-m-d') }}</p>
                     </div>
                 </div>
-                <a class="goback" href="{{ url()->previous() }}"> Go back</a>
+                <a class=" mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                    href="{{ url()->previous() }}"> Go back</a>
             </div>
         </div>
         <br>
     </div>
-</x-layout>
+</body>
+
+</html>

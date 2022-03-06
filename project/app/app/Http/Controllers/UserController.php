@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Image;
 use App\Models\User;
 use App\Models\Movie;
 use App\Models\Image;
@@ -310,7 +309,7 @@ class UserController extends Controller
 
     public function showWatchlist(){
         $user = User::find(Auth::user()->id);
-        $image = Image::where('user_id', $user);
+        $image = Image::where('user_id', $user)->first();
 
 
         $watchlistMovies= [];
@@ -332,7 +331,7 @@ class UserController extends Controller
                 ];
                 array_push($watchlistMovies, $watchlistMovie);
             }
-         return view('/userpage')->with('watchlist', $watchlistMovies);
+         return view('/userpage', ['watchlist' => $watchlistMovies, 'image' => $image]);
 
 
     }

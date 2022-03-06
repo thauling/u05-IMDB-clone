@@ -6,6 +6,13 @@
 <body class="bg-gray-300">
     <div class="container mx-auto px-2 py-4">
         @include('_nav')
+        @if (session('status'))
+            <div class="ml-4 mr-4 md:ml-28 md:mr-28 bg-white pt-2 pb-2 text-black border-4 border-b-8 border-green-500">
+                <div class="ml-4 mr-4">
+                    {{ session('status') }}
+                </div>
+            </div>
+        @endif
         <section class="movie-wrapper">
             <h1 class="movie-title">{{ $movie['title'] }}</h1>
             <div class="movie-controls">
