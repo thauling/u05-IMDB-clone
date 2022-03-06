@@ -91,21 +91,6 @@
     padding: 10px;
     border-radius: 8px;
 }
-/* * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    text-align: center;
-    font-family: sans-serif;
-} */
-
-.user-avatar {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 5px 5px 5px gray;
-}
 
 .container {
     display: flex;
