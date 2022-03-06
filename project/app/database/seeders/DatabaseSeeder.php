@@ -80,12 +80,14 @@ class DatabaseSeeder extends Seeder
             $actors = Http::get("https://api.themoviedb.org/3/movie/$movie->id/credits?api_key=87a6bee8df47d296511c8924683d6ecf&language=en-US");
             $actorsToArray = json_decode($actors);
 
+            $imgPath = "https://image.tmdb.org/t/p/w1280$movie->poster_path";
+
             Movie::create([ // Seed movies table with the API responses
                 'title' => $movie->original_title,
                 'genre' => getGenre($movie->genre_ids[0]),
                 'cast' => json_encode(array($actorsToArray->cast[0]->name, $actorsToArray->cast[1]->name, $actorsToArray->cast[2]->name)),
                 'abstract' => $movie->overview,
-                'urls_images' => json_encode(array($movie->poster_path)),
+                'urls_images' => json_encode(array($imgPath)),
                 'url_trailer' => getTrailer($movie->id),
                 'avg_rating' => $movie->vote_average,
                 'released' => (int)substr($movie->release_date, 0, 4)

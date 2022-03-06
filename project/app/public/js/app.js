@@ -23273,10 +23273,3 @@ process.umask = function() { return 0; };
 /******/ 	
 /******/ })()
 ;
-
-let modalButton = document.getElementById('modalButton');
-imageModal = document.getElementById('imageModal');
-
-modalButton.addEventListener('click', () => {
-  imageModal.display = 'block';
-})
