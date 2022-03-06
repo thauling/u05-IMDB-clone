@@ -1,9 +1,5 @@
-<!-- <?php
-        $searchemail = "ralph";
-        ?> -->
-<!-- need to redirect from controller->find() that sends $user -->
 <x-admin>
-    <div class="flex justify-center items-center flex-col">
+    <section class="flex flex-col items-center">
         <h2 class="block text-gray-500 font-bold">Find User by name or email</h2>
         <form class="w-full max-w-sm" method="get" action="{{url('search-user')}}">
             <!-- need to fix this -->
@@ -42,14 +38,14 @@
             <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="email">Email</label>
             <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="email" name="email" id="email" value="{{ $user->email }}" class="" placeholder="email">
 
-<!-- 
+            <!-- 
             <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="password">Password</label>
             <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="password" name="password" id="password" value="{{ $user->password }}" class="" placeholder="Password"> -->
             <div class="md:flex md:items-center mb-6">
-            <label class="md:w-2/3 block text-gray-500 font-bold" for="is_admin">
-                <input class="mr-2 leading-tight" type="checkbox" name="is_admin" id="is_admin" value="yes" <?php echo $user->is_admin ? "checked":""; ?>>
-                Is admin?
-            </label>
+                <label class="md:w-2/3 block text-gray-500 font-bold" for="is_admin">
+                    <input class="mr-2 leading-tight" type="checkbox" name="is_admin" id="is_admin" value="yes" <?php echo $user->is_admin ? "checked" : ""; ?>>
+                    Is admin?
+                </label>
             </div>
 
             <!--             
@@ -62,8 +58,8 @@
         </form>
         @endif
 
-        
-    <div class="black text-gray-500 font-bold md:text-left mb-1 md:mb-0 p-10"><a href="{{url('admin-main')}}">Back</a></div>
-    </div>
+
+        <div class="shadow bg-yellow-400 text-gray-500 font-bold md:text-left mb-1 md:mb-0 py-2 px-4 rounded"><a href="{{url('admin-main')}}">Back</a></div>
+    </section>
 
 </x-admin>
