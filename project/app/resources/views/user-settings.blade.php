@@ -1,5 +1,5 @@
-
-
+<!DOCTYPE html>
+<meta lang="eng">
 @include('_head')
 
 <body class="bg-gray-300">
@@ -40,7 +40,7 @@
                 <div class="flex gap-x-2">
                     @isset($image)
                         <div>
-                        <a href="{{ url('/user/upload-image') }}" class="mb-4 text-sm text-gray-700 hover:text-gray-900 dark:text-gray-500 underline">Change avatar</a>
+                        <button class="mb-4 text-sm text-gray-700 hover:text-gray-900 dark:text-gray-500 underline" id="openModal">Change avatar</button>
                         </div>
                         
                         <form action="{{ url('/delete-image', Auth::user()->id) }}" method="post">
@@ -52,7 +52,7 @@
                         </form>
                         
                     @else 
-                        <a href="{{ url('/user/upload-image') }}" class="mb-4 text-sm text-gray-700 hover:text-gray-900 dark:text-gray-500 underline">Upload avatar</a>
+                        <button class="mb-4 text-sm text-gray-700 hover:text-gray-900 dark:text-gray-500 underline" id="openModal">Upload avatar</button>
                     @endisset
                 </div>
 
@@ -94,11 +94,12 @@
             @endif
         </article>
       
-       
                    
                 
 
     </div>
+
+    @include('_img_modal')
 <script src="../js/app.js"></script>
 </body>
 </html>
