@@ -1,5 +1,10 @@
 @include ('_head')
-@include ('_nav')
+
+<body class="bg-gray-300">
+
+<div class="container block mx-auto px-2 py-4">
+
+    @include ('_nav')
 
     <div class="max-w-fw mx-auto flex border-solid border-2 border-white max-h-full my-5 bg-white rounded ">
 
