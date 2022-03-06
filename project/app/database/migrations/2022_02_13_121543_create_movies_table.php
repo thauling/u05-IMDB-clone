@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('abstract');
             $table->json('urls_images')->nullable();; //json since >= 1 image(s)
             $table->string('url_trailer'); //we might conside json since movies tend to have > 1 trailers
-            $table->decimal('avg_rating', 3, 2)->nullable(); //tot number of digits: 3, of which 2 are decimals, should look up how to do the math automatically 
+            $table->decimal('avg_rating', 4, 2)->nullable(); //tot number of digits: 4, of which 2 are decimals, should look up how to do the math automatically 
             $table->timestamps();
         });
     }
