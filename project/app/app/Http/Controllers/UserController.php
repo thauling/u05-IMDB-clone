@@ -173,7 +173,6 @@ class UserController extends Controller
 
         $image = Image::where('user_id', $user)->first();
 
-
         $watchlistMovies = [];
         if ($user->watchlist) {
             foreach (json_decode($user->watchlist) as $id) {
