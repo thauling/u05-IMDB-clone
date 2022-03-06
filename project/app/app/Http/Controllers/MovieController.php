@@ -178,31 +178,22 @@ class MovieController extends Controller
                 'genre' => ['required'],
                 'released' => ['required'],
                 'abstract' => ['required'],
-                //'urls_images' => ['required'],
                 'url_trailer' => ['required'],
             ]);
 
             Movie::create([
                 'title' => $attributes['title'],
                 'genre' => $attributes['genre'],
-                // 'cast' => json_encode(array($rattributes->cast)), // Depending on how the user gets to submit the cast, explode by ","?
                 'abstract' => $attributes['abstract'],
-                // 'urls_images' => json_encode(array($attributes->images)), // How does the user get to submit img paths?
-                'url_trailer' => $attributes['trailer'], // This should be the movie id on YT, not the entire url
+                'url_trailer' => $attributes['url_trailer'], 
                 'released' => (int)$attributes['released']
             ]);
 
             session()->flash('success', 'Movie added');
         else :
-            dd('Auth problem');
+            session()->flash('success', 'Auth problem');
         endif;
         return redirect()->back();
-    }
-
-
-    public function show($id)
-    {
-        //
     }
 
     /**

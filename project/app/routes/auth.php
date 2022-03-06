@@ -67,10 +67,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/movies/{movie}/edit', [MovieController::class, 'edit']);
 
-    Route::post('/store-movie', [MovieController::class, 'store']); //c
+    Route::post('/store-movie', [MovieController::class, 'store']); 
     Route::post('/movies/{movie}/update', [MovieController::class, 'updateMovie']);
    
-    Route::put('/update-movie/{id}', [MovieController::class, 'update']); //
+    Route::put('/update-movie/{id}', [MovieController::class, 'update']); 
   
 
     //Route::delete('/movies/{movie}/delete', [MovieController::class, 'destroy']); // not used?

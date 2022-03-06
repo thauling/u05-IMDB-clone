@@ -1,6 +1,9 @@
 <?php
-if (isset($movie->cast)){
-$castArr = json_decode($movie->cast, false);
+if (isset($movie->cast)) {
+    $castArr = json_decode($movie->cast, false);
+} 
+else {
+    $castArr = array( 0 => 'Add cast' );
 };
 ?>
 
