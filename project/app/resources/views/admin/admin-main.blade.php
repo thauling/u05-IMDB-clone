@@ -366,7 +366,7 @@
                                             <td class="text-sm text-gray-900 font-light py-4 whitespace-normal w-xs px-2 lg:px-6">
                                                 {{$review->review_rating}}
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light  px-2 lg:px-6 py-4 max-w-xs">
+                                            <td class="text-sm text-gray-900 font-light  px-2 w-14 lg:px-6 py-4 max-w-xs">
                                                 {{array_search($review->user_id, $allUsers) ? array_search($review->user_id, $allUsers) : 'anonymous';}}
                                             </td>
                                             <td class="text-sm text-gray-900 font-light lg:px-6 py-4 max-w-xs">
