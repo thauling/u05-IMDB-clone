@@ -60,11 +60,4 @@ Route::get('/search-movie', [MovieController::class, 'movieSearch']);
 Route::get('movies/genre/{slug}', [MovieController::class, 'getByGenre']);
 
 
-Route::view('/test', 'test'
-
-// DISCARD PILE
-
-
-);
-
 

@@ -17,7 +17,6 @@
         ?>
         
         <article class="max-w-fw mx-auto flex flex-col items-center border-solid border-2 border-white max-h-full my-5 bg-white rounded p-5">
-
     
             <div class="py-8">
                  
@@ -100,6 +99,6 @@
                 
 
     </div>
-
+<script src="../js/app.js"></script>
 </body>
 </html>
