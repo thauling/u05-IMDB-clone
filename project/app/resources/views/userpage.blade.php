@@ -3,7 +3,20 @@
 @include('_nav')
 <div class="container">
     <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">{{ Auth::user()->name }}</h1>
-    <input type="file" name="userimage" placeholder="Choose profile picture" id="userimage">
+    <div class="py-8">
+
+        @if (isset($image))
+            <?php
+            $path = substr($image->path, 6, strpos($image->path, '.jpg'));
+            ?>
+
+            <img src="{{ asset('storage' . $path) }}" alt="profile image"
+                class="shadow object-cover w-36 h-36 align-middle border-none rounded-full">
+        @else
+            <img src="https://vectorified.com/images/generic-avatar-icon-12.jpg" alt="profile image"
+                class="shadow object-cover w-36 h-36 align-middle border-none rounded-full" />
+        @endif
+    </div>
 </div>
 <section class="text-gray-600 body-font">
     <div class="container px-5 py-24 mx-auto flex flex-wrap">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Movie;
+use App\Models\Image;
+
 
 
 use Illuminate\Http\Request;
@@ -306,6 +308,8 @@ class UserController extends Controller
 
     public function showWatchlist(){
         $user = User::find(Auth::user()->id);
+        $image = Image::where('user_id', $user);
+
 
         $watchlistMovies= [];
 
