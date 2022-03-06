@@ -6,19 +6,27 @@
     @endunless
     @if (Auth::check() && Auth::user()->is_admin)
 
-    <div class="block text-gray-500 font-bold">
+    <section class="block text-center text-gray-900 font-bold">
         <h1 class="">Dashboard</h1>
         <span class=""> Hi admin {{Auth::user()->name}} ! </span>
 
-    </div>
+        @if (session()->has('success'))
+        <div class="bg-red-500" x-data="{ show: true}" x-init="setTimeout(() => show = false, 4000)" x-show="show">
+            <!-- need to import alpine for this to work -->
+            <p>{{ session()->get('success') }}</p>
+        </div>
+        @endif
+    </section>
+
+
 
 
     <section class="flex flex-col items-center xl:flex-row xl:justify-center">
-    @if ($users->count() || $movies->count() || $reviews->count())
+        @if ($users->count() || $movies->count() || $reviews->count())
         <div class="flex-col py-10">
             <h2 class="font-bold px-10">Total number of Movies, Users, Reviews</h2>
             <div class="max-w-full px-0">
-                <div id="columnGraph"> </div> <!--  style="height: 600px; width: 100%"> replace this with tailwind-->
+                <div id="columnGraph"> </div>
             </div>
         </div>
         @endif
@@ -88,14 +96,14 @@
                 </div>
             </form>
             <div class="mt-10">
-                <a href="{{url('movie-cast')}}" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold mr-2 py-2 px-4 rounded">Add cast</a>
+                <a href="{{url('movie-cast')}}" class="shadow bg-yellow-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold mr-2 py-2 px-4 rounded">Search movie/ Add cast</a>
                 <!-- <a href="{{url('movie-images')}}" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add images</a> -->
             </div>
         </div>
 
         <div class="flex-col p-10">
             <h2 class="font-bold">Add a User</h2>
-            <!-- Search for user and update details -->
+
             <form class="w-full max-w-sm" method="post" action="{{url('store-user')}}">
                 @csrf
                 <div class="md:flex md:items-center mb-6">
@@ -144,7 +152,7 @@
 
 
                 <div class="md:flex md:items-center mb-6">
-                    <!-- <div class="md:w-1/3"></div> -->
+
                     <label class="md:w-2/3 block text-gray-500 font-bold" for="is_admin">
                         <input class="mr-2 leading-tight" type="checkbox" name="is_admin" value="yes">
                         Is admin?
@@ -161,22 +169,12 @@
             </form>
         </div>
     </section>
-    <!-- Display a CRUD action message -->
-    <section class="bg-red-500">
-        <!-- class ="message"-->
-        @if (session()->has('success'))
-        <section x-data="{ show: true}" x-init="setTimeout(() => show = false, 4000)" x-show="show">
-            <!-- need to import alpine for this to work -->
-            <p>{{ session()->get('success') }}</p>
-        </section>
-        @endif
-    </section>
 
     <section>
         <h2 class="font-bold">User Tracking</h2>
-        <!-- table and/ or chart on user stats -->
+
         @if ($users->count())
-        <!-- "$users->links" to be used with paginate-->
+
         <div class="flex flex-col">
             <div class="sm:-mx-6 lg:-mx-8">
                 <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -200,7 +198,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- fix pagination -->
+
                                 @foreach ($users as $user)
                                 <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                                     <td class="text-sm text-gray-900 font-light px-6 py-4  whitespace-normal lg:whitespace-nowrap">
@@ -231,7 +229,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <!-- show pagination -->
+
                         {{ $users->links() }}
 
                     </div>
@@ -247,9 +245,9 @@
 
     <section>
         <h2 class="font-bold">Movie Tracking</h2>
-        <!-- table and/ or chart on user stats -->
+
         @if ($movies->count())
-        <!-- "$movies->links" to be used with paginate-->
+
         <div class="flex flex-col">
             <!-- overflow-x-auto -->
             <div class="sm:-mx-6 lg:-mx-8">
@@ -276,7 +274,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- fix pagination -->
+
                                 @foreach ($movies as $movie)
                                 <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-normal lg:whitespace-nowrap">
@@ -309,7 +307,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <!-- show pagination -->
+
                         {{ $movies->links() }}
                     </div>
                 </div>
@@ -325,9 +323,9 @@
 
     <section>
         <h2 class="font-bold">Review Tracking</h2>
-        <!-- table and/ or chart on user stats -->
+
         @if ($reviews->count())
-        <!-- "$movies->links" to be used with paginate-->
+
         <div class="flex flex-col">
             <div class="sm:-mx-6 lg:-mx-8">
                 <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
