@@ -10,7 +10,8 @@
     <div class="mb-2 shadow-lg rounded-t-8xl rounded-b-5xl overflow-hidden">
         <div class="pt-3 pb-3 md:pb-1 px-4 md:px-16 bg-white bg-opacity-40">
             <div class="flex flex-wrap items-center">
-                <h4 class="w-full md:w-auto text-xl font-heading font-medium">{{ Auth::user()->name }} </h4>
+                <h4 class="w-full md:w-auto text-xl font-heading font-medium">
+                    {{ array_search($review->movie_id, $allMovies) }} </h4>
                 <div class="w-full md:w-px h-2 md:h-8 mx-8 bg-transparent md:bg-gray-200"></div>
                 <div class="inline-flex">
                     @for ($i = 0; $i < $review['review_rating']; $i++)

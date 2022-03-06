@@ -28,10 +28,10 @@ class ReviewController extends Controller
     {
 
         $reviews = Review::where('user_id', $id)->get();
+        $allMovies = Movie::pluck('id', 'title')->all();
 
-        return view('reviews/userratings',[
-            'reviews' => $reviews,
-        ]);
+
+        return view('reviews/userratings', compact('reviews', 'allMovies'));
     }
 
     /**
