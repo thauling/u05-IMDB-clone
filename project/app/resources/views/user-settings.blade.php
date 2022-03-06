@@ -2,7 +2,11 @@
 
 @include('_head')
 
-@include('_nav')
+<body class="bg-gray-300">
+
+    <div class="container block mx-auto px-2 py-4">
+
+    @include('_nav')
 
         <h1 class="text-3xl font-semibold text-gray-900 text-center mt-4">
             Settings
