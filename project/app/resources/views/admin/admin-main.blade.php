@@ -4,7 +4,7 @@
     @endunless
     @if (Auth::check() && Auth::user()->is_admin)
 
-    <section class="block text-center text-gray-900 font-bold">
+    <section class="block text-center text-gray-900 font-bold pb-5">
         <h1 class="">Dashboard</h1>
         <span class=""> Hi admin {{Auth::user()->name}} ! </span>
 
@@ -17,15 +17,15 @@
 
     <section class="flex flex-col items-center xl:flex-row xl:justify-center xl:items-start">
         @if ($users->count() || $movies->count() || $reviews->count())
-        <div class="flex-col p-10">
-            <h2 class="font-bold px-10 pb-5">Total number of Movies, Users, Reviews</h2>
+        <div class="flex-col px-10">
+            <h2 class="font-bold px-10 pb-5">The Stats</h2>
             <div class="max-w-full px-0">
                 <div id="columnGraph"> </div>
             </div>
         </div>
         @endif
 
-        <div class="flex-col p-10">
+        <div class="flex-col px-10">
             <h2 class="font-bold">Add a Movie</h2>
 
             <form class="w-full max-w-sm" method="post" action="{{url('store-movie')}}">
@@ -47,7 +47,7 @@
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <textarea rows="5" cols="50" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="abstract" required>
+                        <textarea rows="4" cols="50" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="abstract" required>
                     </textarea>
                     </div>
                 </div>
@@ -73,6 +73,16 @@
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
+                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="urls_images">
+                            Poster URL
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="urls_images" type="text" value="" required>
+                    </div>
+                </div>
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="url_trailer">
                             Trailer URL
                         </label>
@@ -91,11 +101,10 @@
             </form>
             <div class="mt-10">
                 <a href="{{url('movie-cast')}}" class="shadow bg-yellow-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold mr-2 py-2 px-4 rounded">Search movie/ Add cast</a>
-                <!-- <a href="{{url('movie-images')}}" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add images</a> -->
             </div>
         </div>
 
-        <div class="flex-col p-10">
+        <div class="flex-col px-10">
             <h2 class="font-bold">Add a User</h2>
 
             <form class="w-full max-w-sm" method="post" action="{{url('store-user')}}">
@@ -441,7 +450,7 @@
                     is3D: true,
                     fontSize: 16,
                     legend: 'none',
-                    title: 'Total number of users, movies, reviews',
+                    title: 'Total number of Users, Movies and Reviews',
                     isStacked: true
                 };
 
