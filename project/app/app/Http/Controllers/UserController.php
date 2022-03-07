@@ -98,23 +98,23 @@ class UserController extends Controller
         $userID = Auth::user('id');
         $user = User::find($userID)->first();
 
-        $validation = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        // $validation = Validator::make($request->all(), [
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
             
-        ]);
+        // ]);
 
-        if ($validation->fails()) {
-            $errors = response()->json([
-                'status' => 'failure',
-                'errors' => $validation->errors()
-            ], 400);
+        // if ($validation->fails()) {
+        //     $errors = response()->json([
+        //         'status' => 'failure',
+        //         'errors' => $validation->errors()
+        //     ], 400);
 
-            session()->flash('status', $errors);
+        //     session()->flash('status', $errors);
 
-            return redirect('user/user-settings');
-        }
+        //     return redirect('user/user-settings');
+        // }
 
         // $user::update([
         //     'name' => $updates['name'],
@@ -206,28 +206,32 @@ class UserController extends Controller
 
     public function showWatchlist(){
         $user = User::find(Auth::user()->id);
-        $image = Image::where('user_id', $user)->first();
+        $image = Image::where('user_id', $user->id)->first();
 
 
         $watchlistMovies= [];
+        if(($user->watchlist) !== null) {
 
-            foreach(json_decode($user->watchlist) as $id){
-                $movie = Movie::where('id', $id)->first();
-                $imgsToArray = json_decode($movie->urls_images); 
+       
+        foreach(json_decode($user->watchlist) as $id){
+            $movie = Movie::where('id', $id)->first();
+            $imgsToArray = json_decode($movie->urls_images); 
 
-                $watchlistMovie = [
-                    'id' => $movie->id,
-                    'title' => $movie->title,
-                    'genre' => $movie->genre,
-                    'cast' => json_decode($movie->cast),
-                    'abstract' => $movie->abstract,
-                    'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
-                    'avg_rating' => $movie->avg_rating,
-                    'released' => $movie->released
-                ];
-                array_push($watchlistMovies, $watchlistMovie);
-            }
-         return view('/userpage', ['watchlist' => $watchlistMovies, 'image' => $image]);
+            $watchlistMovie = [
+                'id' => $movie->id,
+                'title' => $movie->title,
+                'genre' => $movie->genre,
+                'cast' => json_decode($movie->cast),
+                'abstract' => $movie->abstract,
+                'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
+                'avg_rating' => $movie->avg_rating,
+                'released' => $movie->released
+            ];
+            array_push($watchlistMovies, $watchlistMovie);
+        }
+        }
+
+        return view('/userpage', ['watchlist' => $watchlistMovies, 'image' => $image]);
 
 
     }
