@@ -18,7 +18,7 @@ class AdminController extends Controller
     {
         $users =  User::orderBy('name')->paginate(5); 
         $movies = Movie::orderBy('title')->paginate(5);
-        $reviews = Review::orderBy('title')->paginate(5);
+        $reviews = Review::latest()->paginate(5);
         $usercount = User::count();
         $moviecount = Movie::count();
         $reviewcount = Review::count();

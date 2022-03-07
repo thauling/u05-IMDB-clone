@@ -15,10 +15,10 @@
         @endif
     </section>
 
-    <section class="flex flex-col items-center xl:flex-row xl:justify-center">
+    <section class="flex flex-col items-center xl:flex-row xl:justify-center xl:items-start">
         @if ($users->count() || $movies->count() || $reviews->count())
-        <div class="flex-col py-10">
-            <h2 class="font-bold px-10">Total number of Movies, Users, Reviews</h2>
+        <div class="flex-col p-10">
+            <h2 class="font-bold px-10 pb-5">Total number of Movies, Users, Reviews</h2>
             <div class="max-w-full px-0">
                 <div id="columnGraph"> </div>
             </div>
@@ -168,7 +168,7 @@
     </section>
 
     <section>
-        <h2 class="font-bold">User Tracking</h2>
+        <h2 class="font-bold px-10">User Tracking</h2>
 
         @if ($users->count())
 
@@ -241,7 +241,7 @@
     @endif
     <div class="">
         <section>
-            <h2 class="font-bold">Movie Tracking</h2>
+            <h2 class="font-bold px-10">Movie Tracking</h2>
 
             @if ($movies->count())
 
@@ -319,7 +319,7 @@
         @endif
 
         <section>
-            <h2 class="font-bold">Review Tracking</h2>
+            <h2 class="font-bold px-10">Review Tracking</h2>
 
             @if ($reviews->count())
 
