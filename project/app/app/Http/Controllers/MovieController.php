@@ -221,7 +221,7 @@ class MovieController extends Controller
 
     // Search functionality for movies
     // The code works but is overly complicated
-    public function movieSearch(Request $request) // and/ or $name
+    public function movieSearch(Request $request) 
     {
         $movies = Movie::all();
         $query = $request->input('s');
@@ -261,14 +261,14 @@ class MovieController extends Controller
 
         return view('landing', ['results' => $results]);
     }
+    
     // admin movie search  
-    public function adminSearchMovie(Request $request) // and/ or $name
+    public function adminSearchMovie(Request $request) 
     {
 
         $query = $request->input('query');
-        //dd($query);
         $movie = Movie::where('title', 'like', '%' . $query . '%')
-            ->orWhere('abstract', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
+            ->orWhere('abstract', 'like', '%' . $query . '%')->first(); 
 
 
         return view('admin.movie-cast', ['movie' => $movie]);
