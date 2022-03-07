@@ -77,23 +77,23 @@ class UserController extends Controller
         $userID = Auth::user('id');
         $user = User::find($userID)->first();
 
-        $validation = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        // $validation = Validator::make($request->all(), [
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            
+        // ]);
 
-        ]);
+        // if ($validation->fails()) {
+        //     $errors = response()->json([
+        //         'status' => 'failure',
+        //         'errors' => $validation->errors()
+        //     ], 400);
 
-        if ($validation->fails()) {
-            $errors = response()->json([
-                'status' => 'failure',
-                'errors' => $validation->errors()
-            ], 400);
+        //     session()->flash('status', $errors);
 
-            session()->flash('status', $errors);
-
-            return redirect('user/user-settings');
-        }
+        //     return redirect('user/user-settings');
+        // }
 
         // $user::update([
         //     'name' => $updates['name'],
@@ -171,7 +171,7 @@ class UserController extends Controller
 
         $user = User::find(Auth::user()->id);
 
-        $image = Image::where('user_id', $user)->first();
+        $image = Image::where('user_id', $user->id)->first();
 
         $watchlistMovies = [];
         if ($user->watchlist) {

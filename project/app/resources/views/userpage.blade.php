@@ -8,7 +8,7 @@
         @include('_nav')
         <div class="container">
             <div class="py-8">
-                @if (isset($image))
+                @if ($image)
                 <?php
                 $path = substr($image->path, 6, strpos($image->path, '.jpg'));
                 ?>
