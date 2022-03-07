@@ -14,8 +14,8 @@ else {
             <p>{{ session()->get('success') }}</p>
         </div>
         @endif
-        <div class="flex flex-col p-5">
-            <h1 class="block text-gray-500 text-center font-bold pb-5"">Find movie by title or abstract</h1>
+        <div class="flex flex-col">
+            <h1 class="block text-gray-500 text-center font-bold py-5">Find movie by title or abstract</h1>
             <form class=" w-full max-w-sm" method="get" action="{{url('/admin-search-movie')}}">
 
                 @csrf
@@ -60,7 +60,10 @@ else {
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="genre">Genre</label>
                 <input type="text" name="genre" value="{{ $movie->genre }}" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="">
 
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="url_trailer">Trailer_URL</label>
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="url_images">Poster URL</label>
+                <input type="url_trailer" name="urls_images" value="{{ $movie->urls_images }}" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="">
+
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="url_trailer">Trailer URL</label>
                 <input type="url_trailer" name="url_trailer" value="{{ $movie->url_trailer }}" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="">
 
                 <div class="block" id="dynaForm">

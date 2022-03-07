@@ -19,22 +19,19 @@ use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
-    
+
     public function store(Request $request)
     {
         if (Auth::check() && Auth::user()->is_admin) :
-            //dd(request());
-            $request["is_admin"] = $request["is_admin"] ? 1 : 0; //convert checkbox value to tinyint, 1 or 0
+            $request["is_admin"] = $request["is_admin"] ? 1 : 0;
             $attributes = request()->validate([
                 'name' => ['required', 'string', 'min:5', 'max:255'],
                 'email' => ['required', 'max:255', 'email', 'unique:users,email'],
-                'password' => ['required', 'string', 'min:7', 'max:255'], // 'confirmed' for user regis
+                'password' => ['required', 'string', 'min:7', 'max:255'],
                 'is_admin' => ['required']
             ]);
 
-            //dd('validation success'); //for debugging, to see if store method is called
-            //User::create($attributes);
-            $user = User::create([
+            User::create([
                 'name' => $attributes['name'],
                 'email' => $attributes['email'],
                 'password' => bcrypt($attributes['password']),
@@ -42,56 +39,38 @@ class UserController extends Controller
             ]);
 
             session()->flash('success', 'User created successfully');
-        //return redirect()->back(); //back() redirects to previous page
         endif;
         return redirect()->back();
     }
 
-    
+
     public function edit($id)
     {
-        $user = User::find($id);  
-        //dd($user);
-        return view('admin.edit-user', ['user' => $user]);
-
+        $user = User::find($id);
+        $allMovies = Movie::pluck('id', 'title')->all();
+        return view('admin.edit-user', ['user' => $user, 'allMovies' => $allMovies]);
     }
 
-    
-    public function search(Request $request) // and/ or $name
+
+    public function search(Request $request)
     {
-        
+
         $query = $request->input('query');
-        //dd($query);
-        $user = User::where('email', 'like', '%' . $query . '%')->orWhere('name', 'like', '%' . $query . '%')->first(); // '%' are regex placeholders, 
-
-        // grouped orWhere clause should be used instead according to docs but throws error
-        // $user = User::where (function ($query) 
-        // {$query->where('email', 'like', '%' . $query . '%')
-        //     ->orWhere('name', 'like', '%' . $query . '%');})
-        // ->first(); 
-
+        $user = User::where('email', 'like', '%' . $query . '%')->orWhere('name', 'like', '%' . $query . '%')->first();
         return view('admin.edit-user', ['user' => $user]);
     }
 
-    
+
     public function update(Request $request, $id)
     {
-        //dd($request["is_admin"]);
         $user = User::find($id);
-        $request["is_admin"] = $request["is_admin"] ? 1 : 0; 
+        $request["is_admin"] = $request["is_admin"] ? 1 : 0;
         $user->update($request->all());
-        
-        return redirect('admin-main')->with('status','User data updated.');
-        //return redirect()->back();
-       
+
+        return redirect('admin-main')->with('status', 'User data updated.');
     }
-    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function updateSettings(Request $request)
     {
         //
@@ -126,10 +105,10 @@ class UserController extends Controller
         // ------------WORKS BUT IS PROBABLY BAD PRACTICE
         $user->name = $request->get('name');
         $user->email = $request->get('email');
-        
 
-        if(($request->get('password')) === ($request->get('passConfirm'))){
-            $user->password = password_hash($request->get('password'), PASSWORD_BCRYPT); 
+
+        if (($request->get('password')) === ($request->get('passConfirm'))) {
+            $user->password = password_hash($request->get('password'), PASSWORD_BCRYPT);
         }
         $user->save();
 
@@ -138,29 +117,13 @@ class UserController extends Controller
         return redirect('user/user-settings');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+
         User::destroy($id);
         session()->flash('success', 'User deleted');
-        //return redirect()->back(); //back() redirects to previous page
         return redirect()->back();
     }
-
-    // public function search($email) // and/ or $name
-    // {
-    //     //
-    //     return User::where('email', 'like', '%' . $email . '%')->get(); // '%' are regex placeholders, 
-    //     // for exact search, do
-    //     //return User::where('email', $email)->get();
-
-    // }
 
     public function settings()
     {
@@ -170,7 +133,7 @@ class UserController extends Controller
         return view('user-settings', ['image' => $image]);
     }
 
-    public function updateWatchlist($movieId) 
+    public function updateWatchlist($movieId)
     {
         $user = User::find(Auth::user()->id);
 
@@ -179,13 +142,12 @@ class UserController extends Controller
         if ($user->watchlist != null) {
             $watchlist = json_decode($user->watchlist);
         }
-        
+
         array_push($watchlist, $movieId);
 
         $user->watchlist = json_encode($watchlist);
         $user->update();
         return redirect()->back()->with('status', 'Movie added to watchlist');
-
     }
 
     public function removeFromWatchlist($movieId)
@@ -204,35 +166,33 @@ class UserController extends Controller
         return redirect()->back()->with('status', 'Movie removed from watchlist');
     }
 
-    public function showWatchlist(){
+    public function showWatchlist()
+    {
+
         $user = User::find(Auth::user()->id);
+
         $image = Image::where('user_id', $user->id)->first();
 
+        $watchlistMovies = [];
+        if ($user->watchlist) {
+            foreach (json_decode($user->watchlist) as $id) {
+                $movie = Movie::where('id', $id)->first();
+                $imgsToArray = json_decode($movie->urls_images);
 
-        $watchlistMovies= [];
-        if(($user->watchlist) !== null) {
-
-       
-        foreach(json_decode($user->watchlist) as $id){
-            $movie = Movie::where('id', $id)->first();
-            $imgsToArray = json_decode($movie->urls_images); 
-
-            $watchlistMovie = [
-                'id' => $movie->id,
-                'title' => $movie->title,
-                'genre' => $movie->genre,
-                'cast' => json_decode($movie->cast),
-                'abstract' => $movie->abstract,
-                'urls_images' => "https://image.tmdb.org/t/p/w1280$imgsToArray[0]",
-                'avg_rating' => $movie->avg_rating,
-                'released' => $movie->released
-            ];
-            array_push($watchlistMovies, $watchlistMovie);
-        }
+                $watchlistMovie = [
+                    'id' => $movie->id,
+                    'title' => $movie->title,
+                    'genre' => $movie->genre,
+                    'cast' => json_decode($movie->cast),
+                    'abstract' => $movie->abstract,
+                    'urls_images' => $imgsToArray[0],
+                    'avg_rating' => $movie->avg_rating,
+                    'released' => $movie->released
+                ];
+                array_push($watchlistMovies, $watchlistMovie);
+            }
         }
 
         return view('/userpage', ['watchlist' => $watchlistMovies, 'image' => $image]);
-
-
     }
 }

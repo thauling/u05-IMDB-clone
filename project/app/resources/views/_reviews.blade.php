@@ -47,8 +47,9 @@
                             @endfor
                         </div>
                     </div>
-                    <h2 class="w-full md:w-auto text-l font-heading font-medium"><a class="nostyle"
-                            href="{{ url('review', ['id' => $review['id']]) }}">{{ $review['title'] }} </a></h2>
+                    <h2 class="w-full md:w-auto text-l font-heading font-medium">
+                        <a href="{{ url('review', ['id' => $review['id']]) }}">{{ $review['title'] }} </a>
+                    </h2>
                     <p class="mb-8 max-w-2xl text-darkBlueGray-400 leading-loose">{{ $review['review_content'] }}</p>
                 </div>
             </div>
@@ -79,25 +80,25 @@
                                         <div class="col-span-3 sm:col-span-2">
                                             <fieldset>
                                                 <span class="star-cb-group">
-                                                    <input id="rating-10" type="radio" name="movie_rating"
+                                                    <input id="rating-10" type="radio" name="review_rating"
                                                         value="10" /><label for="rating-10">10</label>
-                                                    <input id="rating-9" type="radio" name="movie_rating"
+                                                    <input id="rating-9" type="radio" name="review_rating"
                                                         value="9" /><label for="rating-9">9</label>
-                                                    <input id="rating-8" type="radio" name="movie_rating"
+                                                    <input id="rating-8" type="radio" name="review_rating"
                                                         value="8" /><label for="rating-8">8</label>
-                                                    <input id="rating-7" type="radio" name="movie_rating"
+                                                    <input id="rating-7" type="radio" name="review_rating"
                                                         value="7" /><label for="rating-7">7</label>
-                                                    <input id="rating-6" type="radio" name="movie_rating"
+                                                    <input id="rating-6" type="radio" name="review_rating"
                                                         value="6" /><label for="rating-6">6</label>
-                                                    <input id="rating-5" type="radio" name="movie_rating"
+                                                    <input id="rating-5" type="radio" name="review_rating"
                                                         value="5" /><label for="rating-5">5</label>
-                                                    <input id="rating-4" type="radio" name="movie_rating"
+                                                    <input id="rating-4" type="radio" name="review_rating"
                                                         value="4" /><label for="rating-4">4</label>
-                                                    <input id="rating-3" type="radio" name="movie_rating"
+                                                    <input id="rating-3" type="radio" name="review_rating"
                                                         value="3" /><label for="rating-3">3</label>
-                                                    <input id="rating-2" type="radio" name="movie_rating"
+                                                    <input id="rating-2" type="radio" name="review_rating"
                                                         value="2" /><label for="rating-2">2</label>
-                                                    <input id="rating-1" type="radio" name="movie_rating"
+                                                    <input id="rating-1" type="radio" name="review_rating"
                                                         value="1" /><label for="rating-1">1</label>
                                                 </span>
                                             </fieldset>
@@ -168,8 +169,5 @@
                 </div>
             </div>
             </form>
-        </div>
-        </div>
-        </div>
         </div>
     @endif

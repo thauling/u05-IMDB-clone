@@ -6,6 +6,7 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Movie;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -42,31 +43,24 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // $validatedData = $request->validate([
-        //     'content' => 'required|max:1000',
-        //     'rating' => 'required',
-        //     'user_id' => 'required',
-        //     'movie_id' => 'required'
-        //         ]);
-        //  Review::create($validatedData);
-        //dd($request);
-        if ($request->movie_rating === null) {
+        
+        if ($request->review_rating === null) {
             return redirect()->back()->with('status', "You have to fill in a rating for this movie!");
         } else {
             
-            $review = new Review;
-            $review->title = $request->title;
-            $review->review_content = $request->content;
-            $review->review_rating = $request->movie_rating;
-            $review->user_id = $request->user_id;
-            $review->movie_id = $request->movie_id;
-            $review->save();
+            $validatedData = $request->validate([
+                'review_content' => 'nullable|max:1000',
+                'title' => 'nullable',
+                'review_rating' => 'required',
+                'user_id' => 'required',
+                'movie_id' => 'required'
+                    ]);
+             Review::create($validatedData);
 
             $reviews = Review::where('movie_id', $request->movie_id)->get()->toArray();
 
             if ($reviews) {
-                $ratings = [$request->movie_rating];
+                $ratings = [$request->review_rating];
 
                 foreach ($reviews as $review) {
                     array_push($ratings, $review['review_rating']);
@@ -108,8 +102,10 @@ class ReviewController extends Controller
      // for approval by admin
     public function editApprove($id)
     {
+        if (Auth::check() && Auth::user()->is_admin){
         $review = Review::find($id);  
         return view('admin.edit-review', ['review' => $review]);
+        }
     }
 
     // for registered user
