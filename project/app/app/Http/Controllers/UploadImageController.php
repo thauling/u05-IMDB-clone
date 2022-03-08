@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UploadImageController extends Controller
 {
@@ -50,8 +51,12 @@ class UploadImageController extends Controller
     public function delete($id) 
     {
 
-        $image = Image::where('user_id', $id);
+        $image = Image::where('user_id', $id)->first();
         $image->delete();
+        
+        if(Storage::exists($image->path)) {
+            Storage::delete($image->path);
+        }
 
         session()->flash('success', 'Avatar deleted');
 

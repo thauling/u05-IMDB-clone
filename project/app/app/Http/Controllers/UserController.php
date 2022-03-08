@@ -106,9 +106,10 @@ class UserController extends Controller
         $user->name = $request->get('name');
         $user->email = $request->get('email');
 
-
-        if (($request->get('password')) === ($request->get('passConfirm'))) {
-            $user->password = password_hash($request->get('password'), PASSWORD_BCRYPT);
+        if($request->get('password') !== ''){
+            if (($request->get('password')) === ($request->get('passConfirm'))) {
+                $user->password = password_hash($request->get('password'), PASSWORD_BCRYPT);
+            }
         }
         $user->save();
 
