@@ -1,9 +1,14 @@
 <?php
 if (isset($movie->cast)) {
     $castArr = json_decode($movie->cast, false);
-} 
-else {
-    $castArr = array( 0 => 'Add cast' );
+} else {
+    $castArr = array(0 => 'Add cast');
+};
+
+if (isset($movie->urls_images)) {
+    $imageArr = json_decode($movie->urls_images, false);
+} else {
+    $imageArr = array(0 => 'Add image');
 };
 ?>
 
@@ -37,7 +42,7 @@ else {
                         </button>
                     </div>
                 </div>
-                </form>
+            </form>
         </div>
         @if (isset($movie))
         <div class="flex flex-col p-5">
@@ -60,12 +65,6 @@ else {
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="genre">Genre</label>
                 <input type="text" name="genre" value="{{ $movie->genre }}" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="">
 
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="url_images">Poster URL</label>
-                <input type="url_trailer" name="urls_images" value="{{ $movie->urls_images }}" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="">
-
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="url_trailer">Trailer URL</label>
-                <input type="url_trailer" name="url_trailer" value="{{ $movie->url_trailer }}" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="">
-
                 <div class="block" id="dynaForm">
                     <label for="cast[0][row]" class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">Cast</label>
                     <button type="button" id="btnAdd" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add row</button>
@@ -73,8 +72,19 @@ else {
                     @foreach($castArr as $key => $cast)
                     <input type="text" name="cast[{{$key}}][row]" value="{{ ($cast) }}" class="newRow bg-gray-200 appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" />
                     @endforeach
-
                 </div>
+
+                <div class="block" id="dynaForm2">
+                    <label for="urls_images[0][row2]" class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">Image URLs</label>
+                    <button type="button" id="btnAdd2" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add row</button>
+                    <button type="button" id="btnRemove2" class="shadow bg-red-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Remove</button>
+                    @foreach($imageArr as $key => $image)
+                    <input type="text" name="urls_images[{{$key}}][row2]" value="{{ ($image) }}" class="newRow2 bg-gray-200 appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" />
+                    @endforeach
+                </div>
+
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="url_trailer">Trailer URL</label>
+                <input type="url_trailer" name="url_trailer" value="{{ $movie->url_trailer }}" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="">
 
                 <button type="submit" class="shadow bg-green-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Update</button>
             </form>
@@ -93,6 +103,18 @@ else {
                 });
                 $("#btnRemove").click(function() {
                     $('.newRow:last-child').remove();
+                });
+            });
+
+            const start2 = <?php echo (count($imageArr) - 1) ?>;
+            $(document).ready(function() {
+                let i = start;
+                $("#btnAdd2").click(function() {
+                    ++i;
+                    $("#dynaForm2").append('<div class="block newRow2"> <input type="text" name="urls_images[' + i + '][row2]" class="bg-gray-200 border-2 border-gray-500 rounded w-full gap-[2.75rem] py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"/></div>');
+                });
+                $("#btnRemove2").click(function() {
+                    $('.newRow2:last-child').remove();
                 });
             });
         </script>

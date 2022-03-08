@@ -30,77 +30,56 @@
 
             <form class="w-full max-w-sm" method="post" action="{{url('store-movie')}}">
                 @csrf
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="title">
-                            Title
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="title" type="text" value="" required>
-                    </div>
-                </div>
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="abstract">
-                            Abstract
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <textarea rows="4" cols="50" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="abstract" required>
+
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="title">
+                    Title
+                </label>
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="title" type="text" value="" required>
+
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="abstract">
+                    Abstract
+                </label>
+
+                <textarea rows="4" cols="50" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="abstract" required>
                     </textarea>
-                    </div>
+
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="released">
+                    Released
+                </label>
+
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="released" type="number" value="" required>
+
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="genre">
+                    Genre
+                </label>
+
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="genre" type="text" value="" required>
+
+                <div class="block" id="dynaForm">
+                    <label for="cast[0][row]" class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">Cast</label>
+                    <button type="button" id="btnAdd" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add row</button>
+                    <button type="button" id="btnRemove" class="shadow bg-red-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Remove</button>
+                    <input type="text" name="cast[0][row]" value="" class="bg-gray-200 appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" required>
                 </div>
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="released">
-                            Released
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="released" type="number" value="" required>
-                    </div>
+                <div class="block" id="dynaForm2">
+                    <label for="urls_images[0][row2]" class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">Images</label>
+                    <button type="button" id="btnAdd2" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add row</button>
+                    <button type="button" id="btnRemove2" class="shadow bg-red-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Remove</button>
+                    <input type="text" name="urls_images[0][row2]" value="" class="bg-gray-200 appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" required>
                 </div>
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="genre">
-                            Genre
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="genre" type="text" value="" required>
-                    </div>
-                </div>
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="urls_images">
-                            Poster URL
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="urls_images" type="text" value="" required>
-                    </div>
-                </div>
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="url_trailer">
-                            Trailer URL
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="url_trailer" type="text" value="" required>
-                    </div>
-                </div>
-                <div class="md:flex md:items-center">
-                    <div class="md:w-2/3">
-                        <button class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
-                            Save
-                        </button>
-                    </div>
-                </div>
+
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="url_trailer">
+                    Trailer URL
+                </label>
+
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="url_trailer" type="text" value="" required>
+
+                <button class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
+                    Save
+                </button>
             </form>
-            <div class="mt-10">
-                <a href="{{url('movie-cast')}}" class="shadow bg-yellow-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold mr-2 py-2 px-4 rounded">Search movie/ Add cast</a>
+            <div class="my-10">
+                <a href="{{url('movie-cast')}}" class="shadow bg-yellow-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold mr-2 py-2 px-4 rounded">Search movie</a>
             </div>
         </div>
 
@@ -109,69 +88,37 @@
 
             <form class="w-full max-w-sm" method="post" action="{{url('store-user')}}">
                 @csrf
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="name">
-                            Name
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="name" type="text" value="" required>
-                    </div>
-                </div>
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="email">
-                            Email
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="email" type="email" value="" required>
-                    </div>
-                </div>
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="name">
+                    Name
+                </label>
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="name" type="text" value="" required>
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="email">
+                    Email
+                </label>
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="email" type="email" value="" required>
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="password">
+                    Password
+                </label>
 
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="password">
-                            Password
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="password" type="password" value="" required>
-                    </div>
-                </div>
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="password" type="password" value="" required>
 
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="password_confirmation">
+                    Confirm password
+                </label>
 
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="password_confirmation">
-                            Confirm password
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="password_confirmation" type="password" value="" required>
-                    </div>
-                </div>
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="password_confirmation" type="password" value="" required>
 
+                <label class="md:w-2/3 block text-gray-500 font-bold" for="is_admin">
+                    <input class="mr-2 leading-tight" type="checkbox" name="is_admin" value="yes">
+                    Is admin?
+                </label>
 
-                <div class="md:flex md:items-center mb-6">
-
-                    <label class="md:w-2/3 block text-gray-500 font-bold" for="is_admin">
-                        <input class="mr-2 leading-tight" type="checkbox" name="is_admin" value="yes">
-                        Is admin?
-                    </label>
-                </div>
-                <div class="md:flex md:items-center">
-                    <div class="md:w-2/3">
-                        <button class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" name="register" type="submit">
-                            Register
-                        </button>
-                    </div>
-                </div>
+                <button class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" name="register" type="submit">
+                    Register
+                </button>
             </form>
-            <div class="mt-10">
+            <div class="my-10">
                 <a href="{{url('edit-user')}}" class="shadow bg-yellow-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold mr-2 py-2 px-4 rounded">Search user</a>
-                <!-- <a href="{{url('movie-images')}}" class="shadow bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Add images</a> -->
             </div>
         </div>
     </section>
@@ -406,7 +353,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <!-- show pagination -->
+
                             {{ $reviews->links() }}
                         </div>
                     </div>
@@ -424,6 +371,7 @@
         <h1>Sorry mate, you must me an ADMIN to view this.</h1>
         @endif
 
+        <!-- JS for barchart object -->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             google.charts.load('current', {
@@ -458,4 +406,31 @@
                 chart.draw(data, options);
             }
         </script>
+
+        <!-- JS/Jquery for dynamic form -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                let i = 0;
+                $("#btnAdd").click(function() {
+                    ++i;
+                    $("#dynaForm").append('<input type="text" name="cast[' + i + '][row]" class="newRow bg-gray-200 border-2 border-gray-500 rounded w-full gap-[2.75rem] py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500" required>');
+                });
+                $("#btnRemove").click(function() {
+                    $('.newRow:last-child').remove();
+                });
+            });
+
+            $(document).ready(function() {
+                let i = 0;
+                $("#btnAdd2").click(function() {
+                    ++i;
+                    $("#dynaForm2").append('<input type="text" name="urls_images[' + i + '][row2]" class="newRow2 bg-gray-200 border-2 border-gray-500 rounded w-full gap-[2.75rem] py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500" required>');
+                });
+                $("#btnRemove2").click(function() {
+                    $('.newRow2:last-child').remove();
+                });
+            });
+        </script>
+
 </x-admin>

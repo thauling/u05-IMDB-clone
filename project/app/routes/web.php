@@ -15,14 +15,12 @@ Route::get('/', function () {
     return view('landing', [
         'movies' => Movie::orderBy('avg_rating', 'desc')->get()
     ]);
-// change to Route::get('/', [MovieController::class, 'getAllMovies']); //do orderBy(), [''] notation in blade.php
-
 });
 
 
 // MOVIE 
 Route::get('/movies', [MovieController::class, 'getAllMovies']);
-Route::get('/search', function() {
+Route::get('/search', function () {
     return view('search', [
         'movies' => Movie::all()
     ]);
@@ -35,12 +33,9 @@ Route::get('/movies/{movie}', [MovieController::class, 'getMovie']);
 
 Route::get('review/{id}', [ReviewController::class, 'show']);
 
-
-require __DIR__.'/auth.php';
-
 Route::get('/search-movie', [MovieController::class, 'movieSearch']);
-    
-Route::get('movies/genre/{slug}', [MovieController::class, 'getByGenre']);
+
+Route::get('/movies/genre/{slug}', [MovieController::class, 'getByGenre']);
 
 
-
+require __DIR__ . '/auth.php';

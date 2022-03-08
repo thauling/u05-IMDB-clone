@@ -19,8 +19,7 @@
 
                 <?php
                     $movies = $results;
-                    // @dd($movies);
-                    // print_r($movies);
+                   
                 ?> 
                 @endif
             
@@ -30,7 +29,7 @@
                 <?php 
                 $imgsToArray = json_decode($movie->urls_images); 
                     
-                $imgPath = "https://image.tmdb.org/t/p/w1280$imgsToArray[0]";
+                $imgPath = $imgsToArray[0];
                 ?>
                     
                     @include('_movies')

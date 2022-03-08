@@ -8,13 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Str;
-
-use Illuminate\Support\Facades\Hash;
-// this to access/ store images 
-use Image;
-use Storage;
 
 
 class MovieController extends Controller
@@ -101,16 +95,16 @@ class MovieController extends Controller
 
     public function postMovie(Request $req)
     {
-      
+
 
         $movie = Movie::create([
             'title' => $req->title,
             'genre' => $req->genre,
-            'cast' => json_encode(array($req->cast)), 
+            'cast' => json_encode(array($req->cast)),
             'abstract' => $req->abstract,
             'urls_images' => json_encode(array($req->images)),
-            'url_trailer' => $req->trailer, 
-            'avg_rating' => $req->rating, 
+            'url_trailer' => $req->trailer,
+            'avg_rating' => $req->rating,
             'released' => (int)$req->released
         ]);
 
@@ -141,12 +135,28 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         if (Auth::check() && Auth::user()->is_admin) :
-            $request["is_admin"] = $request["is_admin"] ? 1 : 0; 
+            $request["is_admin"] = $request["is_admin"] ? 1 : 0;
+
+            // incredibly convoluted method of converting cast and image input into json arrays of required format
+            $castArr = [];
+            for ($i = 0; $i < count($request->cast); $i++) {
+                $castArr[] = array_values(($request->cast)[$i]);
+            };
+            $flattened_cast = json_encode(array_values(array_reduce($castArr, 'array_merge', [])));
+
+            $imageArr = [];
+            for ($i = 0; $i < count($request->urls_images); $i++) {
+                $imageArr[] = array_values(($request->urls_images)[$i]);
+            };
+            $flattened_images = json_encode(array_values(array_reduce($imageArr, 'array_merge', [])));
+
             $attributes = request()->validate([
                 'title' => ['required'],
                 'genre' => ['required'],
                 'released' => ['required'],
                 'abstract' => ['required'],
+                'cast' => ['required'],
+                'urls_images' => ['required'],
                 'url_trailer' => ['required'],
             ]);
 
@@ -154,7 +164,9 @@ class MovieController extends Controller
                 'title' => $attributes['title'],
                 'genre' => $attributes['genre'],
                 'abstract' => $attributes['abstract'],
-                'url_trailer' => $attributes['url_trailer'], 
+                'cast' => $flattened_cast,
+                'urls_images' =>  $flattened_images,
+                'url_trailer' => $attributes['url_trailer'],
                 'released' => (int)$attributes['released']
             ]);
 
@@ -165,14 +177,13 @@ class MovieController extends Controller
         return redirect()->back();
     }
 
-  
+
     public function edit($id)
     {
         $movie = Movie::find($id);
         //dd($user);
         return view('admin.movie-cast', ['movie' => $movie]);
     }
-
 
 
     // updates input from movie-cast, Edit Movie Info (Title, Abstract, Genre) 
@@ -202,12 +213,10 @@ class MovieController extends Controller
 
     public function destroy($id)
     {
-        //
         Movie::destroy($id);
         session()->flash('success', 'Movie deleted');
         return redirect()->back();
     }
-
 
 
     // Search functionality for movies
@@ -254,36 +263,26 @@ class MovieController extends Controller
     // }
 
     // admin movie search  
-    public function adminSearchMovie(Request $request) 
+    public function adminSearchMovie(Request $request)
     {
         $query = $request->input('query');
         $movie = Movie::where('title', 'like', '%' . $query . '%')
-            ->orWhere('abstract', 'like', '%' . $query . '%')->first(); 
+            ->orWhere('abstract', 'like', '%' . $query . '%')->first();
 
 
         return view('admin.movie-cast', ['movie' => $movie]);
     }
 
-     // anyone movie search  
-     public function MovieSearch(Request $request) 
-     {
-         $query = $request->input('s');
-         $results = Movie::where('title', 'like', '%' . $query . '%')
-             ->orWhere('abstract', 'like', '%' . $query . '%')
-             ->orWhere(DB::raw('lower(cast)'), 'like', '%' . strtolower($query). '%')->get();
- 
-            return view('landing', ['results' => $results]);
-     }
+    // anyone movie search  
+    public function MovieSearch(Request $request)
+    {
+        $query = $request->input('s');
+        $results = Movie::where('title', 'like', '%' . $query . '%')
+            ->orWhere('abstract', 'like', '%' . $query . '%')
+            ->orWhere(DB::raw('lower(cast)'), 'like', '%' . strtolower($query) . '%')->get();
 
-     // search by hard-coded genre 
-    //  public function categorySearch(Request $request) 
-    //  {
-    //      dd($request);
-    //      $query = $request->input('s');
-    //      $results = Movie::where('genre', 'like', '%' . $query . '%')->first();
-    //         return view('landing', ['results' => $results]);
-    //  }
-
+        return view('landing', ['results' => $results]);
+    }
 
 
     public function getByGenre($genre)
