@@ -64,11 +64,11 @@
         
                 <div class="mb-4">
                     <label class="block" for="name">name</label>
-                    <input type="text" name="name" id="name" value="{{ Auth::user()->name}}" class="border rounded pl-2">
+                    <input type="text" name="name" id="name" placeholder="{{ Auth::user()->name}}" class="border rounded pl-2">
                 </div>    
                 <div class="mb-4">
                     <label class="block" for="email">email</label>
-                    <input type="email" name="email" id="email" value="{{ Auth::user()->email}}" class="border rounded pl-2">
+                    <input type="email" name="email" id="email" placeholder="{{ Auth::user()->email}}" class="border rounded pl-2">
                 </div>    
                 <div class="mb-4">
                     <label class="block" for="password">new password</label>
@@ -92,6 +92,9 @@
                     <p class="text-red-600">{{ session('status') }}</p> 
                 </div>
             @endif
+
+            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
         </article>
       
                    

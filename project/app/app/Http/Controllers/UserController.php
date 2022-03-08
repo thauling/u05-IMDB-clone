@@ -77,41 +77,32 @@ class UserController extends Controller
         $userID = Auth::user('id');
         $user = User::find($userID)->first();
 
-        // $validation = Validator::make($request->all(), [
-        //     'name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            
-        // ]);
-
-        // if ($validation->fails()) {
-        //     $errors = response()->json([
-        //         'status' => 'failure',
-        //         'errors' => $validation->errors()
-        //     ], 400);
-
-        //     session()->flash('status', $errors);
-
-        //     return redirect('user/user-settings');
-        // }
-
-        // $user::update([
-        //     'name' => $updates['name'],
-        //     'email' => $updates['email'],
-        //     'password' => Hash::make($updates['password'])
-        // ]);
-
-
-        // ------------WORKS BUT IS PROBABLY BAD PRACTICE
-        $user->name = $request->get('name');
-        $user->email = $request->get('email');
-
-        if($request->get('password') !== ''){
-            if (($request->get('password')) === ($request->get('passConfirm'))) {
-                $user->password = password_hash($request->get('password'), PASSWORD_BCRYPT);
-            }
+        if ($user->name === $request['name']) {
+            $request['name'] = null;
+        } elseif ($user->email === $request['email']) {
+            $request['name'] = null;
         }
-        $user->save();
+
+        $request->validate([
+            'name' => ['nullable', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            
+        ]);
+
+
+        if($request['name'] !== null) {
+            $user->update(['name' => $request['name']]);
+        }
+        
+        if($request['email'] !== null) {
+            $user->update(['email' => $request['email']]);
+        }
+        
+        if($request['password'] !== null) {
+            $user->update(['password' => Hash::make($request['password'])]);
+        }
+        
 
         session()->flash('success', 'updated successfully!');
 
