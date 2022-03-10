@@ -181,7 +181,6 @@ class MovieController extends Controller
     public function edit($id)
     {
         $movie = Movie::find($id);
-        //dd($user);
         return view('admin.movie-cast', ['movie' => $movie]);
     }
 
@@ -219,49 +218,6 @@ class MovieController extends Controller
     }
 
 
-    // Search functionality for movies
-    // The code works but is overly complicated
-    // public function movieSearch(Request $request) 
-    // {
-    //     $movies = Movie::all();
-    //     $query = $request->input('s');
-    //     $results = [];
-    //     $actors = [];
-
-    //     foreach ($movies as $movie) {
-
-    //         foreach (json_decode($movie->cast) as $actor) {
-
-    //             if (Str::contains(strtolower($actor), strtolower($query))) {
-    //                 array_push($actors, $actor);
-    //             }
-    //         }
-
-    //         if (
-    //             Str::contains(strtolower($movie->title), strtolower($query)) ||
-    //             Str::contains(strtolower($movie->genre), strtolower($query)) || !empty($actors)
-    //         ) {
-
-    //             array_push($results, $movie);
-    //         }
-
-    //         $actors = [];
-    //     }
-
-    //     if ($query === null || $query === '') {
-    //         $results = $movies;
-    //     }
-
-    //     // ↓↓↓↓↓↓ DOESNT WORK ↓↓↓↓↓↓↓
-    //     // $results = Movie::where('title', 'like', '%' . $query . '%')
-    //     //                     ->orWhere('genre', 'like', '%' . $query . '%')
-    //     //                     ->orWhere('cast', 'like', '%' . $query . '%')
-    //     //                     ->get(); 
-    //     // ↑↑↑↑↑↑ DOESNT WORK ↑↑↑↑↑↑↑
-
-    //     return view('landing', ['results' => $results]);
-    // }
-
     // admin movie search  
     public function adminSearchMovie(Request $request)
     {
@@ -287,7 +243,6 @@ class MovieController extends Controller
 
     public function getByGenre($genre)
     {
-        //dd($genre);
         return view('genre', [
             'movies' => Movie::where('genre', $genre)->orderBy('avg_rating', 'desc')->get(),
             'genre' => $genre
